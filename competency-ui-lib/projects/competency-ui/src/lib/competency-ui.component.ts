@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   template: `
     <p>
       competency-ui works here!
+      <lib-competency-card></lib-competency-card>
     </p>
   `,
   styles: []
