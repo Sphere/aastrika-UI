@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "competency-ui": [
+        "dist/competency-ui"
+      ],
+      "competency-ui/*": [
+        "dist/competency-ui/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
