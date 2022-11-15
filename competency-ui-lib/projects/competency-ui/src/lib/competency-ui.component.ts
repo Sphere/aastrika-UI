@@ -4,8 +4,8 @@ import { Component, OnInit } from '@angular/core';
   selector: 'lib-competency-ui',
   template: `
     <p>
-      competency-ui works here!
-      <lib-competency-card></lib-competency-card>
+      <lib-slef-assessment-entry></lib-slef-assessment-entry>
+      <lib-competency-entry></lib-competency-entry>
     </p>
   `,
   styles: []

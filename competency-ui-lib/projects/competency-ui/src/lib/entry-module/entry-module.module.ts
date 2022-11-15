@@ -9,6 +9,9 @@ import { CompetencyEntryComponent } from './components/competency-entry/competen
   declarations: [SlefAssessmentEntryComponent, CompetencyEntryComponent],
   imports: [
     CommonModule
-  ]
+  ],
+  exports:[
+    SlefAssessmentEntryComponent, 
+    CompetencyEntryComponent]
 })
 export class EntryModuleModule { }
