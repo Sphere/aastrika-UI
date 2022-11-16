@@ -1,0 +1,67 @@
+.date {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: -0.02em;
+    color: #989898;
+    display: flex;
+    justify-content: end;
+}
+
+.card-container {
+    margin: 5px 2px;
+    padding: 14px 10px 20px 14px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    background: #FFFFFF;
+  }
+  
+  .title {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 29px;
+      letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  
+  .description {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      letter-spacing: -0.02em;
+  }
+
+  .panel {
+    box-shadow: 0px 0px 0px 0px !important;
+    padding: 1px 3px 1px 0px;
+    pointer-events: none;
+  }
+
+  .panel-header {
+    padding: 0px;
+    background: none !important;
+  }
+  
+  .panel-header-description {
+    margin: 0px !important;
+    padding: 1px;
+  }
+
+  .pointer-events {
+    pointer-events: all;
+  }
+
+  .level {
+    width: 47px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 2.17333px #00000040;
+  }
