@@ -1,1 +1,10 @@
-<p>self-assessment-card works!</p>
+<div class="card_box">
+  <ng-container *ngIf="cardData?.title">
+    <div class="title">{{ cardData?.title }}</div>
+  </ng-container>
+  <ng-container *ngIf="cardData?.description">
+    <div class="description">{{ cardData?.description }}</div>
+  </ng-container>
+
+  <button mat-button class="startBtn">Start</button>
+</div>
