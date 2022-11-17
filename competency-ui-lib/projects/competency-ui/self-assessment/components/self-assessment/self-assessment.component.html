@@ -1,0 +1,10 @@
+<div class="content">
+    <!-- <mat-icon class="cursor-pointer" (click)="openCompetency()">chevron_left</mat-icon> -->
+  
+    <h3 class=" mb-1 pl-2 ">Competencies</h3>
+
+    <ng-container *ngFor="let gainedproficency  of gainedproficencyData">
+        <lib-self-assessment-card [cardData]="gainedproficency"></lib-self-assessment-card>
+      </ng-container>
+  
+  </div>
