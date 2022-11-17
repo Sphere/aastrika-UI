@@ -6,8 +6,11 @@
     line-height: 14px;
     letter-spacing: -0.02em;
     color: #989898;
-    display: flex;
-    justify-content: end;
+}
+
+.justify-end {
+  display: flex;
+  justify-content: end;
 }
 
 .card-container {
@@ -16,6 +19,7 @@
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     background: #FFFFFF;
+    width: 311px;
   }
   
   .title {
@@ -64,4 +68,39 @@
     justify-content: center;
     align-items: center;
     box-shadow: 0px 0px 2.17333px #00000040;
+  }
+
+  .logs {
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+    color: #808080;
+  }
+
+  .log-date {
+    font-style: normal;
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: -0.02em;
+    color: #808080;
+  }
+
+  .log-header {
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    color: #000000;
+  }
+
+  .log {
+    border-bottom: 1px solid #DDDDDD;
+    padding-bottom: 9px;
+    margin-top: 10px;
+  }
+
+  ::ng-deep .mat-expansion-panel-body {
+    padding: 0px !important;
   }

@@ -1,5 +1,5 @@
 <div class="card-container example-container container-balanced">
-    <div class="date">
+    <div class="date justify-end mr-2">
         <span>{{date}}</span>
     </div>
     <ng-container *ngIf="cardData?.title">
@@ -34,7 +34,25 @@
                     </div>
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <div>expand</div>
+            <div class="logs">
+                <span class="log-header">Log:</span>
+                <ng-container *ngFor="let log of logs">
+                    <div class="log">
+                        <div class="flex">
+                            <ng-container *ngIf="log.header">
+                                <span class="flex-1">{{log.index}}:{{log.header}}</span>
+                                <span class="log-date mr-2">{{log?.date}}</span>
+                            </ng-container>
+                        </div>
+                        <ng-container *ngIf="log.description">
+                            <div class="mt-2">{{log.description}}</div>
+                            <div class="justify-end">
+                                <mat-icon class="mr-3">keyboard_arrow_down</mat-icon>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </div>
         </mat-expansion-panel>
     </mat-accordion>
 </div>

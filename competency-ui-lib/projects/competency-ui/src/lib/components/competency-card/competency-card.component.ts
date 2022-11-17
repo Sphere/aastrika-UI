@@ -37,6 +37,27 @@ export class CompetencyCardComponent implements OnInit {
     ]
   }
 
+  logs = [
+    {
+      index: 1,
+      header: 'Self Assessment',
+      date: '05/11/2022',
+      description: ''
+    },
+    {
+      index: 2,
+      header: 'Admin Added',
+      date: '05/11/2022',
+      description: 'Lorem ipsum sit amet, consectetur adip iscing.'
+    },
+    {
+      index: 2,
+      header: 'Couse-Name Completion',
+      date: '02/12/2022',
+      description: ''
+    },
+  ]
+
   constructor() { }
 
   ngOnInit() {
