@@ -1,0 +1,34 @@
+<div class="content">
+  <mat-icon class="cursor-pointer mb-3" >chevron_left</mat-icon>
+
+  <h1 class=" pl-2 ">Competencies</h1>
+
+  <div class="pl-2 tab-container">
+    <mat-tab-group class="remove-border-bottom" animationDuration="0ms">
+      <mat-tab label="Required">
+        <ng-container *ngFor="let competency of competencyData">
+            <lib-assessment-card [cardData]="competency" ></lib-assessment-card>
+        </ng-container>
+        <div class="btn-container">
+            <button class="btn-start">Start Self Assessment</button>
+        </div>
+      </mat-tab>
+      <mat-tab label="Gained">
+        <div class="legend-container">
+          <div class="legend legend-yellow"></div>
+          <h5>Self Assessment</h5>
+          <div class="legend legend-light-blue"></div>
+          <h5>Course</h5>
+          <div class="legend legend-blue"></div>
+          <h5>Admin added</h5>
+        </div>
+        <ng-container *ngFor="let proficency of gainedproficencyData">
+            <lib-assessment-card [cardData]="proficency" ></lib-assessment-card>
+        </ng-container>
+      </mat-tab>
+
+    </mat-tab-group>
+
+    
+  </div>
+</div> 

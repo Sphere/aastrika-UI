@@ -1,14 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SelfAssessmentCardComponent } from './components/self-assessment-card/self-assessment-card.component';
-
+import { SelfAssessmentComponent } from './self-assessment.component';
+import { MatTabsModule, MatIconModule } from '@angular/material';
+// import { AssessmentCardComponent } from '../components/assessment-card/assessment-card.component';
 
 
 @NgModule({
-  declarations: [SelfAssessmentCardComponent],
-  imports: [
-    CommonModule
+  declarations: [SelfAssessmentComponent,
+    // AssessmentCardComponent
   ],
-  exports:[SelfAssessmentCardComponent]
+  imports: [
+    CommonModule,
+    MatTabsModule,
+    MatIconModule
+  ],
+  exports:[SelfAssessmentComponent]
 })
 export class SelfAssessmentModule { }
