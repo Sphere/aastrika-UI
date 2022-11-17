@@ -15,21 +15,21 @@
     <mat-accordion>
         <mat-expansion-panel class="w-full panel" hideToggle (opened)="panelOpenState = true"
             (closed)="panelOpenState = false">
-            <mat-expansion-panel-header class="flex flex-between items-center panel-header w-full">
+            <mat-expansion-panel-header class="flex-between items-center panel-header w-full">
                 <mat-panel-description class="panel-header-description">
                     <ng-container *ngFor="let proficiency of competencies.proficiencyLevels">
                         <ng-container *ngIf="proficiency.selected; else addLevel">
-                            <div class="level" [ngStyle]="{'background-color': color}">
+                            <div class="level mb-1" [ngStyle]="{'background-color': color}">
                                 <span>{{proficiency?.displayLevel}}</span>
                             </div>
                         </ng-container>
                         <ng-template #addLevel>
-                            <div (click)="$event.stopPropagation();" class="level pointer-events">
+                            <div (click)="$event.stopPropagation();" class="level mb-1 pointer-events">
                                 <span>{{proficiency?.displayLevel}}</span>
                             </div>
                         </ng-template>
                     </ng-container>
-                    <div class="level pointer-events">
+                    <div class="level mb-1 pointer-events">
                         <mat-icon [ngClass]="{'arrowReverse': panelOpenState }">keyboard_arrow_down</mat-icon>
                     </div>
                 </mat-panel-description>
