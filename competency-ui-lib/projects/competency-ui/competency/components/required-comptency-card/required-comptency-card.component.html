@@ -1,1 +1,13 @@
-<p>required-comptency-card works!</p>
+<div class="card-container">
+    <ng-container *ngIf="cardData?.title">
+      <div class="title">{{cardData?.title}}</div>
+    </ng-container>
+    <ng-container *ngIf="cardData?.description">
+      <div class="description">{{cardData?.description}}</div>
+    </ng-container>
+    <ng-container *ngIf="cardData?.requiredLevel">
+      <div class="proficiency">
+       {{cardData?.requiredLevel}}
+      </div>
+    </ng-container>
+  </div>

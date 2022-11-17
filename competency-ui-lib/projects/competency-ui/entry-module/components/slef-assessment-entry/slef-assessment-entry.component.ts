@@ -1,6 +1,5 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { Input,Output } from '@angular/core';
 @Component({
   selector: 'lib-slef-assessment-entry',
   templateUrl: './slef-assessment-entry.component.html',
