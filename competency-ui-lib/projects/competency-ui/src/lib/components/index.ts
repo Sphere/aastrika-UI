@@ -1,1 +1,0 @@
-export * from "./competency-card/competency-card.component"

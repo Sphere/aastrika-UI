@@ -19,9 +19,6 @@
       "dom"
     ],
     "paths": {
-      "competency-ui": [
-        "dist/competency-ui"
-      ],
       "competency-ui/*": [
         "dist/competency-ui/*"
       ]
