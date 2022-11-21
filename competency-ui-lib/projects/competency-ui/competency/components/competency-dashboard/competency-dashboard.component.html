@@ -1,37 +1,39 @@
 <div class="content">
-    <mat-icon class="cursor-pointer mb-3" >chevron_left</mat-icon>
-  
-    <h1 class=" pl-2 ">Competencies</h1>
-  
-    <div class="pl-2 tab-container">
-      <mat-tab-group class="remove-border-bottom" animationDuration="0ms">
-        <!-- required -->
-        <mat-tab label="Required">
-          <ng-container *ngFor="let competency of competencyData">
-              <lib-required-comptency-card [cardData]="competency" ></lib-required-comptency-card>
-          </ng-container>
-          <div class="btn-container">
-              <button class="btn-start">Start Self Assessment</button>
-          </div>
-        </mat-tab>
+  <mat-icon (click)="navigateBack()" class="cursor-pointer mb-3">chevron_left</mat-icon>
 
-        <!-- gained  -->
-        <mat-tab label="Gained">
-          <div class="legend-container">
-            <div class="legend legend-yellow"></div>
-            <h5>Self Assessment</h5>
-            <div class="legend legend-light-blue"></div>
-            <h5>Course</h5>
-            <div class="legend legend-green"></div>
-            <h5>Admin added</h5>
-          </div>
-          <ng-container *ngFor="let proficency of gainedproficencyData">
-              <lib-gained-comptency-card [cardData]="proficency" ></lib-gained-comptency-card>
+  <h1 class=" pl-2 mb-0">Competency Dashboard</h1>
+
+  <div class="pl-2 tab-container">
+    <mat-tab-group class="remove-border-bottom" animationDuration="0ms">
+      <!-- required -->
+      <mat-tab label="Required">
+        <div class="required-comperencies">
+          <ng-container *ngFor="let competency of competencyData">
+            <lib-required-comptency-card [cardData]="competency"></lib-required-comptency-card>
           </ng-container>
-        </mat-tab>
-  
-      </mat-tab-group>
-  
-      
-    </div>
-  </div> 
+        </div>
+        <div class="btn-container">
+          <button class="btn-start" (click)="startSelfAssessment()">Start Self Assessment</button>
+        </div>
+      </mat-tab>
+
+      <!-- gained  -->
+      <mat-tab label="Gained">
+        <div class="legend-container">
+          <div class="legend legend-yellow"></div>
+          <h5>Self Assessment</h5>
+          <div class="legend legend-light-blue"></div>
+          <h5>Course</h5>
+          <div class="legend legend-green"></div>
+          <h5>Admin added</h5>
+        </div>
+        <ng-container *ngFor="let proficency of gainedproficencyData">
+          <lib-gained-comptency-card [cardData]="proficency"></lib-gained-comptency-card>
+        </ng-container>
+      </mat-tab>
+
+    </mat-tab-group>
+
+
+  </div>
+</div>

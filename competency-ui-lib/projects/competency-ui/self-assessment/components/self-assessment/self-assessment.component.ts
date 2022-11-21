@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'lib-self-assessment',
@@ -20,9 +21,15 @@ export class SelfAssessmentComponent implements OnInit {
     }
   ]
 
-  constructor() { }
+  constructor(
+    private location: Location
+  ) { }
 
   ngOnInit() {
+  }
+
+  navigateBack() {
+    this.location.back()
   }
 
 }

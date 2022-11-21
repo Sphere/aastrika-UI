@@ -6,6 +6,7 @@
   
     @media only screen and (min-width: 960px) {
       max-width: 30%;
+      padding: 20px 20px 0px;
     }
   
     @media only screen and (min-width: 1280px){
@@ -64,7 +65,7 @@
     margin-bottom: 20px;
   
     .legend {
-      width: 15px;
+      min-width: 15px;
       height: 15px;
       background: #DFEDF9;
       border-radius: 50%;
@@ -86,15 +87,19 @@
       font-size: 14px;
     }
   }
+
+  .required-comperencies {
+    height: calc(100vh - 270px);
+    overflow: auto;
+  }
   
   .btn-start{
-  width: 311px;
-  height: 35px;
-  background: #1C5D95;
-  border-radius: 50px;
-  border: none ;
-  color: #ffffff;
-  
+    width: 311px;
+    height: 35px;
+    background: #1C5D95;
+    border-radius: 50px;
+    border: none ;
+    color: #ffffff;
   }
   
   .tab-container{
