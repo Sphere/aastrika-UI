@@ -4,7 +4,13 @@
   <h1 class=" pl-2 mb-0">Competency Dashboard</h1>
 
   <div class="pl-2 tab-container">
-    <mat-tab-group class="remove-border-bottom" animationDuration="0ms">
+    <ng-container *ngIf="selectedTab === 'Gained'">
+      <div class="sortIcon">
+        <img src="./competency-ui/assets/images/sort-icon.png">
+      </div>
+    </ng-container>
+    <mat-tab-group [ngClass]="{'mat-tab-header-sortIcon': selectedTab === 'Gained'}" class="remove-border-bottom" animationDuration="0ms"
+      (selectedTabChange)="selectedTabChange($event?.tab?.textLabel)">
       <!-- required -->
       <mat-tab label="Required">
         <div class="required-comperencies">

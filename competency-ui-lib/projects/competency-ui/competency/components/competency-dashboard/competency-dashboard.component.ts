@@ -52,6 +52,8 @@ export class CompetencyDashboardComponent implements OnInit {
     }
   ]
 
+  selectedTab = ''
+
   constructor(
     private location: Location
   ) { }
@@ -63,6 +65,11 @@ export class CompetencyDashboardComponent implements OnInit {
     this.location.back()
   }
 
-  startSelfAssessment() {}
+  startSelfAssessment() {
+  }
+
+  selectedTabChange(event) {
+    this.selectedTab = event;
+  }
 
 }
