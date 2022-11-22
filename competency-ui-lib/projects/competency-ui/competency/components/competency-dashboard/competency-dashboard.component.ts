@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'lib-competency-dashboard',
@@ -18,6 +19,26 @@ export class CompetencyDashboardComponent implements OnInit {
       description: 'Mobilizes children and conducts ECCE activities as per the yearly activity calendar and the ECCE manual ',
       requiredLevel: 'level 4'
     },
+    {
+      title: 'Procurement and Distribution of HCM',
+      description: 'Manages procurement and store raw materials for HCMs as per the pre-decided menu Supervises the preparation and distribution of HCM by Anganwadi Helper (AWH)',
+      requiredLevel: 'level 4'
+    },
+    {
+      title: 'Early Childhood Care Education',
+      description: 'Mobilizes children and conducts ECCE activities as per the yearly activity calendar and the ECCE manual ',
+      requiredLevel: 'level 4'
+    },
+    {
+      title: 'Procurement and Distribution of HCM',
+      description: 'Manages procurement and store raw materials for HCMs as per the pre-decided menu Supervises the preparation and distribution of HCM by Anganwadi Helper (AWH)',
+      requiredLevel: 'level 4'
+    },
+    {
+      title: 'Early Childhood Care Education',
+      description: 'Mobilizes children and conducts ECCE activities as per the yearly activity calendar and the ECCE manual ',
+      requiredLevel: 'level 4'
+    },
   ]
 
   gainedproficencyData = [
@@ -31,9 +52,17 @@ export class CompetencyDashboardComponent implements OnInit {
     }
   ]
 
-  constructor() { }
+  constructor(
+    private location: Location
+  ) { }
 
   ngOnInit() {
   }
+
+  navigateBack() {
+    this.location.back()
+  }
+
+  startSelfAssessment() {}
 
 }

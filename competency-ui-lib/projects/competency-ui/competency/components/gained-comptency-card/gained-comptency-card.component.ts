@@ -10,29 +10,38 @@ export class GainedComptencyCardComponent implements OnInit {
   @Input() cardData: any
 
   date = '05/11/2022'
-  color = '#FFF4DF'
-  panelOpenState: Boolean = true
+  panelOpenState: Boolean = false;
   competencies = {
     proficiencyLevels: [
       {
         selected: true,
-        displayLevel: 1
+        displayLevel: 1,
+        color: '#FFFBB0',
+        level: ''
       },
       {
         selected: true,
-        displayLevel: 2
+        displayLevel: 2,
+        color: '#7CB5E6',
+        level: ''
       },
       {
         selected: true,
-        displayLevel: 3
+        displayLevel: 3,
+        color: '#A4DFCA',
+        level: ''
+      },
+      {
+        selected: true,
+        displayLevel: 4,
+        color: '#A4DFCA',
+        level: ''
       },
       {
         selected: false,
-        displayLevel: 4
-      },
-      {
-        selected: true,
-        displayLevel: 5
+        displayLevel: 5,
+        color: '',
+        level: ''
       }
     ]
   }
@@ -42,19 +51,22 @@ export class GainedComptencyCardComponent implements OnInit {
       index: 1,
       header: 'Self Assessment',
       date: '05/11/2022',
-      description: ''
+      description: '',
+      keyboardArrowUp: true
     },
     {
       index: 2,
       header: 'Admin Added',
       date: '05/11/2022',
-      description: 'Lorem ipsum sit amet, consectetur adip iscing.'
+      description: 'Lorem ipsum sit amet, consectetur adip iscing.',
+      keyboardArrowUp: true
     },
     {
       index: 2,
       header: 'Couse-Name Completion',
       date: '02/12/2022',
-      description: ''
+      description: '',
+      keyboardArrowUp: true
     },
   ]
 
