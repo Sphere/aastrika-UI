@@ -14,7 +14,7 @@ export class CompetencyDashboardComponent implements OnInit {
       requiredLevel: 'level 4'
     },
     {
-      title: 'Early Childhood Care Education',
+      title: 'Store management and planning and coordination of THR and Dry ration',
       description: 'Mobilizes children and conducts ECCE activities as per the yearly activity calendar and the ECCE manual ',
       requiredLevel: 'level 4'
     },

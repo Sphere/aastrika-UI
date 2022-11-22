@@ -8,9 +8,38 @@ import { Component, Input, OnInit } from '@angular/core';
 export class RequiredComptencyCardComponent implements OnInit {
 
   @Input() cardData: any
+
+  panelOpenState: Boolean = true
+  customCollapsedHeight = '100px'
+  customExpandedHeight = '100px'
+
   constructor() { }
 
   ngOnInit() {
   }
+
+  logs = [
+    {
+      index: 1,
+      header: 'Understands HCM guidelines',
+    },
+    {
+      index: 2,
+      header: 'Lists raw material required',
+    },
+    {
+      index: 3,
+      header: 'Plans for storage',
+    },
+    {
+      index: 4,
+      header: 'Motivates the AWH and children on optimal hygiene and handwashing practices',
+    },
+    {
+      index: 5,
+      header: 'Course-Name Completion',
+    },
+    
+  ]
 
 }
