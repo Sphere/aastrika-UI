@@ -63,6 +63,10 @@
   margin-top: 10px;
 }
 
+.logs{
+  padding: 5px 5px;
+}
+
 .log-items {
   font-family: "Roboto";
   font-style: normal;
@@ -75,7 +79,7 @@
 }
 
 ::ng-deep .mat-expansion-panel-header {
-  padding: 0 20px !important;
+  padding: 0 5px !important;
 }
 ::ng-deep .mat-expansion-panel-header:hover {
   background: rgb(255 255 255 / 98%) !important;

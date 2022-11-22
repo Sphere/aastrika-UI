@@ -8,14 +8,15 @@
     >
       <mat-expansion-panel-header
         class="flex-between items-center panel-header w-full"
-        
+        collapsedHeight="auto"
+        expandedHeight="auto"
       >
         <mat-panel-description class="panel-header-description">
           <ng-container *ngIf="cardData?.title">
             <div class="title">{{ cardData?.title }}</div>
           </ng-container>
         </mat-panel-description>
-        <div class="level mb-1 pointer-events">
+        <div class="level mb-0 pointer-events">
           <mat-icon [ngClass]="{ arrowReverse: panelOpenState }"
             >keyboard_arrow_down</mat-icon
           >
