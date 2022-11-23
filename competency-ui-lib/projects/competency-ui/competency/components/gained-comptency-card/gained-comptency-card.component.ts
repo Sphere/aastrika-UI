@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'lib-gained-comptency-card',
@@ -7,7 +7,18 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class GainedComptencyCardComponent implements OnInit {
 
-  @Input() cardData: any
+ 
+
+  gainedproficencyData = [
+    {
+      title: 'Sector Meetings',
+      description: 'Documents and discuss HCM, THR, growth monitoring and referral related issues in sector meetings',
+    },
+    {
+      title: 'Counselling ',
+      description: 'Lorem ipsum dolor sit amet, consectetur',
+    }
+  ]
 
   date = '05/11/2022'
   panelOpenState: Boolean = false;
