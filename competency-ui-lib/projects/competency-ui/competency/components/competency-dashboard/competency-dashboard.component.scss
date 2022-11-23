@@ -1,11 +1,12 @@
 // @import 'ws-mixins';
 
 .content {
-    padding: 60px 20px 50px;
+    padding: 60px 0px 50px;
     margin: auto;
   
     @media only screen and (min-width: 960px) {
       max-width: 30%;
+      padding: 20px 20px 0px;
     }
   
     @media only screen and (min-width: 1280px){
@@ -62,9 +63,22 @@
     margin-top: 20px;
     align-items: center;
     margin-bottom: 20px;
+
+    @media only screen and (max-width: 599px){
+      gap: 5px;
+    }
+
+    h5{
+      margin: 0;
+      font-weight: 400;
+      font-size: 16px;
+      @media only screen and (max-width: 599px){
+        font-size: 12px;
+      }
+    }
   
     .legend {
-      width: 15px;
+      min-width: 15px;
       height: 15px;
       background: #DFEDF9;
       border-radius: 50%;
@@ -79,22 +93,23 @@
     .legend-light-blue {
       background: #DFEDF9;
    }
-  
-    h5 {
-      margin: 0;
-      font-weight: 400;
-      font-size: 14px;
-    }
+
+
+    
+  }
+
+  .required-comperencies {
+    height: calc(100vh - 270px);
+    overflow: auto;
   }
   
   .btn-start{
-  width: 311px;
-  height: 35px;
-  background: #1C5D95;
-  border-radius: 50px;
-  border: none ;
-  color: #ffffff;
-  
+    width: 311px;
+    height: 35px;
+    background: #1C5D95;
+    border-radius: 50px;
+    border: none ;
+    color: #ffffff;
   }
   
   .tab-container{

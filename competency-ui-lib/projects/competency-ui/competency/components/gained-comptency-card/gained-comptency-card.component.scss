@@ -28,16 +28,17 @@
       font-size: 24px;
       line-height: 29px;
       letter-spacing: -0.02em;
-    margin-bottom: 8px;
+      margin-bottom: 18px;
   }
-  
-  .description {
-      font-family: 'Roboto';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 17px;
-      letter-spacing: -0.02em;
+
+  .levelsTitle {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    color: #000000;
   }
 
   .panel {
@@ -47,7 +48,7 @@
   }
 
   .panel-header {
-    padding: 0px;
+    padding: 0px !important;
     background: none !important;
   }
   
@@ -58,33 +59,21 @@
 
   .pointer-events {
     pointer-events: all;
+    cursor: pointer;
+  }
+
+  .arrowReverse {
+    transform: rotateX(180deg);
   }
 
   .level {
     width: 47px;
+    max-width: 16.6%;
     height: 36px;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0px 0px 2.17333px #00000040;
-  }
-
-  .logs {
-    font-family: 'Roboto';
-    font-style: italic;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
-    letter-spacing: -0.02em;
-    color: #808080;
-  }
-
-  .log-date {
-    font-style: normal;
-    font-size: 12px;
-    line-height: 14px;
-    letter-spacing: -0.02em;
-    color: #808080;
   }
 
   .log-header {
@@ -95,11 +84,34 @@
   }
 
   .log {
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;;
+    letter-spacing: -0.02em;
+    color: #808080;
     border-bottom: 1px solid #DDDDDD;
     padding-bottom: 9px;
     margin-top: 10px;
   }
 
+  .log-date {
+    font-style: normal;
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: -0.02em;
+    color: #808080;
+  }
+
   ::ng-deep .mat-expansion-panel-body {
     padding: 0px !important;
+  }
+
+  :host ::ng-deep .mat-content {
+    display: unset !important;
+  }
+
+  .hideContent {
+    display: none;
   }

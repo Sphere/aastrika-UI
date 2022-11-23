@@ -4,10 +4,15 @@ import { RequiredComptencyCardComponent } from './components/required-comptency-
 import { GainedComptencyCardComponent } from './components/gained-comptency-card/gained-comptency-card.component';
 import { CompetencyDashboardComponent } from './components/competency-dashboard/competency-dashboard.component';
 
+import { ActiveSummaryComponent } from './components/active-summary/active-summary.component';
 import { MatTabsModule, MatIconModule, MatExpansionModule } from '@angular/material';
 
 @NgModule({
-  declarations: [RequiredComptencyCardComponent, GainedComptencyCardComponent, CompetencyDashboardComponent],
+  declarations: [
+    RequiredComptencyCardComponent, 
+    GainedComptencyCardComponent, 
+    CompetencyDashboardComponent, 
+    ActiveSummaryComponent],
   imports: [
     CommonModule,
     MatTabsModule,
@@ -16,7 +21,8 @@ import { MatTabsModule, MatIconModule, MatExpansionModule } from '@angular/mater
   ],
   exports: [RequiredComptencyCardComponent,
     GainedComptencyCardComponent,
-    CompetencyDashboardComponent
+    CompetencyDashboardComponent,
+    ActiveSummaryComponent
   ]
 })
 export class CompetencyModule { }
