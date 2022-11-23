@@ -1,0 +1,41 @@
+<div class="">
+  <mat-accordion>
+    <mat-expansion-panel
+      class="w-full panel r"
+      hideToggle
+      (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false"
+    >
+      <mat-expansion-panel-header
+        class="card-containe flex-between items-center panel-header w-full"
+        collapsedHeight="auto"
+        expandedHeight="auto"
+      >
+        <mat-panel-description class="panel-header-description">
+          <ng-container *ngIf="cardData?.roles">
+            <div class="title">{{ cardData?.roles }}</div>
+          </ng-container>
+        </mat-panel-description>
+        <div class="icon-down mb-0 pointer-events">
+          <mat-icon [ngClass]="{ arrowReverse: panelOpenState }"
+            >keyboard_arrow_down</mat-icon
+          >
+        </div>
+      </mat-expansion-panel-header>
+
+      <div class="expand-container">
+        <ng-container *ngFor="let activity of cardData.activities; let i = index">
+            <div class="activity-title">{{i + 1}}.{{activity.activityTitle}}</div>
+            <div class="competency-container">
+                <div class="competency-title">{{activity.competency}}</div>
+                <div class="level">
+                    <ng-container *ngFor="let level of activity.levels ">
+                        {{level}}
+                    </ng-container>
+                </div>
+            </div>
+        </ng-container>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

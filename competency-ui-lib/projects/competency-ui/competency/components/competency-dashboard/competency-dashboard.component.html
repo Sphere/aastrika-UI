@@ -9,19 +9,8 @@
         <img src="./competency-ui/assets/images/sort-icon.png">
       </div>
     </ng-container>
-    <mat-tab-group [ngClass]="{'mat-tab-header-sortIcon': selectedTab === 'Gained'}" class="remove-border-bottom" animationDuration="0ms"
-      (selectedTabChange)="selectedTabChange($event?.tab?.textLabel)">
-      <!-- required -->
-      <mat-tab label="Required">
-        <div class="required-comperencies">
-          <ng-container *ngFor="let competency of competencyData">
-            <lib-required-comptency-card [cardData]="competency"></lib-required-comptency-card>
-          </ng-container>
-        </div>
-        <div class="btn-container">
-          <button class="btn-start" (click)="startSelfAssessment()">Start Self Assessment</button>
-        </div>
-      </mat-tab>
+    <mat-tab-group [ngClass]="{'mat-tab-header-sortIcon': selectedTab === 'Gained'}" class="remove-border-bottom"
+      animationDuration="0ms" (selectedTabChange)="selectedTabChange($event?.tab?.textLabel)">
 
       <!-- gained  -->
       <mat-tab label="Gained">
@@ -37,6 +26,27 @@
           <lib-gained-comptency-card [cardData]="proficency"></lib-gained-comptency-card>
         </ng-container>
       </mat-tab>
+
+      <!-- Active Summary -->
+      <mat-tab label="Activity Summary">
+        <ng-container *ngFor="let activitySummary of activitySummaries">
+          <lib-active-summary [cardData]="activitySummary"></lib-active-summary>
+        </ng-container>
+      </mat-tab>
+
+      <!-- required -->
+      <mat-tab label="Required">
+        <div class="required-comperencies">
+          <ng-container *ngFor="let competency of competencyData">
+            <lib-required-comptency-card [cardData]="competency"></lib-required-comptency-card>
+          </ng-container>
+        </div>
+        <div class="btn-container">
+          <button class="btn-start" (click)="startSelfAssessment()">Start Self Assessment</button>
+        </div>
+      </mat-tab>
+
+
 
     </mat-tab-group>
 

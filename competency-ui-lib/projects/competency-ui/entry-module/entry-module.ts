@@ -2,10 +2,9 @@ import { NgModule ,ModuleWithProviders} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SlefAssessmentEntryComponent } from './components/slef-assessment-entry/slef-assessment-entry.component';
 import { CompetencyEntryComponent } from './components/competency-entry/competency-entry.component';
-import { ConfigService } from './services/config.service';
 import { MatIconModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
-
+import { ConfigurationContext } from './services/configuration-context';
 @NgModule({
   declarations: [SlefAssessmentEntryComponent, CompetencyEntryComponent,],
   imports: [
@@ -17,15 +16,16 @@ import { RouterModule } from '@angular/router';
     SlefAssessmentEntryComponent,
     CompetencyEntryComponent,
   ],
-  providers:[ConfigService]
+  providers:[]
 })
 export class EntryModule { 
-  static forRoot(configService): ModuleWithProviders {
-    console.log(configService)
+  static forRoot(configContext: ConfigurationContext): ModuleWithProviders {
+    console.log(`Preparing to handle configuration context.`);
+    console.log('config data ------',configContext.config)
     return {
       ngModule: EntryModule,
       providers: [
-        {provide: 'configService', useClass: configService}
+        {provide: ConfigurationContext, useValue: configContext.config}
       ]
     }
   }
