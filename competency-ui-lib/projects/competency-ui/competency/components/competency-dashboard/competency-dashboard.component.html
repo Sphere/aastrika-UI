@@ -12,34 +12,28 @@
     <mat-tab-group [ngClass]="{'mat-tab-header-sortIcon': selectedTab === 'Gained'}" class="remove-border-bottom"
       animationDuration="0ms" (selectedTabChange)="selectedTabChange($event?.tab?.textLabel)">
 
-      <!-- gained  -->
-      <mat-tab label="Gained">
-        <div class="legend-container">
-          <div class="legend legend-yellow"></div>
-          <h5>Self Assessment</h5>
-          <div class="legend legend-light-blue"></div>
-          <h5>Course</h5>
-          <div class="legend legend-green"></div>
-          <h5>Admin added</h5>
-        </div>
-        <ng-container *ngFor="let proficency of gainedproficencyData">
-          <lib-gained-comptency-card [cardData]="proficency"></lib-gained-comptency-card>
-        </ng-container>
-      </mat-tab>
-
+        <!-- gained  -->
+        <mat-tab label="Gained">
+          <div class="legend-container">
+            <div class="legend legend-yellow"></div>
+            <h5>Self Assessment</h5>
+            <div class="legend legend-light-blue"></div>
+            <h5>Course</h5>
+            <div class="legend legend-green"></div>
+            <h5>Admin added</h5>
+          </div>      
+            <lib-gained-comptency-card ></lib-gained-comptency-card>
+        </mat-tab>
+     
       <!-- Active Summary -->
-      <mat-tab label="Activity Summary">
-        <ng-container *ngFor="let activitySummary of activitySummaries">
-          <lib-active-summary [cardData]="activitySummary"></lib-active-summary>
-        </ng-container>
+      <mat-tab label="Activity Summary">         
+            <lib-active-summary ></lib-active-summary>
       </mat-tab>
 
-      <!-- required -->
-      <mat-tab label="Required">
-        <div class="required-comperencies">
-          <ng-container *ngFor="let competency of competencyData">
-            <lib-required-comptency-card [cardData]="competency"></lib-required-comptency-card>
-          </ng-container>
+       <!-- required -->
+       <mat-tab label="Required">
+        <div class="required-comperencies">          
+            <lib-required-comptency-card ></lib-required-comptency-card>
         </div>
         <div class="btn-container">
           <button class="btn-start" (click)="startSelfAssessment()">Start Self Assessment</button>

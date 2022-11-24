@@ -1,9 +1,10 @@
+<ng-container *ngFor="let proficency of gainedproficencyData">
 <div class="card-container example-container container-balanced">
     <div class="date justify-end mr-2">
         {{date}}
     </div>
-    <ng-container *ngIf="cardData?.title">
-        <div class="title">{{cardData?.title}}</div>
+    <ng-container *ngIf="proficency?.title">
+        <div class="title">{{proficency?.title}}</div>
     </ng-container>
 
     <div class="levelsTitle">
@@ -53,3 +54,4 @@
         </mat-expansion-panel>
     </mat-accordion>
 </div>
+</ng-container>
