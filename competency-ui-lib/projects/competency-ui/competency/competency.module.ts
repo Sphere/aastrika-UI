@@ -6,7 +6,7 @@ import { CompetencyDashboardComponent } from './components/competency-dashboard/
 
 import { ActiveSummaryComponent } from './components/active-summary/active-summary.component';
 import { MatTabsModule, MatIconModule, MatExpansionModule } from '@angular/material';
-
+import { CoreModule } from '@aastrika/comptency/core';
 @NgModule({
   declarations: [
     RequiredComptencyCardComponent, 
@@ -17,7 +17,8 @@ import { MatTabsModule, MatIconModule, MatExpansionModule } from '@angular/mater
     CommonModule,
     MatTabsModule,
     MatIconModule,
-    MatExpansionModule
+    MatExpansionModule,
+    CoreModule
   ],
   exports: [RequiredComptencyCardComponent,
     GainedComptencyCardComponent,

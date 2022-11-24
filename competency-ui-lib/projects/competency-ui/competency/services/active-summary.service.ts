@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DataService } from 'projects/competency-ui/core';
+import { DataService } from '@aastrika/comptency/core';
 import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'

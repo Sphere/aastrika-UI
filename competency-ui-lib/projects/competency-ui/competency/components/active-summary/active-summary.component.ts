@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RequestUtil } from '../../services/request-util';
-
+import { ActiveSummaryService } from '../../services/active-summary.service';
 @Component({
   selector: 'lib-active-summary',
   templateUrl: './active-summary.component.html',
@@ -39,7 +39,7 @@ export class ActiveSummaryComponent implements OnInit {
     
     ]
 
-  constructor() { 
+  constructor(public activeSummaryService:ActiveSummaryService) { 
    this.requestUtil = new RequestUtil()
   }
 
