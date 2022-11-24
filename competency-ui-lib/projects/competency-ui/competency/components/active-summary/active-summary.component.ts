@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RequestUtil } from '../../services/request-util';
 
 @Component({
   selector: 'lib-active-summary',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class ActiveSummaryComponent implements OnInit {
  
   panelOpenState: Boolean = true
-
+  requestUtil:any
   activitySummaries = [
     {
       roles:"Organize Supplementary Nutrition for children, pregnant and lactating Mothers",
@@ -38,9 +39,13 @@ export class ActiveSummaryComponent implements OnInit {
     
     ]
 
-  constructor() { }
+  constructor() { 
+   this.requestUtil = new RequestUtil()
+  }
 
   ngOnInit() {
+    this.requestUtil.formatedActivities()
+    this.requestUtil.formatedActivitityById()
   }
 
 }
