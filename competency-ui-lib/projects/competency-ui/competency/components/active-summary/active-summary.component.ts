@@ -41,9 +41,19 @@ export class ActiveSummaryComponent implements OnInit {
 
   constructor(public activeSummaryService:ActiveSummaryService) { 
    this.requestUtil = new RequestUtil()
+   
+   
   }
 
   ngOnInit() {
+    const reqBody = {
+      filter :{
+          "isDetail": true
+      }
+};
+    this.activeSummaryService.getActivityById(reqBody).pipe().subscribe((res:any)=>{
+      console.log(res)
+    })
     this.requestUtil.formatedActivities()
     this.requestUtil.formatedActivitityById()
   }

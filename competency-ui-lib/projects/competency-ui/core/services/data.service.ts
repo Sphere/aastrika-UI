@@ -51,7 +51,8 @@ export class DataService {
       headers: requestParam.header ? this.getHeader(requestParam.header) : this.getHeader(),
       params: requestParam.param
     }
-    return this.http.post(this.baseUrl+requestParam.url,requestParam.data,httpOptions).pipe(
+    console.log('log in data service',requestParam)
+    return this.http.post(requestParam.url,requestParam.data,httpOptions).pipe(
       mergeMap((data:any)=>{
         if (data.responseCode !== 'OK') {
           return observableThrowError(data);
