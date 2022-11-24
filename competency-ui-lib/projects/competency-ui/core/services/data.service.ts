@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {mergeMap} from 'rxjs/operators'
 import { of as observableOf, throwError as observableThrowError, Observable } from 'rxjs';
+/**
+ * DataService to make http call
+ *
+ * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
+ */
 @Injectable({
   providedIn: 'root'
 })
