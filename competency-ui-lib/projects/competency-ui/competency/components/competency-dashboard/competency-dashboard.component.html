@@ -15,26 +15,19 @@
             <h5>Course</h5>
             <div class="legend legend-green"></div>
             <h5>Admin added</h5>
-          </div>
-          <!-- <img src="../../../assets/images/filter.png"> -->
-          <ng-container *ngFor="let proficency of gainedproficencyData">
-            <lib-gained-comptency-card [cardData]="proficency"></lib-gained-comptency-card>
-          </ng-container>
+          </div>      
+            <lib-gained-comptency-card ></lib-gained-comptency-card>
         </mat-tab>
      
       <!-- Active Summary -->
-      <mat-tab label="Activity Summary">        
-          <ng-container *ngFor="let activitySummary of activitySummaries">
-            <lib-active-summary [cardData]="activitySummary"></lib-active-summary>
-          </ng-container>
+      <mat-tab label="Activity Summary">         
+            <lib-active-summary ></lib-active-summary>
       </mat-tab>
 
        <!-- required -->
        <mat-tab label="Required">
-        <div class="required-comperencies">
-          <ng-container *ngFor="let competency of competencyData">
-            <lib-required-comptency-card [cardData]="competency"></lib-required-comptency-card>
-          </ng-container>
+        <div class="required-comperencies">          
+            <lib-required-comptency-card ></lib-required-comptency-card>
         </div>
         <div class="btn-container">
           <button class="btn-start" (click)="startSelfAssessment()">Start Self Assessment</button>
