@@ -9,8 +9,8 @@
         <img src="./competency-ui/assets/images/sort-icon.png">
       </div>
     </ng-container>
-    <mat-tab-group [ngClass]="{'mat-tab-header-sortIcon': selectedTab === 'Gained'}" class="remove-border-bottom"
-      animationDuration="0ms" (selectedTabChange)="selectedTabChange($event?.tab?.textLabel)">
+    <mat-tab-group [ngClass]="{'header-width-icon': tabIndex === 0}" class="remove-border-bottom"
+      animationDuration="0ms" selectedIndex="0" (selectedTabChange)="changeTab($event)">
 
         <!-- gained  -->
         <mat-tab label="Gained">
@@ -22,18 +22,18 @@
             <div class="legend legend-green"></div>
             <h5>Admin added</h5>
           </div>      
-            <lib-gained-comptency-card ></lib-gained-comptency-card>
+            <lib-gained-comptency-card *ngIf="tabIndex === 0"></lib-gained-comptency-card>
         </mat-tab>
      
       <!-- Active Summary -->
-      <mat-tab label="Activity Summary">         
-            <lib-active-summary ></lib-active-summary>
+      <mat-tab label="Activity Summary" >         
+            <lib-active-summary *ngIf="tabIndex === 1"></lib-active-summary>
       </mat-tab>
 
        <!-- required -->
        <mat-tab label="Required">
         <div class="required-comperencies">          
-            <lib-required-comptency-card ></lib-required-comptency-card>
+            <lib-required-comptency-card *ngIf="tabIndex === 2"></lib-required-comptency-card>
         </div>
         <div class="btn-container">
           <button class="btn-start" (click)="startSelfAssessment()">Start Self Assessment</button>

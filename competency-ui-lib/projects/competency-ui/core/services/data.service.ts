@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {mergeMap} from 'rxjs/operators'
 import { of as observableOf, throwError as observableThrowError, Observable } from 'rxjs';
+/**
+ * DataService to make http call
+ *
+ * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -46,9 +51,10 @@ export class DataService {
       headers: requestParam.header ? this.getHeader(requestParam.header) : this.getHeader(),
       params: requestParam.param
     }
-    return this.http.post(this.baseUrl+requestParam.url,requestParam.data,httpOptions).pipe(
+    console.log('log in data service',requestParam)
+    return this.http.post(requestParam.url,requestParam.data,httpOptions).pipe(
       mergeMap((data:any)=>{
-        if (data.responseCode !== 'OK') {
+        if (data.responseCode !== 200) {
           return observableThrowError(data);
         }
         return observableOf(data);
