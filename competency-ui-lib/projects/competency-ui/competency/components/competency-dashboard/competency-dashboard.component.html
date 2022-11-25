@@ -4,7 +4,7 @@
   <h1 class=" pl-2 mb-0">Competency Dashboard</h1>
 
   <div class="pl-2 tab-container">
-    <mat-tab-group class="remove-border-bottom" animationDuration="0ms">
+    <mat-tab-group class="remove-border-bottom" animationDuration="0ms" selectedIndex="0" (selectedTabChange)="changeTab($event)">
 
         <!-- gained  -->
         <mat-tab label="Gained">
@@ -16,18 +16,18 @@
             <div class="legend legend-green"></div>
             <h5>Admin added</h5>
           </div>      
-            <lib-gained-comptency-card ></lib-gained-comptency-card>
+            <lib-gained-comptency-card *ngIf="tabIndex === 0"></lib-gained-comptency-card>
         </mat-tab>
      
       <!-- Active Summary -->
-      <mat-tab label="Activity Summary">         
-            <lib-active-summary ></lib-active-summary>
+      <mat-tab label="Activity Summary" >         
+            <lib-active-summary *ngIf="tabIndex === 1"></lib-active-summary>
       </mat-tab>
 
        <!-- required -->
        <mat-tab label="Required">
         <div class="required-comperencies">          
-            <lib-required-comptency-card ></lib-required-comptency-card>
+            <lib-required-comptency-card *ngIf="tabIndex === 2"></lib-required-comptency-card>
         </div>
         <div class="btn-container">
           <button class="btn-start" (click)="startSelfAssessment()">Start Self Assessment</button>

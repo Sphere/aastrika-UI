@@ -1,3 +1,8 @@
+/**
+ * urlConfig to return the api url 
+ *
+ * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
+ */
 export const urlConfig = {
   // endpoint configs...!
   // host: 'http://localhost:3002',

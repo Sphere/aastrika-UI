@@ -7,16 +7,9 @@ import { Location } from '@angular/common'
   styleUrls: ['./competency-dashboard.component.scss']
 })
 export class CompetencyDashboardComponent implements OnInit {
-
-  
-
-  
-
-  
-
-  constructor(
-    private location: Location
-  ) { }
+  tabIndex = 0;
+  constructor(private location: Location) {
+   }
 
   ngOnInit() {
   }
@@ -24,7 +17,9 @@ export class CompetencyDashboardComponent implements OnInit {
   navigateBack() {
     this.location.back()
   }
-
+  changeTab(event:any){
+    this.tabIndex = event.index;
+  }
   startSelfAssessment() {}
 
 }
