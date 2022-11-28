@@ -37,32 +37,8 @@ export class GainedService extends DataService {
     
     const httpOptions: any = {
       url: urlConfig.getAllEntity(),
-      // url: 'https://sphere.aastrika.org/apis/protected/v8/entityCompetency/getAllEntity',
       data: reqBody
     };
     return this.post(httpOptions)
   }
-
-  // public requestDataFromMultipleSources(entityreqBody, passbookReqBody): Observable<any[]> {
-  //   const fetchAllEntityReq: any = {
-  //     url: urlConfig.getAllEntity(),
-  //     // url: 'https://sphere.aastrika.org/apis/protected/v8/entityCompetency/getAllEntity',
-  //     data: entityreqBody
-  //   };
-
-  //   const passbookReq: any = {
-  //     url: urlConfig.getUserPassbook(),
-    
-  //     data: passbookReqBody
-  //   };
-    
-    
-  //   let fetchAllEntity = this.post(fetchAllEntityReq)
-  //   let fetchUserPassbook = this.post(passbookReq)
-  //   // Observable.forkJoin (RxJS 5) changes to just forkJoin() in RxJS 6
-  //   return forkJoin([fetchAllEntity, fetchUserPassbook]);
-  // }
-
-
-  
 }
