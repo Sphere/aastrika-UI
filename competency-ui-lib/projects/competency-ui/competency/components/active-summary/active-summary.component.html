@@ -1,9 +1,9 @@
+<lib-app-loader *ngIf="loading === true"></lib-app-loader>
 <ng-container *ngFor="let role of roleactivitySummaries">
   <div class="">
     <mat-accordion>
       <mat-expansion-panel
         class="w-full panel r"
-        hideToggle
         (opened)="getActivityByRoleId(role.id)"
         (closed)="panelOpenState = false"
       >
@@ -17,13 +17,13 @@
               <div class="title">{{ role?.roles }}</div>
             </ng-container>
           </mat-panel-description>
-          <div class="icon-down mb-0 pointer-events">
+          <!-- <div class="icon-down mb-0 pointer-events">
             <mat-icon [ngClass]="{ arrowReverse: panelOpenState }"
               >keyboard_arrow_down</mat-icon
             >
-          </div>
+          </div> -->
         </mat-expansion-panel-header>
-
+        <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader>
         <div class="expand-container" *ngIf="roleactivitySummaries.length>0">
           <ng-container
             *ngFor="let activity of role?.activities; let i = index"
@@ -43,5 +43,6 @@
         </div>
       </mat-expansion-panel>
     </mat-accordion>
+   
   </div>
 </ng-container>

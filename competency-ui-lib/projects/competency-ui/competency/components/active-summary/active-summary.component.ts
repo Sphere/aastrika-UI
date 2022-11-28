@@ -20,17 +20,20 @@ export class ActiveSummaryComponent implements OnInit {
   private unsubscribe: Subscription;
   roleactivitySummaries:any
   activitySummaries:any
+  loading = false
+  acordianLoading = false
   constructor(public activeSummaryService: ActiveSummaryService) {
     this.requestUtil = new RequestUtil()
 
   }
 
   ngOnInit() {
-   
+   this.loading = true
    this.unsubscribe = this.getActivityByRole().pipe(mergeMap((res:any)=>{
       const formatedResponse =  this.requestUtil.formatedActivitityByPostion(res)
       return of(formatedResponse)
     })).subscribe((res: any) => {
+      this.loading = false
       this.roleactivitySummaries = res
     })
   }
@@ -48,6 +51,7 @@ export class ActiveSummaryComponent implements OnInit {
   public getActivityByRoleId(id:any){
     console.log(id)
     this.panelOpenState = true
+    this.acordianLoading = true
     const index = _.findIndex(this.roleactivitySummaries, {'id': id})
     this.roleactivitySummaries[index]['activities'] = []
     this.getEntityById(id).pipe(mergeMap((res)=>{
@@ -59,6 +63,7 @@ export class ActiveSummaryComponent implements OnInit {
       _.forEach(cidArr,(value:any)=>{
         calls.push(this.getEntityById(value))
       })
+      this.acordianLoading = false
       return forkJoin(...calls)
     })).subscribe((res:any)=>{
       

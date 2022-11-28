@@ -9,6 +9,9 @@
   display: flex;
   justify-content: center;
 }
+.arrowReverse {
+  transform: rotateX(180deg);
+}
 
 .title {
   font-family: "Roboto";
@@ -39,6 +42,9 @@
   padding: 15px !important;
   background-color: #eff6fc !important;
   border-radius: 10px !important;
+}
+:host ::ng-deep .mat-expansion-indicator:after{
+  color: #1c5d95 !important;
 }
 
 .activity-title {
