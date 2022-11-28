@@ -73,40 +73,76 @@ export class GainedComptencyCardComponent implements OnInit {
   }
   
   acauiredChannelColourCode(acquiredDetails:any){
-     let response  = []
+     let response  = [
+      {
+        'color': '#FFFBB0',
+        'displayLevel': 1,
+        'selected': false,
+      },
+      {
+        'color': '#FFFBB0',
+        'displayLevel': 2,
+        'selected': false,
+      },
+      {
+        'color': '#FFFBB0',
+        'displayLevel': 3,
+        'selected': false,
+      },
+      {
+        'color': '#FFFBB0',
+        'displayLevel': 4,
+        'selected': false,
+      },
+      {
+        'color': '#FFFBB0',
+        'displayLevel': 5,
+        'selected': false,
+      }
+     ]
+    
     _.forEach(acquiredDetails,(value:any)=>{
         const channel = _.get(value,'acquiredChannel')
         switch(channel) {
           case 'Course':{
-            response.push({
-              'color': '#DFEDF9',
-              'displayLevel': _.get(value,'competencyLevelId'),
-              'selected': true,
-            })
+            _.forEach(response, (level:any)=>{
+              if(level.displayLevel == _.get(value,'competencyLevelId')){
+                level.color = '#DFEDF9';
+                level.selected = true
+              }
+            } )
+            
             break; 
           }
           case 'self Assessment':{
-            response.push({
-              'color': '#FFF4DF',
-              'displayLevel': _.get(value,'competencyLevelId'),
-              'selected': true,
-            })
+            _.forEach(response, (level:any)=>{
+              if(level.displayLevel == _.get(value,'competencyLevelId')){
+                level.color = '#FFF4DF';
+                level.selected = true
+                
+              }
+            } )
+          
             break; 
           }
           case 'Admin':{
-            response.push({
-              'color': '#A4DFCA',
-              'displayLevel': _.get(value,'competencyLevelId'),
-              'selected': true,
-            })
+            _.forEach(response, (level:any)=>{
+              if(level.displayLevel == _.get(value,'competencyLevelId')){
+                level.color = '#A4DFCA';
+                level.selected = true
+              }
+            } )
+            
             break; 
           }
           default: { 
-            response.push({
-              'color': '#FFFBB0',
-              'displayLevel': _.get(value,'competencyLevelId'),
-              'selected': false,
-            })
+            _.forEach(response, (level:any)=>{
+              if(level.displayLevel == _.get(value,'competencyLevelId')){
+                level.color = '#FFFBB0';
+                level.selected = false;
+              }
+            } )
+            
             break; 
           }
         }
