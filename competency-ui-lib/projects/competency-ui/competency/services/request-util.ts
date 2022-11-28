@@ -1,4 +1,4 @@
-import * as _ from 'lodash-es';
+import * as _ from 'lodash';
 export class RequestUtil {
     formatedActivities = (data:any)=>{
         if(!_.isEmpty(data)){
