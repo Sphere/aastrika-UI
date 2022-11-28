@@ -54,10 +54,12 @@ export class DataService {
     console.log('log in data service',requestParam)
     return this.http.post(requestParam.url,requestParam.data,httpOptions).pipe(
       mergeMap((data:any)=>{
-        if (data.responseCode !== 200) {
+        if(data.responseCode === 200 || data.responseCode === 'OK'){
+          return observableOf(data);
+        }else {
           return observableThrowError(data);
         }
-        return observableOf(data);
+        
       })
     )
   }

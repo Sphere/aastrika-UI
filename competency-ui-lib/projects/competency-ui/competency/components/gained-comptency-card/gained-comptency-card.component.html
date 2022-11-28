@@ -1,8 +1,9 @@
+<lib-app-loader *ngIf="loading === true"></lib-app-loader>
 <ng-container *ngFor="let proficency of gainedproficencyData">
 <div class="card-container example-container container-balanced">
-    <div class="date justify-end mr-2">
+    <!-- <div class="date justify-end mr-2">
         {{date}}
-    </div>
+    </div> -->
     <ng-container *ngIf="proficency?.title">
         <div class="title">{{proficency?.title}}</div>
     </ng-container>
@@ -15,7 +16,7 @@
             (closed)="panelOpenState = false">
             <mat-expansion-panel-header class="flex-between items-center panel-header w-full">
                 <mat-panel-description class="panel-header-description">
-                    <ng-container *ngFor="let proficiency of competencies.proficiencyLevels">
+                    <ng-container *ngFor="let proficiency of proficency?.proficiencyLevels">
                         <ng-container *ngIf="proficiency.selected; else addLevel">
                             <div class="level mb-1" [ngStyle]="{'background-color': proficiency.color}">
                                 {{proficiency?.displayLevel}}
@@ -34,12 +35,12 @@
             </mat-expansion-panel-header>
             <div>
                 <span class="log-header">Log:</span>
-                <ng-container *ngFor="let log of logs">
+                <ng-container *ngFor="let log of proficency?.logs; let logIndex = index">
                     <div class="log">
                         <div class="flex">
                             <ng-container *ngIf="log.header">
-                                <span class="flex-1">{{log.index}}:{{log.header}}</span>
-                                <span class="log-date mr-2">{{log?.date}}</span>
+                                <span class="flex-1">{{logIndex+1}}:{{log.header}}</span>
+                                <span class="log-date mr-2">{{log?.date| date:'dd/MM/yyyy'}}</span>
                             </ng-container>
                         </div>
                         <ng-container *ngIf="log.description">

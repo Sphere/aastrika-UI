@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
+import { pipe } from 'rxjs';
+import { forkJoin } from 'rxjs';
+import { GainedService } from '../../services/gained.service';
+import { RequestUtil } from '../../services/request-util';
+import * as _ from 'lodash-es';
 @Component({
   selector: 'lib-gained-comptency-card',
   templateUrl: './gained-comptency-card.component.html',
@@ -7,84 +11,45 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GainedComptencyCardComponent implements OnInit {
 
- 
-
-  gainedproficencyData = [
-    {
-      title: 'Sector Meetings',
-      description: 'Documents and discuss HCM, THR, growth monitoring and referral related issues in sector meetings',
-    },
-    {
-      title: 'Counselling ',
-      description: 'Lorem ipsum dolor sit amet, consectetur',
-    }
-  ]
-
-  date = '05/11/2022'
+  requestUtil: any
+  loading = false
   panelOpenState: Boolean = false;
-  competencies = {
-    proficiencyLevels: [
-      {
-        selected: true,
-        displayLevel: 1,
-        color: '#FFFBB0',
-        level: ''
-      },
-      {
-        selected: true,
-        displayLevel: 2,
-        color: '#7CB5E6',
-        level: ''
-      },
-      {
-        selected: true,
-        displayLevel: 3,
-        color: '#A4DFCA',
-        level: ''
-      },
-      {
-        selected: true,
-        displayLevel: 4,
-        color: '#A4DFCA',
-        level: ''
-      },
-      {
-        selected: false,
-        displayLevel: 5,
-        color: '',
-        level: ''
-      }
-    ]
+  gainedproficencyData:any
+  constructor(
+    public gainedService: GainedService
+
+  ) {
+    this.requestUtil = new RequestUtil()
   }
-
-  logs = [
-    {
-      index: 1,
-      header: 'Self Assessment',
-      date: '05/11/2022',
-      description: '',
-      keyboardArrowUp: true
-    },
-    {
-      index: 2,
-      header: 'Admin Added',
-      date: '05/11/2022',
-      description: 'Lorem ipsum sit amet, consectetur adip iscing.',
-      keyboardArrowUp: true
-    },
-    {
-      index: 2,
-      header: 'Couse-Name Completion',
-      date: '02/12/2022',
-      description: '',
-      keyboardArrowUp: true
-    },
-  ]
-
-
-  constructor() { }
 
   ngOnInit() {
+    this.loading = true
+    const allEntity = this.getAllEntity()
+    const userPassbook = this.getAllUserPassbook()
+    forkJoin([allEntity,userPassbook]).subscribe((res)=>{
+      const response = this.requestUtil.formatedGainedCompetency(res[0].result.response, res[1].result.content)
+      this.gainedproficencyData = response
+      console.log(this.gainedproficencyData)
+      this.loading = false
+    })
+  }
+ 
+  private getAllUserPassbook() {
+    const reqBody = {
+      "request": {
+        "typeName": "competency"
+      }
+    };
+    return this.gainedService.fetchUserPassbook(reqBody)
   }
 
+
+  private getAllEntity() {
+    const reqBody = {
+      "search": {
+        "type": "Competency"
+      }
+    };
+    return  this.gainedService.fetchAllEntity(reqBody)
+  }
 }
