@@ -12,4 +12,10 @@ export class RequestUtil {
         }
        
     }
+
+    formatedGainedAll = (data:any) => {
+        if(!_.isEmpty(data)){
+            return data
+        }
+    }
 }

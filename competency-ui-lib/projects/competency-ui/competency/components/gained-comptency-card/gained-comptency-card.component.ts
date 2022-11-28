@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
+import { pipe } from 'rxjs';
+import { forkJoin, of, Subscription } from 'rxjs';
+import { mergeMap, take } from 'rxjs/operators';
+import { GainedService } from '../../services/gained.service';
+import { RequestUtil } from '../../services/request-util';
 @Component({
   selector: 'lib-gained-comptency-card',
   templateUrl: './gained-comptency-card.component.html',
@@ -7,7 +11,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GainedComptencyCardComponent implements OnInit {
 
- 
+  private unsubscribe: Subscription;
+  requestUtil: any
 
   gainedproficencyData = [
     {
@@ -80,11 +85,69 @@ export class GainedComptencyCardComponent implements OnInit {
       keyboardArrowUp: true
     },
   ]
+  entityData = []
 
+  constructor(
+    public gainedService: GainedService
 
-  constructor() { }
+  ) {
+    this.requestUtil = new RequestUtil()
+  }
 
   ngOnInit() {
+
+    
+    // this.getAllPassbook()
+    // .subscribe((res:any)=>{
+    //   console.log(res[0], res[1]);
+    // })
+  
+    
+    this.getAllUserPassbook().subscribe((res: any) => {
+        console.log(res)
+      })
+    this.getAllEntity().subscribe((res: any) => {
+        console.log(res)
+      })
+  }
+
+  private getAllUserPassbook() {
+    const reqBody = {
+      "request": {
+        "typeName": "competency"
+      }
+    };
+    return this.gainedService.fetchUserPassbook(reqBody)
+  }
+
+
+  private getAllEntity() {
+    const reqBody = {
+      "search": {
+        "type": "Competency"
+      }
+    };
+    return  this.gainedService.fetchAllEntity(reqBody)
+  }
+
+  // getAllPassbook() {
+  //   const entityreqBody = {
+  //     "search": {
+  //       "type": "Competency"
+  //     }
+
+  //   }
+
+  //   const passbookReqBody = {
+  //     "request": {
+  //       "typeName": "competency"
+  //     }
+  //   };
+  //   return this.gainedService.requestDataFromMultipleSources(entityreqBody, passbookReqBody)
+    
+  // }
+  ngOnDestroy() {
+    // this.unsubscribe.unsubscribe()
   }
 
 }
