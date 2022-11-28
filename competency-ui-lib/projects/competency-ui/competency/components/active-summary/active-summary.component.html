@@ -1,10 +1,10 @@
-<ng-container *ngFor="let activitySummary of activitySummaries">
+<ng-container *ngFor="let role of roleactivitySummaries">
   <div class="">
     <mat-accordion>
       <mat-expansion-panel
         class="w-full panel r"
         hideToggle
-        (opened)="panelOpenState = true"
+        (opened)="getActivityByRoleId(role.id)"
         (closed)="panelOpenState = false"
       >
         <mat-expansion-panel-header
@@ -13,8 +13,8 @@
           expandedHeight="auto"
         >
           <mat-panel-description class="panel-header-description">
-            <ng-container *ngIf="activitySummary?.roles">
-              <div class="title">{{ activitySummary?.roles }}</div>
+            <ng-container *ngIf="role?.roles">
+              <div class="title">{{ role?.roles }}</div>
             </ng-container>
           </mat-panel-description>
           <div class="icon-down mb-0 pointer-events">
@@ -24,12 +24,12 @@
           </div>
         </mat-expansion-panel-header>
 
-        <div class="expand-container">
+        <div class="expand-container" *ngIf="roleactivitySummaries.length>0">
           <ng-container
-            *ngFor="let activity of activitySummary.activities; let i = index"
+            *ngFor="let activity of role?.activities; let i = index"
           >
             <div class="activity-title">
-              {{ i + 1 }}.{{ activity.activityTitle }}
+              {{ i + 1 }}.{{ activity.title }}
             </div>
             <div class="competency-container">
               <div class="competency-title">{{ activity.competency }}</div>
