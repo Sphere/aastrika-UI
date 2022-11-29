@@ -1,21 +1,17 @@
 import { Injectable, Optional } from '@angular/core';
-
 import { Subject,BehaviorSubject } from 'rxjs';
 import { ConfigurationContext } from './configuration-context';
+import { ConfigService as CoreConfig} from '@aastrika/comptency/core';
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
-  private _config: any
-  public config$: Subject<any> = new BehaviorSubject<any>({});
-  constructor(@Optional() context: ConfigurationContext) { 
+  constructor(@Optional() context: ConfigurationContext, public config: CoreConfig) { 
     if(context){
       console.log('context log in config service ------ ', context)
-      this.setConfig(context)
+      this.config.setConfig(context)
     }
   }
 
-  public setConfig(context) {
-    this.config$.next(context)
-  }
+ 
 }

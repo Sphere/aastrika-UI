@@ -4,6 +4,7 @@ import { ActiveSummaryService } from '../../services/active-summary.service';
 import { mergeMap } from 'rxjs/operators';
 import { forkJoin, of, Subscription } from 'rxjs';
 import * as _ from 'lodash-es';
+import { ConfigService } from '@aastrika/comptency/core';
 @Component({
   selector: 'lib-active-summary',
   templateUrl: './active-summary.component.html',
@@ -22,7 +23,7 @@ export class ActiveSummaryComponent implements OnInit {
   activitySummaries:any
   loading = false
   acordianLoading = false
-  constructor(public activeSummaryService: ActiveSummaryService) {
+  constructor(public activeSummaryService: ActiveSummaryService, public configService: ConfigService) {
     this.requestUtil = new RequestUtil()
 
   }
@@ -36,6 +37,7 @@ export class ActiveSummaryComponent implements OnInit {
       this.loading = false
       this.roleactivitySummaries = res
     })
+    console.log(this.configService.getConfig())
   }
 
   private getActivityByRole() {
