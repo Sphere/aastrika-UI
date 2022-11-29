@@ -1,1 +1,1 @@
-export * from './entry-module'
+export * from './public-api'

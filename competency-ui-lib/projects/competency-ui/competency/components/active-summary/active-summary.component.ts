@@ -4,7 +4,7 @@ import { ActiveSummaryService } from '../../services/active-summary.service';
 import { mergeMap } from 'rxjs/operators';
 import { forkJoin, of, Subscription } from 'rxjs';
 import * as _ from 'lodash-es';
-import { ConfigService } from '@aastrika/comptency/core';
+import { ConfigService } from '@aastrika/comptency/entry-module';
 @Component({
   selector: 'lib-active-summary',
   templateUrl: './active-summary.component.html',
