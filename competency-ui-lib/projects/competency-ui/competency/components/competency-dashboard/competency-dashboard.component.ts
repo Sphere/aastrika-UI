@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Location } from '@angular/common'
 
 @Component({
@@ -7,6 +7,7 @@ import { Location } from '@angular/common'
   styleUrls: ['./competency-dashboard.component.scss']
 })
 export class CompetencyDashboardComponent implements OnInit {
+  @Output() stateChange: EventEmitter<any> = new EventEmitter();
   tabIndex = 0;
   constructor(private location: Location) {
    }
@@ -20,6 +21,8 @@ export class CompetencyDashboardComponent implements OnInit {
   changeTab(event:any){
     this.tabIndex = event.index;
   }
-  startSelfAssessment() {}
+  startSelfAssessment() {
+    this.stateChange.emit({'navigation':true})
+  }
 
 }

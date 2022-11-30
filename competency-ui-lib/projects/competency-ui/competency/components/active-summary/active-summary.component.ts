@@ -23,6 +23,7 @@ export class ActiveSummaryComponent implements OnInit {
   activitySummaries:any
   loading = false
   acordianLoading = false
+  profileData:any
   constructor(public activeSummaryService: ActiveSummaryService, public configService: ConfigService) {
     this.requestUtil = new RequestUtil()
 
@@ -38,6 +39,14 @@ export class ActiveSummaryComponent implements OnInit {
       this.roleactivitySummaries = res
     })
     console.log(this.configService.getConfig())
+    // console.log(this.configService.getConfig())
+    this.profileData = JSON.parse(this.configService.getConfig()).profileData[0].designation
+    // this.configService.getConfig().subscribe(
+    //   (data) =>{
+    //     console.log(JSON.parse(data));
+    //     console.log(JSON.parse(data).profileData);
+    //   }
+    // )
   }
 
   private getActivityByRole() {
@@ -45,7 +54,7 @@ export class ActiveSummaryComponent implements OnInit {
       filter: {
         "isDetail": true
       },
-      id: 95
+      id: this.profileData === 'AWW' ? 95 : 1
     };
     return this.activeSummaryService.getActivityById(reqBody)
   }

@@ -138,20 +138,20 @@ export class RequestUtil {
    _.forEach(acquiredDetails,(value:any)=>{
        const channel = _.get(value,'acquiredChannel')
        switch(channel) {
-         case 'Course':{
+         case 'course':{
            _.forEach(response, (level:any)=>{
              if(level.displayLevel == _.get(value,'competencyLevelId')){
-               level.color = '#DFEDF9';
+               level.color = '#FFFBB0';
                level.selected = true
              }
            } )
            
            break; 
          }
-         case 'self Assessment':{
+         case 'selfAssessment':{
            _.forEach(response, (level:any)=>{
              if(level.displayLevel == _.get(value,'competencyLevelId')){
-               level.color = '#FFF4DF';
+               level.color = '#7CB5E6';
                level.selected = true
                
              }
@@ -159,7 +159,7 @@ export class RequestUtil {
          
            break; 
          }
-         case 'Admin':{
+         case 'admin':{
            _.forEach(response, (level:any)=>{
              if(level.displayLevel == _.get(value,'competencyLevelId')){
                level.color = '#A4DFCA';
