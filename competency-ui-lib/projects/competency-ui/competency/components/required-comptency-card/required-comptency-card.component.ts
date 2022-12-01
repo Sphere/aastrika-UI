@@ -49,6 +49,7 @@ export class RequiredComptencyCardComponent implements OnInit, OnDestroy {
   customExpandedHeight = '100px'
   private unsubscribe: Subscription;
   requestUtil: any
+  loading = false
 
   constructor(
     private requiredCompetencyService: RequiredCompetencyService
@@ -57,6 +58,7 @@ export class RequiredComptencyCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.loading = true
     this.unsubscribe = this.getRequiredByPostion().pipe(mergeMap((res:any)=>{
       const formatedResponse =  this.requestUtil.formatedActivitityById(res)
       return of(formatedResponse)

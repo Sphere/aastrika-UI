@@ -3,7 +3,6 @@
     <mat-accordion>
       <mat-expansion-panel
         class="w-full panel"
-        hideToggle
         (opened)="panelOpenState = true"
         (closed)="panelOpenState = false"
       >
@@ -17,13 +16,14 @@
               <div class="title">{{ competency?.title }}</div>
             </ng-container>
           </mat-panel-description>
-          <div class="level mb-0 pointer-events">
+          <!-- <div class="level mb-0 pointer-events">
             <mat-icon [ngClass]="{ arrowReverse: panelOpenState }"
               >keyboard_arrow_down</mat-icon
             >
-          </div>
+          </div> -->
         </mat-expansion-panel-header>
 
+        <lib-app-loader *ngIf="loading === true"></lib-app-loader>
         <div class="logs">
           <span class="log-title">Levels:</span>
           <ng-container *ngFor="let log of logs">

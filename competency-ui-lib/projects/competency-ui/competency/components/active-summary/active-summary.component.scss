@@ -1,31 +1,27 @@
+@import '../../../assets/styles/global.scss';
+
 .card-container {
   margin: 15px 2px;
   padding: 16px 10px 20px 14px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-  background: #eff6fc !important;
+  border-radius: $radius-m;
+  background: var(--light-gray) !important;
 }
 .spinner-loading {
   display: flex;
   justify-content: center;
 }
-.arrowReverse {
-  transform: rotateX(180deg);
-}
 
 .title {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
+  font-size: $size-l;
   line-height: 19px;
-  letter-spacing: -0.02em;
-  color: #1c5d95;
+  letter-spacing: $spacing;
+  color: var(--blue);
 }
 
 .icon-down {
   place-self: flex-end;
-  color: #1c5d95 !important;
+  color: var(--blue) !important;
 }
 
 :host ::ng-deep .mat-expansion-panel {
@@ -40,49 +36,40 @@
 
 :host ::ng-deep .mat-expansion-panel-header {
   padding: 15px !important;
-  background-color: #eff6fc !important;
-  border-radius: 10px !important;
+  background-color: var(--light-gray) !important;
+  border-radius: $radius-m !important;
 }
 :host ::ng-deep .mat-expansion-indicator:after{
-  color: #1c5d95 !important;
+  color: var(--blue) !important;
 }
 
 .activity-title {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
+  font-size: $size-xl;
   line-height: 28px;
-  letter-spacing: -0.02em;
-  color: #000000;
+  letter-spacing: $spacing;
+  color: var(--black);
 }
 
 .competency-container{
-  background: #FFFFFF;
+  background: var(--white);
   box-shadow: 0px 0px 4px rgb(0 0 0 / 15%);
-  border-radius: 10px;
+  border-radius: $radius-m;
   padding: 10px;
   margin: 18px 0 15px;
 
   .competency-title{
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
+    font-size: $size-lg;
     line-height: 25px;
-    letter-spacing: -0.02em;
-    color: #000000;
+    letter-spacing: $spacing;
+    color: var(--black);
     margin-bottom: 20px;
   }
 
   .level{
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24px;
+    font-size: $size-xl;
     line-height: 24px;
-    letter-spacing: -0.02em;
-    color: #1C5D95;
+    letter-spacing: $spacing;
+    color: var(--blue);
   }
 }
 

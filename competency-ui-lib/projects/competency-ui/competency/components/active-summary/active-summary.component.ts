@@ -40,7 +40,7 @@ export class ActiveSummaryComponent implements OnInit {
     })
     console.log(this.configService.getConfig())
     // console.log(this.configService.getConfig())
-    this.profileData = JSON.parse(this.configService.getConfig()).profileData[0].designation
+      this.profileData = JSON.parse(this.configService.getConfig())!.profileData[0].designation
     // this.configService.getConfig().subscribe(
     //   (data) =>{
     //     console.log(JSON.parse(data));

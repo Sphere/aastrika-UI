@@ -1,11 +1,9 @@
+@import '../../../assets/styles/global.scss';
 .date {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
+    font-size: $size-s;
     line-height: 14px;
-    letter-spacing: -0.02em;
-    color: #989898;
+    letter-spacing: $spacing;
+    color: var(--gray-300);
 }
 
 .justify-end {
@@ -17,28 +15,22 @@
     margin: 15px 2px;
     padding: 14px 10px 20px 14px;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-    background: #FFFFFF;
+    border-radius: $radius-m;
+    background: var(--white);
   }
   
   .title {
-      font-family: 'Roboto';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 24px;
+      font-size: $size-xl;
       line-height: 29px;
-      letter-spacing: -0.02em;
+      letter-spacing: $spacing;
       margin-bottom: 18px;
   }
 
   .levelsTitle {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
+    font-size: $size-m;
     line-height: 24px;
-    letter-spacing: -0.02em;
-    color: #000000;
+    letter-spacing: $spacing;
+    color: var(--black);
   }
 
   .panel {
@@ -73,24 +65,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0px 0px 2.17333px #00000040;
+    box-shadow: 0px 0px 2.17333px var(--black)40;
   }
 
   .log-header {
-    font-size: 14px;
+    font-size: $size-m;
     line-height: 24px;
-    letter-spacing: -0.02em;
-    color: #000000;
+    letter-spacing: $spacing;
+    color: var(--black);
   }
 
   .log {
-    font-family: 'Roboto';
     font-style: italic;
-    font-weight: 400;
-    font-size: 14px;
+    font-size: $size-m;
     line-height: 16px;;
-    letter-spacing: -0.02em;
-    color: #808080;
+    letter-spacing: $spacing;
+    color: var(--gray-400);
     border-bottom: 1px solid #DDDDDD;
     padding-bottom: 9px;
     margin-top: 10px;
@@ -98,10 +88,10 @@
 
   .log-date {
     font-style: normal;
-    font-size: 12px;
+    font-size: $size-s;
     line-height: 14px;
-    letter-spacing: -0.02em;
-    color: #808080;
+    letter-spacing: $spacing;
+    color: var(--gray-400);
   }
 
   ::ng-deep .mat-expansion-panel-body {
