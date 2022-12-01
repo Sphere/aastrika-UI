@@ -50,11 +50,16 @@
   }
   
   :host ::ng-deep .mat-ink-bar {
-    width: 66px !important;
     height: 3px !important;
     background: #1C5D95 !important;
     border-radius: 5px !important;
   }
+
+  ::ng-deep .theme-igot.day-mode .mat-ink-bar {
+    background-color: #1C5D95!important;
+}
+
+
   
   
   .legend-container {

@@ -39,14 +39,8 @@ export class ActiveSummaryComponent implements OnInit {
       this.roleactivitySummaries = res
     })
     console.log(this.configService.getConfig())
-    // console.log(this.configService.getConfig())
-    this.profileData = JSON.parse(this.configService.getConfig()).profileData[0].designation
-    // this.configService.getConfig().subscribe(
-    //   (data) =>{
-    //     console.log(JSON.parse(data));
-    //     console.log(JSON.parse(data).profileData);
-    //   }
-    // )
+    this.profileData = JSON.parse(this.configService.getConfig())!.profileData[0].designation
+    
   }
 
   private getActivityByRole() {

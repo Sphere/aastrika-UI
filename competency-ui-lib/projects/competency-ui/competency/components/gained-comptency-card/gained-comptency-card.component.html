@@ -39,7 +39,7 @@
                     <div class="log">
                         <div class="flex">
                             <ng-container *ngIf="log.header">
-                                <span class="flex-1">{{logIndex+1}}:{{log.header}}</span>
+                                <span class="flex-1">Level {{log.level}}: {{log.header}}</span>
                                 <span class="log-date mr-2">{{log?.date| date:'dd/MM/yyyy'}}</span>
                             </ng-container>
                         </div>

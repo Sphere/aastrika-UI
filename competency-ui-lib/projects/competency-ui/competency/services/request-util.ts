@@ -100,7 +100,8 @@ export class RequestUtil {
             'header': _.get(value, 'courseName') ? _.get(value, 'courseName') : '',
             'date':  _.get(value,'createdDate'),
             'description': _.get(value, 'additionalParams.description'),
-            'keyboardArrowUp':true
+            'keyboardArrowUp':true,
+            'level': _.get(value,'competencyLevelId')
           })
       })
     }
@@ -138,7 +139,7 @@ export class RequestUtil {
    _.forEach(acquiredDetails,(value:any)=>{
        const channel = _.get(value,'acquiredChannel')
        switch(channel) {
-         case 'course':{
+         case 'Course':{
            _.forEach(response, (level:any)=>{
              if(level.displayLevel == _.get(value,'competencyLevelId')){
                level.color = '#FFFBB0';
