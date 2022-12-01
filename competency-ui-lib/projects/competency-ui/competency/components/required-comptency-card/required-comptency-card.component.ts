@@ -58,7 +58,7 @@ export class RequiredComptencyCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loading = true
+    // this.loading = true
     this.unsubscribe = this.getRequiredByPostion().pipe(mergeMap((res:any)=>{
       const formatedResponse =  this.requestUtil.formatedActivitityById(res)
       return of(formatedResponse)
