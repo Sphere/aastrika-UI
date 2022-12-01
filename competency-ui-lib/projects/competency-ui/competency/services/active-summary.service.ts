@@ -21,12 +21,12 @@ export class ActiveSummaryService extends DataService {
    * 
    */
     public getActivityById(reqBody:any){
-      console.log('calling getActivityById>>')
+      // console.log('calling getActivityById>>')
       const httpOptions: any = {
         url: urlConfig.getEntityById(reqBody.id),
         data: reqBody
       };
-      console.log('reqBody',httpOptions)
+      // console.log('reqBody',httpOptions)
       return this.post(httpOptions)
     }
 }

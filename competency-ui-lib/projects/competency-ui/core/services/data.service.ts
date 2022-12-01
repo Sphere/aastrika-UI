@@ -51,7 +51,7 @@ export class DataService {
       headers: requestParam.header ? this.getHeader(requestParam.header) : this.getHeader(),
       params: requestParam.param
     }
-    console.log('log in data service',requestParam)
+    // console.log('log in data service',requestParam)
     return this.http.post(requestParam.url,requestParam.data,httpOptions).pipe(
       mergeMap((data:any)=>{
         if(data.responseCode === 200 || data.responseCode === 'OK'){

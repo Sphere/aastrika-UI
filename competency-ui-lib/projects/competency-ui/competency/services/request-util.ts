@@ -60,7 +60,6 @@ export class RequestUtil {
         }
       }
     })
-    console.log(result)
     return result
   }
 
@@ -71,13 +70,10 @@ export class RequestUtil {
 
   formatedGainedCompetency(entity:any, passbook:any){
     let response = []
-    console.log(entity)
-    console.log(passbook)
     _.forEach(entity,(value:any)=>{
         const cid =   _.get(value, 'id')
         _.forEach(passbook,(passbookValue:any)=>{
            if(passbookValue.competencies.hasOwnProperty(cid)){
-              console.log('inside if')
               const competency =  passbookValue.competencies[cid]
               response.push({
                 'title': _.get(competency,'additionalParams.competencyName'),
@@ -88,8 +84,6 @@ export class RequestUtil {
             }
         })
     })
-    
-    console.log(response)
     return response
   }
   acquiredPassbookLogs(acquiredDetails:any){

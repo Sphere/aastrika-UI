@@ -38,7 +38,7 @@ export class ActiveSummaryComponent implements OnInit {
       this.loading = false
       this.roleactivitySummaries = res
     })
-    console.log(this.configService.getConfig())
+    
     this.profileData = JSON.parse(this.configService.getConfig())!.profileData[0].designation
     
   }
@@ -54,7 +54,6 @@ export class ActiveSummaryComponent implements OnInit {
   }
 
   public getActivityByRoleId(id:any){
-    console.log(id)
     this.panelOpenState = true
     this.acordianLoading = true
     const index = _.findIndex(this.roleactivitySummaries, {'id': id})
@@ -63,7 +62,6 @@ export class ActiveSummaryComponent implements OnInit {
       const respone = this.requestUtil.formatedActivitityByRoleId(res)
       this.roleactivitySummaries[index]['activities'] = respone
       const cidArr = _.map(this.roleactivitySummaries[index]['activities'], 'cid')
-      console.log(cidArr)
       let calls = [];
       _.forEach(cidArr,(value:any)=>{
         calls.push(this.getEntityById(value))
@@ -75,7 +73,6 @@ export class ActiveSummaryComponent implements OnInit {
       const response = this.requestUtil.formatedCompetency(res)
       this.roleactivitySummaries[index]['activities'] = _.values( _.merge(_.keyBy(response, 'cid'), 
            _.keyBy(this.roleactivitySummaries[index]['activities'], 'cid')))
-      console.log(this.roleactivitySummaries)
     })
     
   }
