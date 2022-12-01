@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { of, Subscription } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { RequestUtil } from '../../services/request-util';
+import { RequiredCompetencyService } from '../../services/required-competency.service';
 
 @Component({
   selector: 'lib-required-comptency-card',
   templateUrl: './required-comptency-card.component.html',
   styleUrls: ['./required-comptency-card.component.scss']
 })
-export class RequiredComptencyCardComponent implements OnInit {
-
-
+export class RequiredComptencyCardComponent implements OnInit, OnDestroy {
 
   competencyData = [
     {
@@ -45,10 +47,33 @@ export class RequiredComptencyCardComponent implements OnInit {
   panelOpenState: Boolean = true
   customCollapsedHeight = '100px'
   customExpandedHeight = '100px'
+  private unsubscribe: Subscription;
+  requestUtil: any
+  loading = false
 
-  constructor() { }
+  constructor(
+    private requiredCompetencyService: RequiredCompetencyService
+  ) { 
+    this.requestUtil = new RequestUtil()
+  }
 
   ngOnInit() {
+    // this.loading = true
+    this.unsubscribe = this.getRequiredByPostion().pipe(mergeMap((res:any)=>{
+      const formatedResponse =  this.requestUtil.formatedActivitityById(res)
+      return of(formatedResponse)
+    })).subscribe((res: any) => {
+      console.log(res)
+    })
+  }
+
+  private getRequiredByPostion() {
+    const reqBody = {
+      filter: {
+        "isDetail": true
+      }
+    };
+    return this.requiredCompetencyService.getRequiredCompetencyById(reqBody)
   }
 
   logs = [
@@ -74,5 +99,8 @@ export class RequiredComptencyCardComponent implements OnInit {
     },
     
   ]
-
+  
+  ngOnDestroy() {
+    this.unsubscribe.unsubscribe()
+  }
 }

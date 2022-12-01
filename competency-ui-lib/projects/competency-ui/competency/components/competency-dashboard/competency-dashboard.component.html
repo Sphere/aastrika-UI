@@ -4,7 +4,13 @@
   <h1 class=" pl-2 mb-0">Competency Dashboard</h1>
 
   <div class="pl-2 tab-container">
-    <mat-tab-group class="remove-border-bottom" animationDuration="0ms" selectedIndex="0" (selectedTabChange)="changeTab($event)">
+    <!-- <ng-container *ngIf="tabIndex === 0"> -->
+      <!-- <div class="sortIcon">
+        <img src="./projects/competency-ui/assets/images/filter.png">
+      </div>
+    </ng-container> -->
+    <mat-tab-group [ngClass]="{'header-width-icon': tabIndex === 0}" class="remove-border-bottom"
+      animationDuration="0ms" selectedIndex="0" (selectedTabChange)="changeTab($event)">
 
         <!-- gained  -->
         <mat-tab label="Gained">
@@ -34,7 +40,7 @@
         </div>
       </mat-tab>
 
-    
+
 
     </mat-tab-group>
 

@@ -1,4 +1,4 @@
-import * as _ from 'lodash-es';
+import * as _ from 'lodash';
 export class RequestUtil {
   formatedActivities = (data: any) => {
     if (!_.isEmpty(data)) {
@@ -133,7 +133,7 @@ export class RequestUtil {
    _.forEach(acquiredDetails,(value:any)=>{
        const channel = _.get(value,'acquiredChannel')
        switch(channel) {
-         case 'Course':{
+         case 'course':{
            _.forEach(response, (level:any)=>{
              if(level.displayLevel == _.get(value,'competencyLevelId')){
                level.color = '#FFFBB0';

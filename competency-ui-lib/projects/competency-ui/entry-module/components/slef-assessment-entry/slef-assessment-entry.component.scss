@@ -1,7 +1,8 @@
+@import '../../../assets/styles/global.scss';
 
   .mat-primary-background {
     background: #1C5D95 !important;
-    border-radius: 50px;
+    border-radius: $radius-l;
     color: white;
     border: none;
     padding: 9px 40px;
