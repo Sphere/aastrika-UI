@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/aastrika-comptency-entry-module.umd.js",
+  "module": "../fesm5/aastrika-comptency-entry-module.js",
+  "es2015": "../fesm2015/aastrika-comptency-entry-module.js",
+  "esm5": "../esm5/entry-module/aastrika-comptency-entry-module.js",
+  "esm2015": "../esm2015/entry-module/aastrika-comptency-entry-module.js",
+  "fesm5": "../fesm5/aastrika-comptency-entry-module.js",
+  "fesm2015": "../fesm2015/aastrika-comptency-entry-module.js",
+  "typings": "aastrika-comptency-entry-module.d.ts",
+  "metadata": "aastrika-comptency-entry-module.metadata.json",
+  "sideEffects": false,
+  "name": "@aastrika/comptency/entry-module"
+}
