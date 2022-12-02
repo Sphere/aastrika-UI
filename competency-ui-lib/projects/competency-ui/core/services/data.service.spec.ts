@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CompetencyUiService } from './competency-ui.service';
+import { DataService } from './data.service';
 
-describe('CompetencyUiService', () => {
+describe('DataService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: CompetencyUiService = TestBed.get(CompetencyUiService);
+    const service: DataService = TestBed.get(DataService);
     expect(service).toBeTruthy();
   });
 });

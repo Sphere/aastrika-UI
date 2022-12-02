@@ -1,0 +1,42 @@
+<ng-container *ngFor="let competency of competencyData"
+  ><div class="card-container">
+    <mat-accordion>
+      <mat-expansion-panel
+        class="w-full panel"
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header
+          class="flex-between items-center panel-header w-full"
+          collapsedHeight="auto"
+          expandedHeight="auto"
+        >
+          <mat-panel-description class="panel-header-description">
+            <ng-container *ngIf="competency?.title">
+              <div class="title">{{ competency?.title }}</div>
+            </ng-container>
+          </mat-panel-description>
+          <!-- <div class="level mb-0 pointer-events">
+            <mat-icon [ngClass]="{ arrowReverse: panelOpenState }"
+              >keyboard_arrow_down</mat-icon
+            >
+          </div> -->
+        </mat-expansion-panel-header>
+
+        <lib-app-loader *ngIf="loading === true"></lib-app-loader>
+        <div class="logs">
+          <span class="log-title">Levels:</span>
+          <ng-container *ngFor="let log of logs">
+            <div class="log">
+              <ng-container *ngIf="log.header">
+                <span class="flex-1 log-items"
+                  >{{ log.index }} : {{ log.header }}</span
+                >
+              </ng-container>
+            </div>
+          </ng-container>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</ng-container>

@@ -1,0 +1,78 @@
+@import '../../../assets/styles/global.scss';
+
+.card-container {
+  margin: 15px 2px;
+  padding: 16px 10px 20px 14px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+  border-radius: $radius-m;
+  background: var(--light-gray) !important;
+}
+.spinner-loading {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  font-size: $size-l;
+  line-height: 19px;
+  letter-spacing: $spacing;
+  color: var(--blue);
+}
+
+.icon-down {
+  place-self: flex-end;
+  color: var(--blue) !important;
+}
+
+:host ::ng-deep .mat-expansion-panel {
+  margin: 10px 0px;
+  //padding: 10px 0px !important;
+  height: auto;
+}
+
+:host ::ng-deep .mat-expansion-panel-header:hover {
+  background: rgb(239 246 252) !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-header {
+  padding: 15px !important;
+  background-color: var(--light-gray) !important;
+  border-radius: $radius-m !important;
+}
+:host ::ng-deep .mat-expansion-indicator:after{
+  color: var(--blue) !important;
+}
+
+.activity-title {
+  font-size: $size-xl;
+  line-height: 28px;
+  letter-spacing: $spacing;
+  color: var(--black);
+}
+
+.competency-container{
+  background: var(--white);
+  box-shadow: 0px 0px 4px rgb(0 0 0 / 15%);
+  border-radius: $radius-m;
+  padding: 10px;
+  margin: 18px 0 15px;
+
+  .competency-title{
+    font-size: $size-lg;
+    line-height: 25px;
+    letter-spacing: $spacing;
+    color: var(--black);
+    margin-bottom: 20px;
+  }
+
+  .level{
+    font-size: $size-xl;
+    line-height: 24px;
+    letter-spacing: $spacing;
+    color: var(--blue);
+  }
+}
+
+.expand-container{
+  padding: 15px 15px 0;
+}

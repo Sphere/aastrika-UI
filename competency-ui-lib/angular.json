@@ -38,5 +38,10 @@
         }
       }
     }},
-  "defaultProject": "competency-ui"
+  "defaultProject": "competency-ui",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

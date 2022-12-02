@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CompetencyUiComponent } from './competency-ui.component';
+import { SelfAssessmentCardComponent } from './self-assessment-card.component';
 
-describe('CompetencyUiComponent', () => {
-  let component: CompetencyUiComponent;
-  let fixture: ComponentFixture<CompetencyUiComponent>;
+describe('SelfAssessmentCardComponent', () => {
+  let component: SelfAssessmentCardComponent;
+  let fixture: ComponentFixture<SelfAssessmentCardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CompetencyUiComponent ]
+      declarations: [ SelfAssessmentCardComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CompetencyUiComponent);
+    fixture = TestBed.createComponent(SelfAssessmentCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

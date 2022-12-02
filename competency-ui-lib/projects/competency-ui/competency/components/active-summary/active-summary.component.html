@@ -1,0 +1,43 @@
+<lib-app-loader *ngIf="loading === true"></lib-app-loader>
+<ng-container *ngFor="let role of roleactivitySummaries">
+  <div class="">
+    <mat-accordion>
+      <mat-expansion-panel
+        class="w-full panel r"
+        (opened)="getActivityByRoleId(role.id)"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header
+          class="card-containe flex-between items-center panel-header w-full"
+          collapsedHeight="auto"
+          expandedHeight="auto"
+        >
+          <mat-panel-description class="panel-header-description">
+            <ng-container *ngIf="role?.roles">
+              <div class="title">{{ role?.roles }}</div>
+            </ng-container>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader>
+        <div class="expand-container" *ngIf="roleactivitySummaries.length>0">
+          <ng-container
+            *ngFor="let activity of role?.activities; let i = index"
+          >
+            <div class="activity-title">
+              {{ i + 1 }}.{{ activity.title }}
+            </div>
+            <div class="competency-container">
+              <div class="competency-title">{{ activity.competency }}</div>
+              <div class="level">
+                <ng-container *ngFor="let level of activity.levels">
+                  {{ level }}
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+   
+  </div>
+</ng-container>
