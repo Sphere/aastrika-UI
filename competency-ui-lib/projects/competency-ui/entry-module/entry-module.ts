@@ -18,15 +18,13 @@ import { ConfigurationContext } from './services/configuration-context';
   ],
   providers:[]
 })
-export class EntryModule { 
+export class EntryModule {
   /**
  * Take the config from consuming apps
  *
  * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
  */
   static forRoot(configContext: ConfigurationContext): ModuleWithProviders {
-    console.log(`Preparing to handle configuration context.`);
-    console.log('config data ------',configContext.config)
     return {
       ngModule: EntryModule,
       providers: [
