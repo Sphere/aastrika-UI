@@ -1,5 +1,5 @@
 {
-  "name": "@aastrika/comptency",
+  "name": "@aastrika_npmjs/comptency",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^8.2.14",

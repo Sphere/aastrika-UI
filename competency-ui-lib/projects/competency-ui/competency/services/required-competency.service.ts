@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { DataService } from '@aastrika/comptency/core';
+import { DataService } from '@aastrika_npmjs/comptency/core';
 import { HttpClient } from '@angular/common/http';
-import { urlConfig  } from '@aastrika/comptency/core';
+import { urlConfig  } from '@aastrika_npmjs/comptency/core';
 /**
- * RequiredCompetencyService to extend Data Service 
+ * RequiredCompetencyService to extend Data Service
  *
  * @author Mansur Shaik <mansur.shaik@tarento.com>
  */
@@ -18,7 +18,7 @@ export class RequiredCompetencyService extends DataService {
 
   /**
    * for making getall required competency api calls
-   * 
+   *
    */
 
    public getRequiredCompetencyById(reqBody:any){
@@ -29,5 +29,5 @@ export class RequiredCompetencyService extends DataService {
     console.log('reqBody',httpOptions)
     return this.post(httpOptions)
   }
-  
+
 }

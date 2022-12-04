@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { DataService } from '@aastrika/comptency/core';
+import { DataService } from '@aastrika_npmjs/comptency/core';
 import { HttpClient } from '@angular/common/http';
-import { urlConfig  } from '@aastrika/comptency/core';
+import { urlConfig  } from '@aastrika_npmjs/comptency/core';
 /**
- * ActiveSummaryService to extend Data Service 
+ * ActiveSummaryService to extend Data Service
  *
  * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
  */
@@ -18,7 +18,7 @@ export class ActiveSummaryService extends DataService {
 
    /**
    * for making getall activity api calls
-   * 
+   *
    */
     public getActivityById(reqBody:any){
       // console.log('calling getActivityById>>')

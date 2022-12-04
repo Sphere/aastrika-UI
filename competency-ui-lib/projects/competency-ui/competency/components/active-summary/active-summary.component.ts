@@ -4,7 +4,7 @@ import { ActiveSummaryService } from '../../services/active-summary.service';
 import { mergeMap } from 'rxjs/operators';
 import { forkJoin, of, Subscription } from 'rxjs';
 import * as _ from 'lodash-es';
-import { ConfigService } from '@aastrika/comptency/entry-module';
+import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 @Component({
   selector: 'lib-active-summary',
   templateUrl: './active-summary.component.html',
@@ -12,7 +12,7 @@ import { ConfigService } from '@aastrika/comptency/entry-module';
 })
 export class ActiveSummaryComponent implements OnInit {
   /**
- * Core Module  
+ * Core Module
  *
  * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
  */
@@ -38,9 +38,9 @@ export class ActiveSummaryComponent implements OnInit {
       this.loading = false
       this.roleactivitySummaries = res
     })
-    
+
     this.profileData = JSON.parse(this.configService.getConfig())!.profileData[0].designation
-    
+
   }
 
   private getActivityByRole() {
@@ -69,12 +69,12 @@ export class ActiveSummaryComponent implements OnInit {
       this.acordianLoading = false
       return forkJoin(...calls)
     })).subscribe((res:any)=>{
-      
+
       const response = this.requestUtil.formatedCompetency(res)
-      this.roleactivitySummaries[index]['activities'] = _.values( _.merge(_.keyBy(response, 'cid'), 
+      this.roleactivitySummaries[index]['activities'] = _.values( _.merge(_.keyBy(response, 'cid'),
            _.keyBy(this.roleactivitySummaries[index]['activities'], 'cid')))
     })
-    
+
   }
   getEntityById(id:any){
     const reqBody = {
