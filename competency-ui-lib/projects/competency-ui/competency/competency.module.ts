@@ -6,12 +6,12 @@ import { GainedComptencyCardComponent } from './components/gained-comptency-card
 import { CompetencyDashboardComponent } from './components/competency-dashboard/competency-dashboard.component';
 import { ActiveSummaryComponent } from './components/active-summary/active-summary.component';
 import { MatTabsModule, MatIconModule, MatExpansionModule } from '@angular/material';
-import { CoreModule } from '@aastrika/comptency/core';
+import { CoreModule } from '@aastrika_npmjs/comptency/core';
 @NgModule({
   declarations: [
-    RequiredComptencyCardComponent, 
-    GainedComptencyCardComponent, 
-    CompetencyDashboardComponent, 
+    RequiredComptencyCardComponent,
+    GainedComptencyCardComponent,
+    CompetencyDashboardComponent,
     ActiveSummaryComponent],
   imports: [
     CommonModule,
