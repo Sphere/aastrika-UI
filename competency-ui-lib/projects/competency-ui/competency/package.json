@@ -3,7 +3,8 @@
       "lib": {
         "entryFile": "public-api.ts",
         "umdModuleIds":{
-          "lodash-es":"lodashEs"
+          "lodash-es":"lodashEs",
+          "entryModule":"entryModule"
         }
       }
     }

@@ -1,5 +1,5 @@
 {
-  "name": "@aastrika_npmjs/comptency-ui-lib",
+  "name": "@aastrika_npmjs/comptency",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -36,7 +36,7 @@
     "@types/node": "~8.9.4",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/lodash": "4.14.104",
+    "@types/lodash": "4.14.149",
     "codelyzer": "^5.0.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",

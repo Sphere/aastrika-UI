@@ -4,7 +4,7 @@ import { ActiveSummaryService } from '../../services/active-summary.service';
 import { mergeMap } from 'rxjs/operators';
 import { forkJoin, of, Subscription } from 'rxjs';
 import * as _ from 'lodash-es';
-import { ConfigService } from '@aastrika/comptency/entry-module';
+import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 @Component({
   selector: 'lib-active-summary',
   templateUrl: './active-summary.component.html',
@@ -26,11 +26,12 @@ export class ActiveSummaryComponent implements OnInit {
   profileData:any
   constructor(public activeSummaryService: ActiveSummaryService, public configService: ConfigService) {
     this.requestUtil = new RequestUtil()
-
+    this.profileData = JSON.parse(this.configService.getConfig())!.profileData[0].designation
   }
 
   ngOnInit() {
-   this.loading = true
+    setTimeout(()=>{
+      this.loading = true
    this.unsubscribe = this.getActivityByRole().pipe(mergeMap((res:any)=>{
       const formatedResponse =  this.requestUtil.formatedActivitityByPostion(res)
       return of(formatedResponse)
@@ -38,9 +39,7 @@ export class ActiveSummaryComponent implements OnInit {
       this.loading = false
       this.roleactivitySummaries = res
     })
-    
-    this.profileData = JSON.parse(this.configService.getConfig())!.profileData[0].designation
-    
+    },500)
   }
 
   private getActivityByRole() {
