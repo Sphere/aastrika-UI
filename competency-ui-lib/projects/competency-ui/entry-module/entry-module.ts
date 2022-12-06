@@ -25,8 +25,6 @@ export class EntryModule {
  * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
  */
   static forRoot(configContext: ConfigurationContext): ModuleWithProviders {
-    console.log(`Preparing to handle configuration context.`);
-    console.log('config data ------',configContext.config)
     return {
       ngModule: EntryModule,
       providers: [

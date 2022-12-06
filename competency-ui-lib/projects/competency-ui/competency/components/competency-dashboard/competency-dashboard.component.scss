@@ -1,5 +1,4 @@
 // @import 'ws-mixins';
-@import '../../../assets/styles/global.scss';
 
 .content {
   padding: 60px 0px 50px;
@@ -86,7 +85,7 @@
   .legend {
     min-width: 15px;
     height: 15px;
-    background:#DFEDF9;
+    background: var(--grey-100);
     border-radius: 50%;
   }
 
@@ -94,10 +93,10 @@
     background:  var(--teal);
   }
   .legend-blue {
-    background: #7CB5E6;
+    background: var(--blue-500);
   }
   .legend-yellow {
-    background:  #FFFBB0;
+    background:  var(--yellow-500);
     ;
  }
 
