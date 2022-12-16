@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { DataService } from '@aastrika/comptency/core';
+import { DataService } from '@aastrika_npmjs/comptency/core';
 import { HttpClient } from '@angular/common/http';
-import { urlConfig  } from '@aastrika/comptency/core';
+import { urlConfig  } from '@aastrika_npmjs/comptency/core';
 /**
  * ActiveSummaryService to extend Data Service 
  *

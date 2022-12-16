@@ -5,6 +5,7 @@ import { CompetencyEntryComponent } from './components/competency-entry/competen
 import { MatIconModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { ConfigurationContext } from './services/configuration-context';
+import { ConfigService } from './services/config.service';
 @NgModule({
   declarations: [SlefAssessmentEntryComponent, CompetencyEntryComponent,],
   imports: [
@@ -25,11 +26,9 @@ export class EntryModule {
  * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
  */
   static forRoot(configContext: ConfigurationContext): ModuleWithProviders {
-    console.log(`Preparing to handle configuration context.`);
-    console.log('config data ------',configContext.config)
     return {
       ngModule: EntryModule,
-      providers: [
+      providers: [ConfigService,
         {provide: ConfigurationContext, useValue: configContext.config}
       ]
     }

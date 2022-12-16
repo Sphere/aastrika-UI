@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DataService, urlConfig } from '@aastrika/comptency/core';
+import { DataService, urlConfig } from '@aastrika_npmjs/comptency/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
 
