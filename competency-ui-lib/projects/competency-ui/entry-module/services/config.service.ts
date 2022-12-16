@@ -1,4 +1,4 @@
-import { Injectable, Optional } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { Subject,BehaviorSubject } from 'rxjs';
 import { ConfigurationContext } from './configuration-context';
 @Injectable({
@@ -7,7 +7,8 @@ import { ConfigurationContext } from './configuration-context';
 export class ConfigService {
   public config$: Subject<any> = new BehaviorSubject<any>({});
   private _config = this.config$.asObservable()
-  constructor(@Optional() context: ConfigurationContext, ) { 
+ 
+  constructor(@Optional() @Inject('context') private context:ConfigurationContext ) { 
     if(context){
       console.log('context log in config service ------ ', context)
       this.setConfig(context)
