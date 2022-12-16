@@ -26,7 +26,7 @@ export class ActiveSummaryComponent implements OnInit {
   profileData:any
   constructor(public activeSummaryService: ActiveSummaryService, public configService: ConfigService) {
     this.requestUtil = new RequestUtil()
-    this.profileData = JSON.parse(this.configService.getConfig())!.profileData[0].designation
+    this.profileData = this.configService.getConfig()!.profileData[0].designation
   }
 
   ngOnInit() {

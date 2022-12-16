@@ -8,10 +8,10 @@ export class ConfigService {
   public config$: Subject<any> = new BehaviorSubject<any>({});
   private _config = this.config$.asObservable()
  
-  constructor(@Optional() @Inject('context') private context:ConfigurationContext ) { 
-    if(context){
-      console.log('context log in config service ------ ', context)
-      this.setConfig(context)
+  constructor(@Optional() @Inject('config') public config:ConfigurationContext ) { 
+    if(config){
+      console.log('context log in config service ------ ', config)
+      this.setConfig(config)
     }
   }
   public setConfig(context) {

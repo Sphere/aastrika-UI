@@ -29,7 +29,7 @@ export class EntryModule {
     return {
       ngModule: EntryModule,
       providers: [ConfigService,
-        {provide: ConfigurationContext, useValue: configContext.config}
+        {provide: 'config', useValue: configContext.config}
       ]
     }
   }
