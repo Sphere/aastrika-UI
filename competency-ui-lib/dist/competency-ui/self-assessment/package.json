@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/aastrika-comptency-self-assessment.umd.js",
+  "module": "../fesm5/aastrika-comptency-self-assessment.js",
+  "es2015": "../fesm2015/aastrika-comptency-self-assessment.js",
+  "esm5": "../esm5/self-assessment/aastrika-comptency-self-assessment.js",
+  "esm2015": "../esm2015/self-assessment/aastrika-comptency-self-assessment.js",
+  "fesm5": "../fesm5/aastrika-comptency-self-assessment.js",
+  "fesm2015": "../fesm2015/aastrika-comptency-self-assessment.js",
+  "typings": "aastrika-comptency-self-assessment.d.ts",
+  "metadata": "aastrika-comptency-self-assessment.metadata.json",
+  "sideEffects": false,
+  "name": "@aastrika/comptency/self-assessment"
+}

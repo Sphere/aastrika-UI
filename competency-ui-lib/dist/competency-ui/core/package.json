@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/aastrika-comptency-core.umd.js",
+  "module": "../fesm5/aastrika-comptency-core.js",
+  "es2015": "../fesm2015/aastrika-comptency-core.js",
+  "esm5": "../esm5/core/aastrika-comptency-core.js",
+  "esm2015": "../esm2015/core/aastrika-comptency-core.js",
+  "fesm5": "../fesm5/aastrika-comptency-core.js",
+  "fesm2015": "../fesm2015/aastrika-comptency-core.js",
+  "typings": "aastrika-comptency-core.d.ts",
+  "metadata": "aastrika-comptency-core.metadata.json",
+  "sideEffects": false,
+  "name": "@aastrika/comptency/core"
+}

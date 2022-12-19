@@ -1,0 +1,21 @@
+{
+  "name": "@aastrika/comptency",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.2.14",
+    "@angular/core": "^8.2.14"
+  },
+  "main": "bundles/aastrika-comptency.umd.js",
+  "module": "fesm5/aastrika-comptency.js",
+  "es2015": "fesm2015/aastrika-comptency.js",
+  "esm5": "esm5/aastrika-comptency.js",
+  "esm2015": "esm2015/aastrika-comptency.js",
+  "fesm5": "fesm5/aastrika-comptency.js",
+  "fesm2015": "fesm2015/aastrika-comptency.js",
+  "typings": "aastrika-comptency.d.ts",
+  "metadata": "aastrika-comptency.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}
