@@ -7,7 +7,10 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "copy:assets": "cp -r ./projects/competency-ui/assets dist/competency-ui/",
+    "build-lib": "ng build && npm run copy:assets",
+    "build-lib-watch": "ng build --watch && npm run copy:assets"
   },
   "private": true,
   "dependencies": {
