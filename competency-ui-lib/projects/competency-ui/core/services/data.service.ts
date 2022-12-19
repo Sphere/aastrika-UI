@@ -33,7 +33,7 @@ export class DataService {
       params: requestParam.param,
       observe: 'response'
     };
-    return this.http.get(this.baseUrl + requestParam.url, httpOptions).pipe(
+    return this.http.get( requestParam.url, httpOptions).pipe(
       mergeMap(({ body, headers }: any) => {
         if (body.responseCode !== 'OK') {
           return observableThrowError(body);
