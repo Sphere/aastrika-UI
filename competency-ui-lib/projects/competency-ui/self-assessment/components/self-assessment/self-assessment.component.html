@@ -3,8 +3,8 @@
   
     <h1 class=" mb-1 pl-2 ">Self Assessment</h1>
 
-    <ng-container *ngFor="let gainedproficency  of gainedproficencyData">
-        <lib-self-assessment-card [cardData]="gainedproficency"></lib-self-assessment-card>
+    <ng-container *ngFor="let cardData   of selfAssessmentData">
+        <lib-self-assessment-card [cardData]="cardData"></lib-self-assessment-card>
       </ng-container>
   
   </div>
