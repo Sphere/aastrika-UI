@@ -30,4 +30,28 @@ export class RequestUtil {
 
     }
   }
+
+  formatedCompetencyCourseData(data:any){
+    const result = []
+    if(_.get(data,'result')){
+      const content =  _.get(data, 'result.content')
+      if(content.length > 0){
+         _.forEach(content, (value:any)=>{
+            result.push({
+              'title':  _.get(value, 'name'),
+              'contentId': _.get(value,'identifier'),
+              'contentType':_.get(value,'contentType'),
+              'subTitle': _.get(value,'subTitle'),
+              'description': _.get(value,'description'),
+              'creator': _.get(value,'creator'),
+              'duration': _.get(value,'duration')
+
+            })
+           })
+           return result
+        }
+      
+
+    }
+  }
 }

@@ -346,28 +346,13 @@
         return EntryModule;
     }());
 
-    var SelfAssessmentCardComponent = /** @class */ (function () {
-        function SelfAssessmentCardComponent() {
-        }
-        SelfAssessmentCardComponent.prototype.ngOnInit = function () {
-        };
-        __decorate([
-            core.Input()
-        ], SelfAssessmentCardComponent.prototype, "cardData", void 0);
-        SelfAssessmentCardComponent = __decorate([
-            core.Component({
-                selector: 'lib-self-assessment-card',
-                template: "<div class=\"card_box\">\n  <ng-container *ngIf=\"cardData?.title\">\n    <div class=\"title\">{{ cardData?.title }}</div>\n  </ng-container>\n  <ng-container *ngIf=\"cardData?.description\">\n    <div class=\"description\">{{ cardData?.description }}</div>\n  </ng-container>\n\n  <button mat-button class=\"startBtn\">Start</button>\n</div>\n",
-                styles: [":root{font-size:16px;--blue:#1C5D95;--yellow:#FFF4DF;--teal:#A4DFCA;--black:#000000;--white:#ffffff;--light-gray:#eff6fc;--grey-100:#DFEDF9;--gray-200:#8E8E8E;--gray-300:#989898;--gray-400:#808080;--grey-500:#919191;--yellow-500:#FFFBB0;--blue-500:#7CB5E6}.button-primary{background-color:var(--blue)!important;border-radius:50px;gap:8px;color:var(--white)!important;border:none}.mat-primary-background{padding:9px 40px;width:310px;cursor:pointer}.card_box{margin:7px 2px 15px;padding:16px 10px 20px 14px;box-shadow:0 0 4px rgba(0,0,0,.15);border-radius:10px;background:#fff}.title{font-size:24px;line-height:29px;letter-spacing:-.02em;margin-bottom:7px}.description{font-size:14px;line-height:17px;letter-spacing:-.02em}.startBtn{background-color:#1c5d95!important;border-radius:50px;padding:8px 32px;gap:8px;font-size:16px;line-height:19px;color:#fff!important;margin-top:10px;border:none}.proficiency{color:#1c5d96;font-style:italic;font-size:14px;line-height:17px;cursor:pointer;margin-top:4px}"]
-            })
-        ], SelfAssessmentCardComponent);
-        return SelfAssessmentCardComponent;
-    }());
-
     var SelfAssessmentService = /** @class */ (function (_super) {
         __extends(SelfAssessmentService, _super);
         function SelfAssessmentService(http) {
-            return _super.call(this, http) || this;
+            var _this = _super.call(this, http) || this;
+            _this.startAssessment = new rxjs.BehaviorSubject(undefined);
+            _this.startAssessment$ = _this.startAssessment.asObservable();
+            return _this;
         }
         /**
          *searching for the content Identifier
@@ -402,6 +387,31 @@
         return SelfAssessmentService;
     }(core$1.DataService));
 
+    var SelfAssessmentCardComponent = /** @class */ (function () {
+        function SelfAssessmentCardComponent(selfAssessmentService) {
+            this.selfAssessmentService = selfAssessmentService;
+        }
+        SelfAssessmentCardComponent.prototype.ngOnInit = function () {
+        };
+        SelfAssessmentCardComponent.prototype.startSelfAssesment = function (data) {
+            this.selfAssessmentService.startAssessment.next(data);
+        };
+        SelfAssessmentCardComponent.ctorParameters = function () { return [
+            { type: SelfAssessmentService }
+        ]; };
+        __decorate([
+            core.Input()
+        ], SelfAssessmentCardComponent.prototype, "cardData", void 0);
+        SelfAssessmentCardComponent = __decorate([
+            core.Component({
+                selector: 'lib-self-assessment-card',
+                template: "<div class=\"card_box\">\n  <ng-container *ngIf=\"cardData?.title\">\n    <div class=\"title\">{{ cardData?.title }}</div>\n  </ng-container>\n  <ng-container *ngIf=\"cardData?.description\">\n    <div class=\"description\">{{ cardData?.description }}</div>\n  </ng-container>\n\n  <button mat-button class=\"startBtn\"(click)=\"startSelfAssesment(cardData)\">Start</button>\n</div>\n",
+                styles: [":root{font-size:16px;--blue:#1C5D95;--yellow:#FFF4DF;--teal:#A4DFCA;--black:#000000;--white:#ffffff;--light-gray:#eff6fc;--grey-100:#DFEDF9;--gray-200:#8E8E8E;--gray-300:#989898;--gray-400:#808080;--grey-500:#919191;--yellow-500:#FFFBB0;--blue-500:#7CB5E6}.button-primary{background-color:var(--blue)!important;border-radius:50px;gap:8px;color:var(--white)!important;border:none}.mat-primary-background{padding:9px 40px;width:310px;cursor:pointer}.card_box{margin:7px 2px 15px;padding:16px 10px 20px 14px;box-shadow:0 0 4px rgba(0,0,0,.15);border-radius:10px;background:#fff}.title{font-size:24px;line-height:29px;letter-spacing:-.02em;margin-bottom:7px}.description{font-size:14px;line-height:17px;letter-spacing:-.02em}.startBtn{background-color:#1c5d95!important;border-radius:50px;padding:8px 32px;gap:8px;font-size:16px;line-height:19px;color:#fff!important;margin-top:10px;border:none}.proficiency{color:#1c5d96;font-style:italic;font-size:14px;line-height:17px;cursor:pointer;margin-top:4px}"]
+            })
+        ], SelfAssessmentCardComponent);
+        return SelfAssessmentCardComponent;
+    }());
+
     var RequestUtil = /** @class */ (function () {
         function RequestUtil() {
         }
@@ -425,6 +435,26 @@
                 }
             }
         };
+        RequestUtil.prototype.formatedCompetencyCourseData = function (data) {
+            var result = [];
+            if (lodashEs.get(data, 'result')) {
+                var content = lodashEs.get(data, 'result.content');
+                if (content.length > 0) {
+                    lodashEs.forEach(content, function (value) {
+                        result.push({
+                            'title': lodashEs.get(value, 'name'),
+                            'contentId': lodashEs.get(value, 'identifier'),
+                            'contentType': lodashEs.get(value, 'contentType'),
+                            'subTitle': lodashEs.get(value, 'subTitle'),
+                            'description': lodashEs.get(value, 'description'),
+                            'creator': lodashEs.get(value, 'creator'),
+                            'duration': lodashEs.get(value, 'duration')
+                        });
+                    });
+                    return result;
+                }
+            }
+        };
         RequestUtil.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function RequestUtil_Factory() { return new RequestUtil(); }, token: RequestUtil, providedIn: "root" });
         RequestUtil = __decorate([
             core.Injectable({
@@ -439,6 +469,7 @@
             this.location = location;
             this.selfAssessmentService = selfAssessmentService;
             this.selfAssessmentData = [];
+            this.loading = false;
             this.requestUtil = new RequestUtil();
         }
         /**
@@ -447,14 +478,23 @@
          */
         SelfAssessmentComponent.prototype.ngOnInit = function () {
             var _this = this;
-            this.getCompetencyCourseIdentifier().pipe(operators.mergeMap(function (res) {
-                var identifier = res.result.content[0].identifier;
-                return _this.fetchHiearchyDetails(identifier);
+            this.loading = true;
+            this.getCompetencyCourse().pipe(operators.map(function (res) {
+                var formatedResponse = _this.requestUtil.formatedCompetencyCourseData(res);
+                return formatedResponse;
             })).subscribe(function (res) {
-                _this.selfAssessmentData = _this.requestUtil.formatedcompetencyData(res);
+                _this.selfAssessmentData = res;
+                _this.loading = false;
+            });
+            this.selfAssessmentService.startAssessment$.pipe().subscribe(function (res) {
+                console.log(res);
+                /**
+             * here we will redirect to player screen
+             *
+             */
             });
         };
-        SelfAssessmentComponent.prototype.getCompetencyCourseIdentifier = function () {
+        SelfAssessmentComponent.prototype.getCompetencyCourse = function () {
             var reqBody = {
                 "request": {
                     "filters": {
@@ -479,9 +519,6 @@
             };
             return this.selfAssessmentService.getCompetencyCourseIdentifier(reqBody);
         };
-        SelfAssessmentComponent.prototype.fetchHiearchyDetails = function (identifier) {
-            return this.selfAssessmentService.fetchHiearchyDetails(identifier, 'detail');
-        };
         SelfAssessmentComponent.prototype.navigateBack = function () {
             this.location.back();
         };
@@ -492,7 +529,7 @@
         SelfAssessmentComponent = __decorate([
             core.Component({
                 selector: 'lib-self-assessment',
-                template: "<div class=\"content\">\n    <mat-icon (click)=\"navigateBack()\" class=\"cursor-pointer\">chevron_left</mat-icon>\n    <h1 class=\" mb-1 pl-2 \">Self Assessment</h1>\n    <ng-container *ngFor=\"let cardData   of selfAssessmentData\">\n        <ng-container *ngIf=\"selfAssessmentData\">\n            <lib-self-assessment-card [cardData]=\"cardData\"></lib-self-assessment-card>\n        </ng-container>\n    </ng-container>\n</div>",
+                template: "<lib-app-loader *ngIf=\"loading === true\"></lib-app-loader>\n<div class=\"content\">\n    <mat-icon (click)=\"navigateBack()\" class=\"cursor-pointer\">chevron_left</mat-icon>\n    <h1 class=\" mb-1 pl-2 \">Self Assessment</h1>\n    <ng-container *ngFor=\"let cardData   of selfAssessmentData\">\n        <ng-container *ngIf=\"selfAssessmentData\">\n            <lib-self-assessment-card [cardData]=\"cardData\"></lib-self-assessment-card>\n        </ng-container>\n    </ng-container>\n</div>",
                 styles: [".content{padding:60px 20px 50px;margin:auto}@media only screen and (min-width:960px){.content{max-width:30%}}@media only screen and (min-width:1280px){.content{max-width:35%}}@media only screen and (min-width:1920px){.content{max-width:30%}}@media only screen and (min-width:600px) and (max-width:959px){.content{max-width:50%}}@media only screen and (max-width:599px){.content{max-width:90%}}"]
             })
         ], SelfAssessmentComponent);
@@ -1095,8 +1132,8 @@
     exports.ɵc = ConfigService;
     exports.ɵd = ConfigurationContext;
     exports.ɵe = SelfAssessmentCardComponent;
-    exports.ɵf = SelfAssessmentComponent;
-    exports.ɵg = SelfAssessmentService;
+    exports.ɵf = SelfAssessmentService;
+    exports.ɵg = SelfAssessmentComponent;
     exports.ɵh = RequiredComptencyCardComponent;
     exports.ɵi = RequiredCompetencyService;
     exports.ɵj = GainedComptencyCardComponent;

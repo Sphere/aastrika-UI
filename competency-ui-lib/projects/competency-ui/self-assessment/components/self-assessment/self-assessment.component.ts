@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common'
 import { SelfAssessmentService } from '../../service/self-assessment.service';
 import { RequestUtil } from '../../service/request-util.service';
-import { mergeMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import * as _ from 'lodash-es';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'lib-self-assessment',
@@ -14,7 +15,7 @@ export class SelfAssessmentComponent implements OnInit {
 
   selfAssessmentData = []
   requestUtil: any
-
+  loading = false
   constructor(
     private location: Location,
     private selfAssessmentService : SelfAssessmentService,
@@ -27,15 +28,24 @@ export class SelfAssessmentComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    this.getCompetencyCourseIdentifier().pipe(mergeMap((res:any)=>{
-      const identifier = res.result.content[0].identifier;
-      return this.fetchHiearchyDetails(identifier)
-     })).subscribe((res)=>{
-      this.selfAssessmentData = this.requestUtil.formatedcompetencyData(res)
-     })
+    this.loading = true
+    this.getCompetencyCourse().pipe(map((res:any)=>{
+      const formatedResponse =  this.requestUtil.formatedCompetencyCourseData(res)
+      return formatedResponse
+    })).subscribe((res)=>{
+      this.selfAssessmentData = res
+      this.loading = false
+    })
+    this.selfAssessmentService.startAssessment$.pipe().subscribe((res:any)=>{
+      console.log(res)
+      /**
+   * here we will redirect to player screen 
+   * 
+   */
+    })
   }
 
-  getCompetencyCourseIdentifier(){
+  getCompetencyCourse(){
     const reqBody = {
       "request": {
           "filters": {
@@ -60,10 +70,7 @@ export class SelfAssessmentComponent implements OnInit {
   }
     return  this.selfAssessmentService.getCompetencyCourseIdentifier(reqBody)
   }
-  fetchHiearchyDetails(identifier){
-    return this.selfAssessmentService.fetchHiearchyDetails(identifier,'detail')
-    
-  }
+  
 
   navigateBack() {
     this.location.back()

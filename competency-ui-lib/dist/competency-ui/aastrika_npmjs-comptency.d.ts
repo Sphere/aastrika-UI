@@ -14,5 +14,5 @@ export { SlefAssessmentEntryComponent as ɵa } from './entry-module/components/s
 export { ConfigService as ɵc } from './entry-module/services/config.service';
 export { ConfigurationContext as ɵd } from './entry-module/services/configuration-context';
 export { SelfAssessmentCardComponent as ɵe } from './self-assessment/components/self-assessment-card/self-assessment-card.component';
-export { SelfAssessmentComponent as ɵf } from './self-assessment/components/self-assessment/self-assessment.component';
-export { SelfAssessmentService as ɵg } from './self-assessment/service/self-assessment.service';
+export { SelfAssessmentComponent as ɵg } from './self-assessment/components/self-assessment/self-assessment.component';
+export { SelfAssessmentService as ɵf } from './self-assessment/service/self-assessment.service';

@@ -6,13 +6,13 @@ export declare class SelfAssessmentComponent implements OnInit {
     private selfAssessmentService;
     selfAssessmentData: any[];
     requestUtil: any;
+    loading: boolean;
     constructor(location: Location, selfAssessmentService: SelfAssessmentService);
     /**
      *getting the details of course by pasing the identifier and hierarchyType
      *
      */
     ngOnInit(): void;
-    getCompetencyCourseIdentifier(): import("rxjs").Observable<any>;
-    fetchHiearchyDetails(identifier: any): import("rxjs").Observable<any>;
+    getCompetencyCourse(): import("rxjs").Observable<any>;
     navigateBack(): void;
 }
