@@ -6,7 +6,7 @@ import { throwError, of } from 'rxjs';
 import { get } from 'lodash-es';
 import { CommonModule } from '@angular/common';
 
-var ɵ0 = function () { return "" + urlConfig.host + urlConfig.apiSlug; }, ɵ1 = function () { return "" + urlConfig.host + urlConfig.apiProxy; }, ɵ2 = function (id) { return urlConfig.apiBasePath() + "/entityCompetency/getEntityById/" + id; }, ɵ3 = function () { return urlConfig.apiBasePath() + "/entityCompetency/getAllEntity"; }, ɵ4 = function () { return urlConfig.apiBaseProxy() + "/user/v1/passbook"; };
+var ɵ0 = function () { return "" + urlConfig.host + urlConfig.apiSlug; }, ɵ1 = function () { return "" + urlConfig.host + urlConfig.apiProxy; }, ɵ2 = function () { return "" + urlConfig.host + urlConfig.apiPublic; }, ɵ3 = function (id) { return urlConfig.apiBasePath() + "/entityCompetency/getEntityById/" + id; }, ɵ4 = function () { return urlConfig.apiBasePath() + "/entityCompetency/getAllEntity"; }, ɵ5 = function () { return urlConfig.apiBaseProxy() + "/user/v1/passbook"; }, ɵ6 = function () { return urlConfig.apiBasePublic() + "/publicContent/v1/search"; }, ɵ7 = function (identifier, hierarchyType) { return urlConfig.apiBaseProxy() + "/action/content/v3/hierarchy/" + identifier + "?hierarchyType=" + hierarchyType; };
 /**
  * urlConfig to return the api url
  *
@@ -18,11 +18,15 @@ var urlConfig = {
     host: 'http://localhost:3000',
     apiSlug: '/apis/protected/v8',
     apiProxy: '/apis/proxies/v8',
+    apiPublic: '/apis/public/v8',
     apiBasePath: ɵ0,
     apiBaseProxy: ɵ1,
-    getEntityById: ɵ2,
-    getAllEntity: ɵ3,
-    getUserPassbook: ɵ4,
+    apiBasePublic: ɵ2,
+    getEntityById: ɵ3,
+    getAllEntity: ɵ4,
+    getUserPassbook: ɵ5,
+    getSearch: ɵ6,
+    getHierachyDetails: ɵ7,
 };
 
 /**
@@ -45,7 +49,7 @@ var DataService = /** @class */ (function () {
             params: requestParam.param,
             observe: 'response'
         };
-        return this.http.get(this.baseUrl + requestParam.url, httpOptions).pipe(mergeMap(function (_a) {
+        return this.http.get(requestParam.url, httpOptions).pipe(mergeMap(function (_a) {
             var body = _a.body, headers = _a.headers;
             if (body.responseCode !== 'OK') {
                 return throwError(body);
@@ -149,5 +153,5 @@ var CoreModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { AppLoaderComponent, CoreModule, DataService, urlConfig, ɵ0, ɵ1, ɵ2, ɵ3, ɵ4 };
+export { AppLoaderComponent, CoreModule, DataService, urlConfig, ɵ0, ɵ1, ɵ2, ɵ3, ɵ4, ɵ5, ɵ6, ɵ7 };
 //# sourceMappingURL=aastrika_npmjs-comptency-core.js.map

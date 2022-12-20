@@ -1,6 +1,10 @@
-import { __decorate } from 'tslib';
-import { Input, Component, NgModule } from '@angular/core';
+import { __decorate, __extends } from 'tslib';
+import { Input, Component, ɵɵdefineInjectable, ɵɵinject, Injectable, NgModule } from '@angular/core';
 import { Location, CommonModule } from '@angular/common';
+import { urlConfig, DataService, CoreModule } from '@aastrika_npmjs/comptency/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { get, forEach } from 'lodash-es';
+import { mergeMap } from 'rxjs/operators';
 import { MatIconModule } from '@angular/material';
 
 var SelfAssessmentCardComponent = /** @class */ (function () {
@@ -21,32 +25,135 @@ var SelfAssessmentCardComponent = /** @class */ (function () {
     return SelfAssessmentCardComponent;
 }());
 
-var SelfAssessmentComponent = /** @class */ (function () {
-    function SelfAssessmentComponent(location) {
-        this.location = location;
-        this.gainedproficencyData = [
-            {
-                title: 'Sector Meetings',
-                description: 'Documents and discuss HCM, THR, growth monitoring and referral related issues in sector meetings',
-            },
-            {
-                title: 'Counselling ',
-                description: 'Lorem ipsum dolor sit amet, consectetur',
-            }
-        ];
+var SelfAssessmentService = /** @class */ (function (_super) {
+    __extends(SelfAssessmentService, _super);
+    function SelfAssessmentService(http) {
+        return _super.call(this, http) || this;
     }
+    /**
+     *searching for the content Identifier
+     *
+     */
+    SelfAssessmentService.prototype.getCompetencyCourseIdentifier = function (reqBody) {
+        var httpOptions = {
+            url: urlConfig.getSearch(),
+            data: reqBody
+        };
+        return this.post(httpOptions);
+    };
+    /**
+    *getting the details of course by pasing the identifier and hierarchyType
+    *
+    */
+    SelfAssessmentService.prototype.fetchHiearchyDetails = function (identifier, hierarchyType) {
+        var httpOptions = {
+            url: urlConfig.getHierachyDetails(identifier, hierarchyType),
+        };
+        return this.get(httpOptions);
+    };
+    SelfAssessmentService.ctorParameters = function () { return [
+        { type: HttpClient }
+    ]; };
+    SelfAssessmentService.ngInjectableDef = ɵɵdefineInjectable({ factory: function SelfAssessmentService_Factory() { return new SelfAssessmentService(ɵɵinject(HttpClient)); }, token: SelfAssessmentService, providedIn: "root" });
+    SelfAssessmentService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        })
+    ], SelfAssessmentService);
+    return SelfAssessmentService;
+}(DataService));
+
+var RequestUtil = /** @class */ (function () {
+    function RequestUtil() {
+    }
+    RequestUtil.prototype.formatedcompetencyData = function (data) {
+        var result = [];
+        if (get(data, 'result')) {
+            if (get(data, 'result.content').competency === true) {
+                var children = get(data, 'result.content').children;
+                if (children.length > 0) {
+                    forEach(children, function (value) {
+                        result.push({
+                            'title': get(value, 'name'),
+                            'courseId': get(value, 'parent'),
+                            'contentId': get(value, 'identifier'),
+                            'contentType': get(value, 'contentType'),
+                            'artifactUrl': get(value, 'artifactUrl'),
+                        });
+                    });
+                    return result;
+                }
+            }
+        }
+    };
+    RequestUtil.ngInjectableDef = ɵɵdefineInjectable({ factory: function RequestUtil_Factory() { return new RequestUtil(); }, token: RequestUtil, providedIn: "root" });
+    RequestUtil = __decorate([
+        Injectable({
+            providedIn: 'root'
+        })
+    ], RequestUtil);
+    return RequestUtil;
+}());
+
+var SelfAssessmentComponent = /** @class */ (function () {
+    function SelfAssessmentComponent(location, selfAssessmentService) {
+        this.location = location;
+        this.selfAssessmentService = selfAssessmentService;
+        this.selfAssessmentData = [];
+        this.requestUtil = new RequestUtil();
+    }
+    /**
+     *getting the details of course by pasing the identifier and hierarchyType
+     *
+     */
     SelfAssessmentComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.getCompetencyCourseIdentifier().pipe(mergeMap(function (res) {
+            var identifier = res.result.content[0].identifier;
+            return _this.fetchHiearchyDetails(identifier);
+        })).subscribe(function (res) {
+            _this.selfAssessmentData = _this.requestUtil.formatedcompetencyData(res);
+        });
+    };
+    SelfAssessmentComponent.prototype.getCompetencyCourseIdentifier = function () {
+        var reqBody = {
+            "request": {
+                "filters": {
+                    "primaryCategory": [
+                        "Course"
+                    ],
+                    "contentType": [
+                        "Course"
+                    ],
+                    "status": [
+                        "Live"
+                    ],
+                    "competency": true
+                }
+            },
+            "query": "",
+            "sort": [
+                {
+                    "lastUpdatedOn": "desc"
+                }
+            ]
+        };
+        return this.selfAssessmentService.getCompetencyCourseIdentifier(reqBody);
+    };
+    SelfAssessmentComponent.prototype.fetchHiearchyDetails = function (identifier) {
+        return this.selfAssessmentService.fetchHiearchyDetails(identifier, 'detail');
     };
     SelfAssessmentComponent.prototype.navigateBack = function () {
         this.location.back();
     };
     SelfAssessmentComponent.ctorParameters = function () { return [
-        { type: Location }
+        { type: Location },
+        { type: SelfAssessmentService }
     ]; };
     SelfAssessmentComponent = __decorate([
         Component({
             selector: 'lib-self-assessment',
-            template: "<div class=\"content\">\n    <mat-icon (click)=\"navigateBack()\" class=\"cursor-pointer\">chevron_left</mat-icon>\n  \n    <h1 class=\" mb-1 pl-2 \">Self Assessment</h1>\n\n    <ng-container *ngFor=\"let gainedproficency  of gainedproficencyData\">\n        <lib-self-assessment-card [cardData]=\"gainedproficency\"></lib-self-assessment-card>\n      </ng-container>\n  \n  </div>\n",
+            template: "<div class=\"content\">\n    <mat-icon (click)=\"navigateBack()\" class=\"cursor-pointer\">chevron_left</mat-icon>\n    <h1 class=\" mb-1 pl-2 \">Self Assessment</h1>\n    <ng-container *ngFor=\"let cardData   of selfAssessmentData\">\n        <ng-container *ngIf=\"selfAssessmentData\">\n            <lib-self-assessment-card [cardData]=\"cardData\"></lib-self-assessment-card>\n        </ng-container>\n    </ng-container>\n</div>",
             styles: [".content{padding:60px 20px 50px;margin:auto}@media only screen and (min-width:960px){.content{max-width:30%}}@media only screen and (min-width:1280px){.content{max-width:35%}}@media only screen and (min-width:1920px){.content{max-width:30%}}@media only screen and (min-width:600px) and (max-width:959px){.content{max-width:50%}}@media only screen and (max-width:599px){.content{max-width:90%}}"]
         })
     ], SelfAssessmentComponent);
@@ -62,6 +169,8 @@ var SelfAssessmentModule = /** @class */ (function () {
             imports: [
                 CommonModule,
                 MatIconModule,
+                HttpClientModule,
+                CoreModule
             ],
             exports: [SelfAssessmentCardComponent, SelfAssessmentComponent]
         })
@@ -73,5 +182,5 @@ var SelfAssessmentModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { SelfAssessmentCardComponent, SelfAssessmentComponent, SelfAssessmentModule };
+export { SelfAssessmentCardComponent, SelfAssessmentComponent, SelfAssessmentModule, SelfAssessmentService as ɵa };
 //# sourceMappingURL=aastrika_npmjs-comptency-self-assessment.js.map

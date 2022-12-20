@@ -223,7 +223,7 @@
         return value;
     }
 
-    var ɵ0 = function () { return "" + urlConfig.host + urlConfig.apiSlug; }, ɵ1 = function () { return "" + urlConfig.host + urlConfig.apiProxy; }, ɵ2 = function (id) { return urlConfig.apiBasePath() + "/entityCompetency/getEntityById/" + id; }, ɵ3 = function () { return urlConfig.apiBasePath() + "/entityCompetency/getAllEntity"; }, ɵ4 = function () { return urlConfig.apiBaseProxy() + "/user/v1/passbook"; };
+    var ɵ0 = function () { return "" + urlConfig.host + urlConfig.apiSlug; }, ɵ1 = function () { return "" + urlConfig.host + urlConfig.apiProxy; }, ɵ2 = function () { return "" + urlConfig.host + urlConfig.apiPublic; }, ɵ3 = function (id) { return urlConfig.apiBasePath() + "/entityCompetency/getEntityById/" + id; }, ɵ4 = function () { return urlConfig.apiBasePath() + "/entityCompetency/getAllEntity"; }, ɵ5 = function () { return urlConfig.apiBaseProxy() + "/user/v1/passbook"; }, ɵ6 = function () { return urlConfig.apiBasePublic() + "/publicContent/v1/search"; }, ɵ7 = function (identifier, hierarchyType) { return urlConfig.apiBaseProxy() + "/action/content/v3/hierarchy/" + identifier + "?hierarchyType=" + hierarchyType; };
     /**
      * urlConfig to return the api url
      *
@@ -235,11 +235,15 @@
         host: 'http://localhost:3000',
         apiSlug: '/apis/protected/v8',
         apiProxy: '/apis/proxies/v8',
+        apiPublic: '/apis/public/v8',
         apiBasePath: ɵ0,
         apiBaseProxy: ɵ1,
-        getEntityById: ɵ2,
-        getAllEntity: ɵ3,
-        getUserPassbook: ɵ4,
+        apiBasePublic: ɵ2,
+        getEntityById: ɵ3,
+        getAllEntity: ɵ4,
+        getUserPassbook: ɵ5,
+        getSearch: ɵ6,
+        getHierachyDetails: ɵ7,
     };
 
     /**
@@ -262,7 +266,7 @@
                 params: requestParam.param,
                 observe: 'response'
             };
-            return this.http.get(this.baseUrl + requestParam.url, httpOptions).pipe(operators.mergeMap(function (_a) {
+            return this.http.get(requestParam.url, httpOptions).pipe(operators.mergeMap(function (_a) {
                 var body = _a.body, headers = _a.headers;
                 if (body.responseCode !== 'OK') {
                     return rxjs.throwError(body);
@@ -371,6 +375,9 @@
     exports.ɵ2 = ɵ2;
     exports.ɵ3 = ɵ3;
     exports.ɵ4 = ɵ4;
+    exports.ɵ5 = ɵ5;
+    exports.ɵ6 = ɵ6;
+    exports.ɵ7 = ɵ7;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

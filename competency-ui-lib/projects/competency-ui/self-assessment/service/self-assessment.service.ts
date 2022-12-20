@@ -16,7 +16,7 @@ export class SelfAssessmentService extends DataService {
    *searching for the content Identifier
    * 
    */
-  public seachIdentifier(reqBody:any){ 
+  public getCompetencyCourseIdentifier(reqBody:any){ 
    
     const httpOptions: any = {
       url: urlConfig.getSearch(),
@@ -31,13 +31,11 @@ export class SelfAssessmentService extends DataService {
    * 
    */
 
-
-  public fetchHeiarchDetails(identifier, hierarchyType){
+  public fetchHiearchyDetails(identifier, hierarchyType){
     
     const httpOptions: any = {
-      url: urlConfig.getHeiarchDetails(identifier, hierarchyType),
+      url: urlConfig.getHierachyDetails(identifier, hierarchyType),
     };
-    // console.log('reqBody',httpOptions)
     return this.get(httpOptions)
   }
 

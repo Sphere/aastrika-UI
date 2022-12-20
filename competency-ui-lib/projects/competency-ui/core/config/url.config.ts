@@ -17,6 +17,6 @@ export const urlConfig = {
   getAllEntity: () => `${urlConfig.apiBasePath()}/entityCompetency/getAllEntity`,
   getUserPassbook: () => `${urlConfig.apiBaseProxy()}/user/v1/passbook`,
   getSearch:() => `${urlConfig.apiBasePublic()}/publicContent/v1/search`,
-  getHeiarchDetails:(identifier, hierarchyType) => `${urlConfig.apiBaseProxy()}/action/content/v3/hierarchy/${identifier}?hierarchyType=${hierarchyType}`,
+  getHierachyDetails:(identifier, hierarchyType) => `${urlConfig.apiBaseProxy()}/action/content/v3/hierarchy/${identifier}?hierarchyType=${hierarchyType}`,
 
 }

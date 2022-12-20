@@ -22,19 +22,20 @@ export class SelfAssessmentComponent implements OnInit {
 
     this.requestUtil = new RequestUtil()
   }
-
+  /**
+   *getting the details of course by pasing the identifier and hierarchyType
+   * 
+   */
   ngOnInit() {
-    this.getSearchIdentifier().pipe(mergeMap((res:any)=>{
+    this.getCompetencyCourseIdentifier().pipe(mergeMap((res:any)=>{
       const identifier = res.result.content[0].identifier;
-      return this.getHeiarchDetails(identifier)
+      return this.fetchHiearchyDetails(identifier)
      })).subscribe((res)=>{
-      // console.log(res);
       this.selfAssessmentData = this.requestUtil.formatedcompetencyData(res)
-      
      })
   }
 
-  getSearchIdentifier(){
+  getCompetencyCourseIdentifier(){
     const reqBody = {
       "request": {
           "filters": {
@@ -57,11 +58,10 @@ export class SelfAssessmentComponent implements OnInit {
           }
       ]
   }
-    return  this.selfAssessmentService.seachIdentifier(reqBody)
+    return  this.selfAssessmentService.getCompetencyCourseIdentifier(reqBody)
   }
-
-  getHeiarchDetails(identifier){
-    return this.selfAssessmentService.fetchHeiarchDetails(identifier,'detail')
+  fetchHiearchyDetails(identifier){
+    return this.selfAssessmentService.fetchHiearchyDetails(identifier,'detail')
     
   }
 

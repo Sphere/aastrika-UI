@@ -4,10 +4,10 @@ import { CommonModule, Location } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule, MatTabsModule, MatExpansionModule } from '@angular/material';
 import { BehaviorSubject, of, forkJoin } from 'rxjs';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { mergeMap } from 'rxjs/operators';
-import { isEmpty, get, reduce, forEach, findIndex, map, values, merge, keyBy } from 'lodash-es';
 import { DataService, urlConfig, CoreModule } from '@aastrika_npmjs/comptency/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { get, forEach, isEmpty, reduce, findIndex, map, values, merge, keyBy } from 'lodash-es';
+import { mergeMap } from 'rxjs/operators';
 import { ConfigService as ConfigService$1 } from '@aastrika_npmjs/comptency/entry-module';
 
 let SlefAssessmentEntryComponent = class SlefAssessmentEntryComponent {
@@ -139,33 +139,131 @@ SelfAssessmentCardComponent = __decorate([
     })
 ], SelfAssessmentCardComponent);
 
-let SelfAssessmentComponent = class SelfAssessmentComponent {
-    constructor(location) {
-        this.location = location;
-        this.gainedproficencyData = [
-            {
-                title: 'Sector Meetings',
-                description: 'Documents and discuss HCM, THR, growth monitoring and referral related issues in sector meetings',
-            },
-            {
-                title: 'Counselling ',
-                description: 'Lorem ipsum dolor sit amet, consectetur',
-            }
-        ];
+let SelfAssessmentService = class SelfAssessmentService extends DataService {
+    constructor(http) {
+        super(http);
     }
+    /**
+     *searching for the content Identifier
+     *
+     */
+    getCompetencyCourseIdentifier(reqBody) {
+        const httpOptions = {
+            url: urlConfig.getSearch(),
+            data: reqBody
+        };
+        return this.post(httpOptions);
+    }
+    /**
+    *getting the details of course by pasing the identifier and hierarchyType
+    *
+    */
+    fetchHiearchyDetails(identifier, hierarchyType) {
+        const httpOptions = {
+            url: urlConfig.getHierachyDetails(identifier, hierarchyType),
+        };
+        return this.get(httpOptions);
+    }
+};
+SelfAssessmentService.ctorParameters = () => [
+    { type: HttpClient }
+];
+SelfAssessmentService.ngInjectableDef = ɵɵdefineInjectable({ factory: function SelfAssessmentService_Factory() { return new SelfAssessmentService(ɵɵinject(HttpClient)); }, token: SelfAssessmentService, providedIn: "root" });
+SelfAssessmentService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], SelfAssessmentService);
+
+let RequestUtil = class RequestUtil {
+    constructor() { }
+    formatedcompetencyData(data) {
+        const result = [];
+        if (get(data, 'result')) {
+            if (get(data, 'result.content').competency === true) {
+                const children = get(data, 'result.content').children;
+                if (children.length > 0) {
+                    forEach(children, (value) => {
+                        result.push({
+                            'title': get(value, 'name'),
+                            'courseId': get(value, 'parent'),
+                            'contentId': get(value, 'identifier'),
+                            'contentType': get(value, 'contentType'),
+                            'artifactUrl': get(value, 'artifactUrl'),
+                        });
+                    });
+                    return result;
+                }
+            }
+        }
+    }
+};
+RequestUtil.ngInjectableDef = ɵɵdefineInjectable({ factory: function RequestUtil_Factory() { return new RequestUtil(); }, token: RequestUtil, providedIn: "root" });
+RequestUtil = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], RequestUtil);
+
+let SelfAssessmentComponent = class SelfAssessmentComponent {
+    constructor(location, selfAssessmentService) {
+        this.location = location;
+        this.selfAssessmentService = selfAssessmentService;
+        this.selfAssessmentData = [];
+        this.requestUtil = new RequestUtil();
+    }
+    /**
+     *getting the details of course by pasing the identifier and hierarchyType
+     *
+     */
     ngOnInit() {
+        this.getCompetencyCourseIdentifier().pipe(mergeMap((res) => {
+            const identifier = res.result.content[0].identifier;
+            return this.fetchHiearchyDetails(identifier);
+        })).subscribe((res) => {
+            this.selfAssessmentData = this.requestUtil.formatedcompetencyData(res);
+        });
+    }
+    getCompetencyCourseIdentifier() {
+        const reqBody = {
+            "request": {
+                "filters": {
+                    "primaryCategory": [
+                        "Course"
+                    ],
+                    "contentType": [
+                        "Course"
+                    ],
+                    "status": [
+                        "Live"
+                    ],
+                    "competency": true
+                }
+            },
+            "query": "",
+            "sort": [
+                {
+                    "lastUpdatedOn": "desc"
+                }
+            ]
+        };
+        return this.selfAssessmentService.getCompetencyCourseIdentifier(reqBody);
+    }
+    fetchHiearchyDetails(identifier) {
+        return this.selfAssessmentService.fetchHiearchyDetails(identifier, 'detail');
     }
     navigateBack() {
         this.location.back();
     }
 };
 SelfAssessmentComponent.ctorParameters = () => [
-    { type: Location }
+    { type: Location },
+    { type: SelfAssessmentService }
 ];
 SelfAssessmentComponent = __decorate([
     Component({
         selector: 'lib-self-assessment',
-        template: "<div class=\"content\">\n    <mat-icon (click)=\"navigateBack()\" class=\"cursor-pointer\">chevron_left</mat-icon>\n  \n    <h1 class=\" mb-1 pl-2 \">Self Assessment</h1>\n\n    <ng-container *ngFor=\"let gainedproficency  of gainedproficencyData\">\n        <lib-self-assessment-card [cardData]=\"gainedproficency\"></lib-self-assessment-card>\n      </ng-container>\n  \n  </div>\n",
+        template: "<div class=\"content\">\n    <mat-icon (click)=\"navigateBack()\" class=\"cursor-pointer\">chevron_left</mat-icon>\n    <h1 class=\" mb-1 pl-2 \">Self Assessment</h1>\n    <ng-container *ngFor=\"let cardData   of selfAssessmentData\">\n        <ng-container *ngIf=\"selfAssessmentData\">\n            <lib-self-assessment-card [cardData]=\"cardData\"></lib-self-assessment-card>\n        </ng-container>\n    </ng-container>\n</div>",
         styles: [".content{padding:60px 20px 50px;margin:auto}@media only screen and (min-width:960px){.content{max-width:30%}}@media only screen and (min-width:1280px){.content{max-width:35%}}@media only screen and (min-width:1920px){.content{max-width:30%}}@media only screen and (min-width:600px) and (max-width:959px){.content{max-width:50%}}@media only screen and (max-width:599px){.content{max-width:90%}}"]
     })
 ], SelfAssessmentComponent);
@@ -178,12 +276,14 @@ SelfAssessmentModule = __decorate([
         imports: [
             CommonModule,
             MatIconModule,
+            HttpClientModule,
+            CoreModule
         ],
         exports: [SelfAssessmentCardComponent, SelfAssessmentComponent]
     })
 ], SelfAssessmentModule);
 
-class RequestUtil {
+class RequestUtil$1 {
     constructor() {
         this.formatedActivities = (data) => {
             if (!isEmpty(data)) {
@@ -445,7 +545,7 @@ let RequiredComptencyCardComponent = class RequiredComptencyCardComponent {
                 header: 'Course-Name Completion',
             },
         ];
-        this.requestUtil = new RequestUtil();
+        this.requestUtil = new RequestUtil$1();
     }
     ngOnInit() {
         // this.loading = true
@@ -522,7 +622,7 @@ let GainedComptencyCardComponent = class GainedComptencyCardComponent {
         this.gainedService = gainedService;
         this.loading = false;
         this.panelOpenState = false;
-        this.requestUtil = new RequestUtil();
+        this.requestUtil = new RequestUtil$1();
     }
     ngOnInit() {
         this.loading = true;
@@ -639,7 +739,7 @@ let ActiveSummaryComponent = class ActiveSummaryComponent {
         this.panelOpenState = true;
         this.loading = false;
         this.acordianLoading = false;
-        this.requestUtil = new RequestUtil();
+        this.requestUtil = new RequestUtil$1();
         this.profileData = this.configService.getConfig().profileData[0].designation;
     }
     ngOnInit() {
@@ -742,5 +842,5 @@ CompetencyModule = __decorate([
  * Generated bundle index. Do not edit.
  */
 
-export { CompetencyModule, EntryModule, SelfAssessmentModule, SlefAssessmentEntryComponent as ɵa, CompetencyEntryComponent as ɵb, ConfigService as ɵc, ConfigurationContext as ɵd, SelfAssessmentCardComponent as ɵe, SelfAssessmentComponent as ɵf, RequiredComptencyCardComponent as ɵg, RequiredCompetencyService as ɵh, GainedComptencyCardComponent as ɵi, GainedService as ɵj, CompetencyDashboardComponent as ɵk, ActiveSummaryComponent as ɵl, ActiveSummaryService as ɵm };
+export { CompetencyModule, EntryModule, SelfAssessmentModule, SlefAssessmentEntryComponent as ɵa, CompetencyEntryComponent as ɵb, ConfigService as ɵc, ConfigurationContext as ɵd, SelfAssessmentCardComponent as ɵe, SelfAssessmentComponent as ɵf, SelfAssessmentService as ɵg, RequiredComptencyCardComponent as ɵh, RequiredCompetencyService as ɵi, GainedComptencyCardComponent as ɵj, GainedService as ɵk, CompetencyDashboardComponent as ɵl, ActiveSummaryComponent as ɵm, ActiveSummaryService as ɵn };
 //# sourceMappingURL=aastrika_npmjs-comptency.js.map
