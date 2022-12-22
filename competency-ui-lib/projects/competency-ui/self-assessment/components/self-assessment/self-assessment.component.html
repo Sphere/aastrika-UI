@@ -1,5 +1,5 @@
 <lib-app-loader *ngIf="loading === true"></lib-app-loader>
-<div class="content"  *ngIf="selfAssessmentData.length>0">
+<div class="content"  *ngIf="selfAssessmentData">
     <mat-icon (click)="navigateBack()" class="cursor-pointer">chevron_left</mat-icon>
     <h1 class=" mb-1 pl-2 ">Self Assessment</h1>
     <ng-container *ngFor="let cardData   of selfAssessmentData">

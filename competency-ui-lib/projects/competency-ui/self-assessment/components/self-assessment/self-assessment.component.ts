@@ -59,7 +59,6 @@ export class SelfAssessmentComponent implements OnInit {
               "competency":true
           }
       },
-      "query": "",
       "sort": [
           {
               "lastUpdatedOn": "desc"

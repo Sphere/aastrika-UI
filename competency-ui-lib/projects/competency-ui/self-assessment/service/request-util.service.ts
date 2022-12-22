@@ -35,7 +35,7 @@ export class RequestUtil {
     const result = []
     if(_.get(data,'result')){
       const content =  _.get(data, 'result.content')
-      if(content.length > 0){
+      if(content){
          _.forEach(content, (value:any)=>{
             result.push({
               'title':  _.get(value, 'name'),
