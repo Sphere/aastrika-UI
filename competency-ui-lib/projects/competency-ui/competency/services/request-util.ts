@@ -91,7 +91,7 @@ export class RequestUtil {
     if(acquiredDetails.length>0){
       _.forEach(acquiredDetails,(value:any)=>{
           response.push({
-            'header': _.get(value, 'courseName') ? _.get(value, 'courseName') : '',
+            'header': _.get(value, 'courseName') ? _.get(value, 'courseName') : _.get(value,'acquiredChannel'),
             'date':  _.get(value,'createdDate'),
             'description': _.get(value, 'additionalParams.description'),
             'keyboardArrowUp':true,
@@ -101,6 +101,8 @@ export class RequestUtil {
     }
    return response
   }
+
+  
   acauiredChannelColourCode(acquiredDetails:any){
     let response  = [
      {
@@ -143,6 +145,16 @@ export class RequestUtil {
            
            break; 
          }
+         case 'Course':{
+          _.forEach(response, (level:any)=>{
+            if(level.displayLevel == _.get(value,'competencyLevelId')){
+              level.color = '#FFFBB0';
+              level.selected = true
+            }
+          } )
+          
+          break; 
+        }
          case 'selfAssessment':{
            _.forEach(response, (level:any)=>{
              if(level.displayLevel == _.get(value,'competencyLevelId')){
