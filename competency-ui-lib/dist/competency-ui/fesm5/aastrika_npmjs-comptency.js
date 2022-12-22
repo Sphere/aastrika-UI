@@ -257,6 +257,7 @@ var SelfAssessmentComponent = /** @class */ (function () {
         this.selfAssessmentService = selfAssessmentService;
         this.selfAssessmentData = [];
         this.loading = false;
+        this.selfAsesment = new EventEmitter();
         this.requestUtil = new RequestUtil();
     }
     /**
@@ -275,10 +276,7 @@ var SelfAssessmentComponent = /** @class */ (function () {
         });
         this.selfAssessmentService.startAssessment$.pipe().subscribe(function (res) {
             console.log(res);
-            /**
-         * here we will redirect to player screen
-         *
-         */
+            _this.selfAsesment.emit(res);
         });
     };
     SelfAssessmentComponent.prototype.getCompetencyCourse = function () {
@@ -313,6 +311,9 @@ var SelfAssessmentComponent = /** @class */ (function () {
         { type: Location },
         { type: SelfAssessmentService }
     ]; };
+    __decorate([
+        Output()
+    ], SelfAssessmentComponent.prototype, "selfAsesment", void 0);
     SelfAssessmentComponent = __decorate([
         Component({
             selector: 'lib-self-assessment',

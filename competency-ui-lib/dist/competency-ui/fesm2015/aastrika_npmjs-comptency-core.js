@@ -13,7 +13,7 @@ const ɵ0 = () => `${urlConfig.host}${urlConfig.apiSlug}`, ɵ1 = () => `${urlCon
  * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
  */
 const urlConfig = {
-    host: 'https://sphere.aastrika.org',
+    host: window.location.protocol + "//" + window.location.host || 'https://sphere.aastrika.org',
     apiSlug: '/apis/protected/v8',
     apiProxy: '/apis/proxies/v8',
     apiPublic: '/apis/public/v8',

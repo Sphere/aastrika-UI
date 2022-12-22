@@ -347,6 +347,7 @@
             this.selfAssessmentService = selfAssessmentService;
             this.selfAssessmentData = [];
             this.loading = false;
+            this.selfAsesment = new core.EventEmitter();
             this.requestUtil = new RequestUtil();
         }
         /**
@@ -365,10 +366,7 @@
             });
             this.selfAssessmentService.startAssessment$.pipe().subscribe(function (res) {
                 console.log(res);
-                /**
-             * here we will redirect to player screen
-             *
-             */
+                _this.selfAsesment.emit(res);
             });
         };
         SelfAssessmentComponent.prototype.getCompetencyCourse = function () {
@@ -403,6 +401,9 @@
             { type: common.Location },
             { type: SelfAssessmentService }
         ]; };
+        __decorate([
+            core.Output()
+        ], SelfAssessmentComponent.prototype, "selfAsesment", void 0);
         SelfAssessmentComponent = __decorate([
             core.Component({
                 selector: 'lib-self-assessment',
@@ -434,7 +435,7 @@
     exports.SelfAssessmentCardComponent = SelfAssessmentCardComponent;
     exports.SelfAssessmentComponent = SelfAssessmentComponent;
     exports.SelfAssessmentModule = SelfAssessmentModule;
-    exports.ɵa = SelfAssessmentService;
+    exports.SelfAssessmentService = SelfAssessmentService;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

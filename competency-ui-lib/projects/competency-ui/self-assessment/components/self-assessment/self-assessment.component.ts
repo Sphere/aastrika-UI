@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit ,Output} from '@angular/core';
 import { Location } from '@angular/common'
 import { SelfAssessmentService } from '../../service/self-assessment.service';
 import { RequestUtil } from '../../service/request-util.service';
@@ -16,6 +16,7 @@ export class SelfAssessmentComponent implements OnInit {
   selfAssessmentData = []
   requestUtil: any
   loading = false
+  @Output() selfAsesment = new EventEmitter();
   constructor(
     private location: Location,
     private selfAssessmentService : SelfAssessmentService,
@@ -38,10 +39,7 @@ export class SelfAssessmentComponent implements OnInit {
     })
     this.selfAssessmentService.startAssessment$.pipe().subscribe((res:any)=>{
       console.log(res)
-      /**
-   * here we will redirect to player screen 
-   * 
-   */
+      this.selfAsesment.emit(res)
     })
   }
 

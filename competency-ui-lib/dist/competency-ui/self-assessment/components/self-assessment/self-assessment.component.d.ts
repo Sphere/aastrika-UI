@@ -1,4 +1,4 @@
-import { OnInit } from '@angular/core';
+import { EventEmitter, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { SelfAssessmentService } from '../../service/self-assessment.service';
 export declare class SelfAssessmentComponent implements OnInit {
@@ -7,6 +7,7 @@ export declare class SelfAssessmentComponent implements OnInit {
     selfAssessmentData: any[];
     requestUtil: any;
     loading: boolean;
+    selfAsesment: EventEmitter<any>;
     constructor(location: Location, selfAssessmentService: SelfAssessmentService);
     /**
      *getting the details of course by pasing the identifier and hierarchyType

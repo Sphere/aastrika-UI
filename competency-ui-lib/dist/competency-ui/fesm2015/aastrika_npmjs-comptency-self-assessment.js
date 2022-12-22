@@ -1,5 +1,5 @@
 import { __decorate } from 'tslib';
-import { ɵɵdefineInjectable, ɵɵinject, Injectable, Input, Component, NgModule } from '@angular/core';
+import { ɵɵdefineInjectable, ɵɵinject, Injectable, Input, Component, EventEmitter, Output, NgModule } from '@angular/core';
 import { DataService, urlConfig, CoreModule } from '@aastrika_npmjs/comptency/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
@@ -126,6 +126,7 @@ let SelfAssessmentComponent = class SelfAssessmentComponent {
         this.selfAssessmentService = selfAssessmentService;
         this.selfAssessmentData = [];
         this.loading = false;
+        this.selfAsesment = new EventEmitter();
         this.requestUtil = new RequestUtil();
     }
     /**
@@ -143,10 +144,7 @@ let SelfAssessmentComponent = class SelfAssessmentComponent {
         });
         this.selfAssessmentService.startAssessment$.pipe().subscribe((res) => {
             console.log(res);
-            /**
-         * here we will redirect to player screen
-         *
-         */
+            this.selfAsesment.emit(res);
         });
     }
     getCompetencyCourse() {
@@ -182,6 +180,9 @@ SelfAssessmentComponent.ctorParameters = () => [
     { type: Location },
     { type: SelfAssessmentService }
 ];
+__decorate([
+    Output()
+], SelfAssessmentComponent.prototype, "selfAsesment", void 0);
 SelfAssessmentComponent = __decorate([
     Component({
         selector: 'lib-self-assessment',
@@ -209,5 +210,5 @@ SelfAssessmentModule = __decorate([
  * Generated bundle index. Do not edit.
  */
 
-export { SelfAssessmentCardComponent, SelfAssessmentComponent, SelfAssessmentModule, SelfAssessmentService as ɵa };
+export { SelfAssessmentCardComponent, SelfAssessmentComponent, SelfAssessmentModule, SelfAssessmentService };
 //# sourceMappingURL=aastrika_npmjs-comptency-self-assessment.js.map

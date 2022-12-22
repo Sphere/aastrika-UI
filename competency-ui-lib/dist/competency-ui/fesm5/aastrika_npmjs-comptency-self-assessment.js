@@ -1,5 +1,5 @@
 import { __extends, __decorate } from 'tslib';
-import { ɵɵdefineInjectable, ɵɵinject, Injectable, Input, Component, NgModule } from '@angular/core';
+import { ɵɵdefineInjectable, ɵɵinject, Injectable, Input, Component, EventEmitter, Output, NgModule } from '@angular/core';
 import { urlConfig, DataService, CoreModule } from '@aastrika_npmjs/comptency/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
@@ -132,6 +132,7 @@ var SelfAssessmentComponent = /** @class */ (function () {
         this.selfAssessmentService = selfAssessmentService;
         this.selfAssessmentData = [];
         this.loading = false;
+        this.selfAsesment = new EventEmitter();
         this.requestUtil = new RequestUtil();
     }
     /**
@@ -150,10 +151,7 @@ var SelfAssessmentComponent = /** @class */ (function () {
         });
         this.selfAssessmentService.startAssessment$.pipe().subscribe(function (res) {
             console.log(res);
-            /**
-         * here we will redirect to player screen
-         *
-         */
+            _this.selfAsesment.emit(res);
         });
     };
     SelfAssessmentComponent.prototype.getCompetencyCourse = function () {
@@ -188,6 +186,9 @@ var SelfAssessmentComponent = /** @class */ (function () {
         { type: Location },
         { type: SelfAssessmentService }
     ]; };
+    __decorate([
+        Output()
+    ], SelfAssessmentComponent.prototype, "selfAsesment", void 0);
     SelfAssessmentComponent = __decorate([
         Component({
             selector: 'lib-self-assessment',
@@ -220,5 +221,5 @@ var SelfAssessmentModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { SelfAssessmentCardComponent, SelfAssessmentComponent, SelfAssessmentModule, SelfAssessmentService as ɵa };
+export { SelfAssessmentCardComponent, SelfAssessmentComponent, SelfAssessmentModule, SelfAssessmentService };
 //# sourceMappingURL=aastrika_npmjs-comptency-self-assessment.js.map

@@ -241,6 +241,7 @@ let SelfAssessmentComponent = class SelfAssessmentComponent {
         this.selfAssessmentService = selfAssessmentService;
         this.selfAssessmentData = [];
         this.loading = false;
+        this.selfAsesment = new EventEmitter();
         this.requestUtil = new RequestUtil();
     }
     /**
@@ -258,10 +259,7 @@ let SelfAssessmentComponent = class SelfAssessmentComponent {
         });
         this.selfAssessmentService.startAssessment$.pipe().subscribe((res) => {
             console.log(res);
-            /**
-         * here we will redirect to player screen
-         *
-         */
+            this.selfAsesment.emit(res);
         });
     }
     getCompetencyCourse() {
@@ -297,6 +295,9 @@ SelfAssessmentComponent.ctorParameters = () => [
     { type: Location },
     { type: SelfAssessmentService }
 ];
+__decorate([
+    Output()
+], SelfAssessmentComponent.prototype, "selfAsesment", void 0);
 SelfAssessmentComponent = __decorate([
     Component({
         selector: 'lib-self-assessment',
