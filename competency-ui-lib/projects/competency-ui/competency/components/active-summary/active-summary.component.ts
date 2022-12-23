@@ -26,20 +26,26 @@ export class ActiveSummaryComponent implements OnInit {
   profileData:any
   constructor(public activeSummaryService: ActiveSummaryService, public configService: ConfigService) {
     this.requestUtil = new RequestUtil()
-    this.profileData = this.configService.getConfig()!.profileData[0].designation
+    if(this.configService.getConfig()!.profileData){
+      this.profileData = this.configService.getConfig()!.profileData[0].designation
+    }
+    
   }
 
   ngOnInit() {
-    setTimeout(()=>{
-      this.loading = true
-   this.unsubscribe = this.getActivityByRole().pipe(mergeMap((res:any)=>{
-      const formatedResponse =  this.requestUtil.formatedActivitityByPostion(res)
-      return of(formatedResponse)
-    })).subscribe((res: any) => {
-      this.loading = false
-      this.roleactivitySummaries = res
-    })
-    },500)
+    if(this.profileData){
+      setTimeout(()=>{
+        this.loading = true
+     this.unsubscribe = this.getActivityByRole().pipe(mergeMap((res:any)=>{
+        const formatedResponse =  this.requestUtil.formatedActivitityByPostion(res)
+        return of(formatedResponse)
+      })).subscribe((res: any) => {
+        this.loading = false
+        this.roleactivitySummaries = res
+      })
+      },500)
+    }
+    
   }
 
   private getActivityByRole() {
