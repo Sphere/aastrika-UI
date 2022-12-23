@@ -26,34 +26,37 @@ export class ActiveSummaryComponent implements OnInit {
   profileData:any
   constructor(public activeSummaryService: ActiveSummaryService, public configService: ConfigService) {
     this.requestUtil = new RequestUtil()
-    if(this.configService.getConfig()!.profileData){
-      this.profileData = this.configService.getConfig()!.profileData[0].designation
-    }
-    
   }
 
   ngOnInit() {
-    if(this.profileData){
-      setTimeout(()=>{
-        this.loading = true
-     this.unsubscribe = this.getActivityByRole().pipe(mergeMap((res:any)=>{
-        const formatedResponse =  this.requestUtil.formatedActivitityByPostion(res)
-        return of(formatedResponse)
-      })).subscribe((res: any) => {
-        this.loading = false
-        this.roleactivitySummaries = res
-      })
-      },500)
-    }
-    
+    this.loading = true
+    this.getUserDetails().pipe(mergeMap((res:any)=>{
+      this.profileData = res.profileDetails.profileReq
+      if(this.profileData){
+        return this.getActivityByRole()
+      }
+    })).subscribe((res:any)=>{
+      const formatedResponse =  this.requestUtil.formatedActivitityByPostion(res)
+      this.roleactivitySummaries = formatedResponse
+      this.loading = false
+    }) 
   }
-
+  getUserDetails(){
+    const reqBody = {
+      id: this.configService.getConfig().id
+    }
+    return this.activeSummaryService.getUserdetailsFromRegistry(reqBody)
+  }
   private getActivityByRole() {
+    let designation :any 
+    if(this.profileData.professionalDetails){
+      designation = this.profileData.professionalDetails[0].designation
+    }
     const reqBody = {
       filter: {
         "isDetail": true
       },
-      id: this.profileData === 'AWW' ? 95 : 1
+      id: designation === 'AWW' ? 95 : 1
     };
     return this.activeSummaryService.getActivityById(reqBody)
   }
