@@ -91,6 +91,9 @@ export class ActiveSummaryComponent implements OnInit {
     return this.activeSummaryService.getActivityById(reqBody)
   }
   ngOnDestroy() {
-    this.unsubscribe.unsubscribe()
+    if(this.unsubscribe){
+      this.unsubscribe.unsubscribe()
+    }
+   
   }
 }
