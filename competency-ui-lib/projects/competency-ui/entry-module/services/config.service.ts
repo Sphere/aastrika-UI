@@ -9,6 +9,7 @@ export class ConfigService {
   private _config = this.config$.asObservable()
  
   constructor(@Optional() @Inject('config') public config:ConfigurationContext ) { 
+    console.log('log in config service ', config)
     if(config){
       console.log('context log in config service ------ ', config)
       this.setConfig(config)
