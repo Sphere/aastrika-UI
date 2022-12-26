@@ -21,7 +21,13 @@ export class ConfigService {
   public getConfig(){
     let config :any 
     this._config.subscribe((res:any)=>{
-      config =  res
+      if(res){
+        config =  res
+      } else {
+        const c_cofig = JSON.parse(localStorage.getItem('competency'))
+        config = c_cofig
+      }
+     
     })
     return config
   }
