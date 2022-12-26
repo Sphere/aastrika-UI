@@ -1,6 +1,7 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { Subject,BehaviorSubject } from 'rxjs';
 import { ConfigurationContext } from './configuration-context';
+import * as _ from 'lodash-es';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,7 +11,7 @@ export class ConfigService {
  
   constructor(@Optional() @Inject('config') public config:ConfigurationContext ) { 
     console.log('log in config service ', config)
-    if(config){
+    if(!_.isEmpty(config)){
       console.log('context log in config service ------ ', config)
       this.setConfig(config)
     }
@@ -21,7 +22,7 @@ export class ConfigService {
   public getConfig(){
     let config :any 
     this._config.subscribe((res:any)=>{
-      if(res){
+      if(!_.isEmpty(res)){
         config =  res
       } else {
         const c_cofig = JSON.parse(localStorage.getItem('competency'))
