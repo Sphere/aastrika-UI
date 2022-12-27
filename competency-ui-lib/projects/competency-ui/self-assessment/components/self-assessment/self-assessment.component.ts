@@ -5,6 +5,7 @@ import { RequestUtil } from '../../service/request-util.service';
 import { map, mergeMap } from 'rxjs/operators';
 import * as _ from 'lodash-es';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'lib-self-assessment',
@@ -20,6 +21,7 @@ export class SelfAssessmentComponent implements OnInit {
   constructor(
     private location: Location,
     private selfAssessmentService : SelfAssessmentService,
+    public router:Router
   ) { 
 
     this.requestUtil = new RequestUtil()
@@ -70,7 +72,7 @@ export class SelfAssessmentComponent implements OnInit {
   
 
   navigateBack() {
-    this.location.back()
+    this.router.navigate(['/app/profile-view'])
   }
 
 }
