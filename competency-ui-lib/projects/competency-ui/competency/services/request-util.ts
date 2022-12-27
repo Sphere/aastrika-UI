@@ -93,7 +93,8 @@ export class RequestUtil {
           response.push({
             'header': _.get(value, 'courseName') ? _.get(value, 'courseName') : _.get(value,'acquiredChannel'),
             'date':  _.get(value,'createdDate'),
-            'description': _.get(value, 'additionalParams.description'),
+            'description': _.get(value,'acquiredChannel') === 'admin' ? 
+             _.get(value, 'additionalParams.remarks') :  _.get(value, 'additionalParams.description'),
             'keyboardArrowUp':true,
             'level': _.get(value,'competencyLevelId')
           })
