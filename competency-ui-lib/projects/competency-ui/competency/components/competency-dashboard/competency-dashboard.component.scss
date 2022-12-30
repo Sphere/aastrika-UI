@@ -83,16 +83,19 @@
     height: 15px;
     background: #dfedf9;
     border-radius: 50%;
+    border: 0.5px solid #959595;
   }
 
   .legend-green {
     background: var(--teal);
+    margin-left: 18px;
   }
   .legend-blue {
     background: #7cb5e6;
   }
   .legend-yellow {
     background: #fffbb0;
+    margin-left: 18px;
   }
 }
 

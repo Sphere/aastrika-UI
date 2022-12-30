@@ -95,7 +95,7 @@ export class RequestUtil {
             'date':  _.get(value,'createdDate'),
             'description': _.get(value, 'additionalParams.description'),
             'keyboardArrowUp':true,
-            'level': _.get(value,'competencyLevelId')
+            'level': _.toNumber(_.get(value,'competencyLevelId'))
           })
       })
     }
@@ -109,26 +109,31 @@ export class RequestUtil {
        'color': '#FFFBB0',
        'displayLevel': 1,
        'selected': false,
+       'showBorder': false,
      },
      {
        'color': '#FFFBB0',
        'displayLevel': 2,
        'selected': false,
+       'showBorder': false,
      },
      {
        'color': '#FFFBB0',
        'displayLevel': 3,
        'selected': false,
+       'showBorder': false,
      },
      {
        'color': '#FFFBB0',
        'displayLevel': 4,
        'selected': false,
+       'showBorder': false,
      },
      {
        'color': '#FFFBB0',
        'displayLevel': 5,
        'selected': false,
+       'showBorder': false,
      }
     ]
    
