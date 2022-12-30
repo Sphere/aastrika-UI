@@ -15,7 +15,7 @@ export class GainedComptencyCardComponent implements OnInit {
   panelOpenState: Boolean = false;
   gainedproficencyData: any
   selectedProficiencyIndex = -1;
-  selectedDisplayLevel = '-1';
+  selectedDisplayLevel = -1;
   constructor(
     public gainedService: GainedService
 
@@ -53,7 +53,7 @@ export class GainedComptencyCardComponent implements OnInit {
   }
 
   selectLevel(selectedProficiencyIndex, selectedDisplayLevel) {
-    if (selectedDisplayLevel === '-1' && selectedProficiencyIndex === this.selectedProficiencyIndex) {
+    if (selectedDisplayLevel === -1 && selectedProficiencyIndex === this.selectedProficiencyIndex) {
       this.selectedProficiencyIndex = -1
     } else {
       this.selectedProficiencyIndex = selectedProficiencyIndex
