@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SelfAssessmentService } from '../../service/self-assessment.service';
 @Component({
   selector: 'lib-self-assessment-card',
@@ -10,11 +11,16 @@ export class SelfAssessmentCardComponent implements OnInit {
   @Input() cardData: any
 
 
-  constructor(  private selfAssessmentService : SelfAssessmentService,) { }
+  constructor(  private selfAssessmentService : SelfAssessmentService,
+    private router: Router
+    ) { }
 
   ngOnInit() {
+    console.log(this.cardData)
   }
   startSelfAssesment(data:any){
+
+    this.router.navigate([`app/user/self-assessment`], { queryParams: data})
     this.selfAssessmentService.startAssessment.next(data)
   }
 }
