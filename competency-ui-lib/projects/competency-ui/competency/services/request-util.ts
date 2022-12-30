@@ -109,31 +109,26 @@ export class RequestUtil {
        'color': '#FFFBB0',
        'displayLevel': 1,
        'selected': false,
-       'showBorder': false,
      },
      {
        'color': '#FFFBB0',
        'displayLevel': 2,
        'selected': false,
-       'showBorder': false,
      },
      {
        'color': '#FFFBB0',
        'displayLevel': 3,
        'selected': false,
-       'showBorder': false,
      },
      {
        'color': '#FFFBB0',
        'displayLevel': 4,
        'selected': false,
-       'showBorder': false,
      },
      {
        'color': '#FFFBB0',
        'displayLevel': 5,
        'selected': false,
-       'showBorder': false,
      }
     ]
    

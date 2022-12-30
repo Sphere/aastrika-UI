@@ -19,7 +19,7 @@
                             <ng-container *ngIf="proficiencyLevel.selected; else addLevel">
                                 <div (click)="$event.stopPropagation(); selectLevel(i, proficiencyLevel.displayLevel)" class="level mb-1"
                                     [ngStyle]="{'background-color': proficiencyLevel.color}"
-                                    [ngClass]="{'addBorder': selectedProficiencyIndex === i && selectedDisplayLevel === proficiencyLevel?.displayLevel}">
+                                    [ngClass]="{'individual-select': selectedProficiencyIndex === i && selectedDisplayLevel === proficiencyLevel?.displayLevel}">
                                     {{proficiencyLevel?.displayLevel}}
                                 </div>
                             </ng-container>
@@ -29,7 +29,7 @@
                                 </div>
                             </ng-template>
                         </ng-container>
-                        <div class="level mb-1 pointer-events" (click)="$event.stopPropagation(); selectLevel(i, '-1')">
+                        <div class="level mb-1 pointer-events" (click)="$event.stopPropagation(); selectLevel(i, -1)">
                             <mat-icon [ngClass]="{'arrowReverse': selectedProficiencyIndex === i }">keyboard_arrow_down</mat-icon>
                         </div>
                     </mat-panel-description>
@@ -38,7 +38,7 @@
                     <span class="log-header">Log:</span>
                     <ng-container *ngFor="let log of proficency?.logs; let logIndex = index">
                         <ng-container
-                            *ngIf="(selectedDisplayLevel === '-1' || (selectedProficiencyIndex === i && selectedDisplayLevel === log.level))">
+                            *ngIf="(selectedDisplayLevel === -1 || (selectedProficiencyIndex === i && selectedDisplayLevel === log.level))">
                             <div class="log">
                                 <div class="flex">
                                     <ng-container *ngIf="log.header">
@@ -47,7 +47,7 @@
                                     </ng-container>
                                 </div>
                                 <ng-container *ngIf="log.description">
-                                    <div class="mt-2" [ngClass]="{'hideContent': !log.keyboardArrowUp}">
+                                    <div class="mt-2" [ngClass]="{'hide-content': !log.keyboardArrowUp}">
                                         {{log.description}}
                                     </div>
                                     <div class="justify-end">
