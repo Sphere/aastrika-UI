@@ -12,11 +12,17 @@
           collapsedHeight="auto"
           expandedHeight="auto"
         >
+
           <mat-panel-description class="panel-header-description">
             <ng-container *ngIf="role?.roles">
-              <div class="title">{{ role?.roles }}</div>
+              <div class="flex flex-column">
+                <div class="title">{{ role?.roles }}</div>
+                <div class="progress-status">In Progress</div>
+                <mat-progress-bar mode="determinate" value="40" class="mt-1"></mat-progress-bar>
+              </div>
             </ng-container>
           </mat-panel-description>
+          <!-- <mat-progress-bar mode="determinate" value="40"></mat-progress-bar> -->
         </mat-expansion-panel-header>
         <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader>
         <div class="expand-container" *ngIf="roleactivitySummaries.length>0">
@@ -28,6 +34,8 @@
             <div class="activity-title">
               {{ i + 1 }}.{{ activity.title }}
             </div>
+
+            
           </ng-container>
             <div class="">
               <lib-competency-accordion [competencyList]="role?.activities"></lib-competency-accordion>

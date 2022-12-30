@@ -1,6 +1,5 @@
-
 <div class="competency-badge">Competencies :</div>
-<ng-container  *ngFor="let competency of competencyList; let i = index" >
+<ng-container *ngFor="let competency of competencyList; let i = index">
   <!-- <div class="competency-list">
     {{ i + 1 }}.{{ competency.competency }}
   </div> -->
@@ -13,25 +12,31 @@
       >
         <mat-panel-description class="panel-header-description">
           <ng-container *ngIf="competency.competency">
-            <div class="competency-title">{{ competency.competency }}</div>
+            <div class="flex flex-row align-items-center gap-2">
+              <div>
+                <mat-icon class="circle-tick cursor-pointer"
+                  >check_circle</mat-icon
+                >
+              </div>
+              <div class="competency-title">{{ competency.competency }}</div>
+            </div>
           </ng-container>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <!-- <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader> -->
-      <div class="expand-container" >
+      <div class="expand-container">
         <!-- list of levels -->
         <div class="Levels-badge">Levels :</div>
-        <ng-container
-          *ngFor="let level of competency.levels; let i = index"
-        >
-          <div class="Levels-title">
-            {{ i + 1 }} : {{ level }}
+        <ng-container *ngFor="let level of competency.levels; let i = index">
+          <div class="flex flex-row align-items-center gap-2">
+            <div>
+              <mat-icon class="circle-tick cursor-pointer">check_circle</mat-icon>
+            </div>
+            <div class="Levels-title">{{ i + 1 }} : {{ level }}</div>
           </div>
         </ng-container>
-         
       </div>
     </mat-expansion-panel>
   </mat-accordion>
- <hr/>
+  <hr />
 </ng-container>
-

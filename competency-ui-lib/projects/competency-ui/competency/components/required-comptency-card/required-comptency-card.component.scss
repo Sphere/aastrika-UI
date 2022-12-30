@@ -66,9 +66,9 @@
   color: #000000;
 }
 
-::ng-deep .mat-expansion-panel-header {
-  padding: 0 5px !important;
-}
+// :host ::ng-deep .mat-expansion-panel-header {
+//   padding: 0 5px !important;
+// }
 :host ::ng-deep .mat-expansion-panel-header:hover {
   background: rgb(255 255 255 / 98%) !important;
 }
@@ -81,20 +81,3 @@
   place-self: flex-end;
 }
 
-.assess-btn {
-  background: #1c5d95;
-    border-radius: 50px;
-    width: fit-content;
-    padding: 3px 20px;
-    border: none;
-    color: #FFFFFF;
-}
-.btn-long {
-  border: 1px solid #1c5d95;
-    border-radius: 50px;
-    color: #1c5d95;
-    background-color: inherit;
-    width: fit-content;
-    padding: 3px 30px;
-
-}

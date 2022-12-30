@@ -1,4 +1,4 @@
-@import '../../../assets/styles/global.scss';
+@import "../../../assets/styles/global.scss";
 
 .card-container {
   margin: 15px 2px;
@@ -42,10 +42,14 @@
   // padding: 15px !important;
   // background-color: var(--light-gray) !important;
   border-radius: $radius-m !important;
-  padding: 10px 24px;
+  padding: 10px 10px 0px;
 }
-:host ::ng-deep .mat-expansion-indicator:after{
+:host ::ng-deep .mat-expansion-indicator:after {
   color: var(--black) !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-header-description {
+  margin-right: 0px !important;
 }
 
 .activity-title {
@@ -54,17 +58,17 @@
   letter-spacing: $spacing;
   color: var(--black);
   margin-bottom: 10px;
-  padding: 0 24px;
+  padding: 0 10px;
 }
 
-.competency-container{
+.competency-container {
   background: var(--white);
   box-shadow: 0px 0px 4px rgb(0 0 0 / 15%);
   border-radius: $radius-m;
   padding: 10px;
   margin: 18px 0 15px;
 
-  .competency-title{
+  .competency-title {
     font-size: $size-lg;
     line-height: 25px;
     letter-spacing: $spacing;
@@ -72,7 +76,7 @@
     margin-bottom: 20px;
   }
 
-  .level{
+  .level {
     font-size: $size-xl;
     line-height: 24px;
     letter-spacing: $spacing;
@@ -80,17 +84,51 @@
   }
 }
 
-.expand-container{
+.expand-container {
   padding: 15px 0px 0;
 }
 
-.activity-badge{
+.activity-badge {
   font-weight: 400;
   font-size: 14px;
   color: #1c5d95;
-  background: #EBF4FB;
+  background: #ebf4fb;
   border-radius: 50px;
   width: fit-content;
   padding: 5px 20px;
-  margin: 0 24px 15px
+  margin: 0 10px 15px;
+}
+
+.mat-progress-bar {
+  // width: 275px;
+  border-radius: 40px;
+  height: 4px;
+}
+
+.value {
+  position: relative;
+  bottom: 19px;
+  color: #1c5d95;
+  width: 275px;
+  display: flex;
+  justify-content: center;
+}
+
+::ng-deep.theme-igot.day-mode .mat-progress-bar-fill::after {
+  background: #34d6a4 0% 0% no-repeat padding-box;
+  border-radius: 40px;
+}
+
+::ng-deep.theme-igot.day-mode .mat-progress-bar-buffer {
+  // background-color: #EDEDED;
+  background-color: #f5f5f5;
+  // background-color: #E7E6E6 !important;
+}
+
+.progress-status {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  color: #000000;
+  place-self: end;
 }

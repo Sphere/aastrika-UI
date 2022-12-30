@@ -2,9 +2,13 @@
   <ng-container *ngIf="cardData?.title">
     <div class="title">{{ cardData?.title }}</div>
   </ng-container>
-  <ng-container *ngIf="cardData?.description">
+  <!-- <ng-container *ngIf="cardData?.description">
     <div class="description">{{ cardData?.description }}</div>
-  </ng-container>
+  </ng-container> -->
+  <div class="flex flex-row gap-3 mt-3">
+    <!-- <button class="assess-btn">Assess</button> -->
+    <button mat-button class="assess-btn"(click)="startSelfAssesment(cardData)">Assess</button>
+    <button class="btn-long">View Courses</button>
+  </div>
 
-  <button mat-button class="startBtn"(click)="startSelfAssesment(cardData)">Start</button>
 </div>

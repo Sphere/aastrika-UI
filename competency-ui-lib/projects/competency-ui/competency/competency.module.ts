@@ -5,9 +5,11 @@ import { RequiredComptencyCardComponent } from './components/required-comptency-
 import { GainedComptencyCardComponent } from './components/gained-comptency-card/gained-comptency-card.component';
 import { CompetencyDashboardComponent } from './components/competency-dashboard/competency-dashboard.component';
 import { ActiveSummaryComponent } from './components/active-summary/active-summary.component';
-import { MatTabsModule, MatIconModule, MatExpansionModule } from '@angular/material';
+import { MatTabsModule, MatIconModule, MatExpansionModule, MatProgressBarModule } from '@angular/material';
 import { CoreModule } from '@aastrika_npmjs/comptency/core';
 import { CompetencyAccordionComponent } from './components/competency-accordion/competency-accordion.component';
+import { SelfAssessmentModule } from '@aastrika_npmjs/comptency/self-assessment';
+
 @NgModule({
   declarations: [
     RequiredComptencyCardComponent, 
@@ -19,8 +21,10 @@ import { CompetencyAccordionComponent } from './components/competency-accordion/
     MatTabsModule,
     MatIconModule,
     MatExpansionModule,
+    MatProgressBarModule,
     HttpClientModule,
-    CoreModule
+    CoreModule,
+    SelfAssessmentModule
   ],
   exports: [RequiredComptencyCardComponent,
     GainedComptencyCardComponent,
