@@ -12,11 +12,8 @@
 }
 
 .card-container {
-    margin: 15px 2px;
-    padding: 14px 10px 20px 14px;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
-    border-radius: $radius-m;
     background: var(--white);
+    border-bottom: 1px solid #DDDDDD;
   }
   
   .title {
@@ -36,7 +33,7 @@
   .panel {
     box-shadow: 0px 0px 0px 0px !important;
     padding: 1px 3px 1px 0px;
-    pointer-events: none;
+    // pointer-events: none;
   }
 
   .panel-header {
@@ -50,8 +47,9 @@
   }
 
   .pointer-events {
-    pointer-events: all;
-    cursor: pointer;
+    // pointer-events: all;
+    // cursor: pointer;
+    width: auto;
   }
 
   .arrowReverse {
@@ -104,4 +102,8 @@
 
   .hideContent {
     display: none;
+  }
+
+  .addBorder {
+    border: 2px solid #1C5D95;
   }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { pipe } from 'rxjs';
 import { forkJoin } from 'rxjs';
 import { GainedService } from '../../services/gained.service';
 import { RequestUtil } from '../../services/request-util';
@@ -14,7 +13,9 @@ export class GainedComptencyCardComponent implements OnInit {
   requestUtil: any
   loading = false
   panelOpenState: Boolean = false;
-  gainedproficencyData:any
+  gainedproficencyData: any
+  selectedProficiencyIndex = -1;
+  selectedDisplayLevel = '-1';
   constructor(
     public gainedService: GainedService
 
@@ -26,13 +27,13 @@ export class GainedComptencyCardComponent implements OnInit {
     this.loading = true
     const allEntity = this.getAllEntity()
     const userPassbook = this.getAllUserPassbook()
-    forkJoin([allEntity,userPassbook]).subscribe((res)=>{
+    forkJoin([allEntity, userPassbook]).subscribe((res) => {
       const response = this.requestUtil.formatedGainedCompetency(res[0].result.response, res[1].result.content)
       this.gainedproficencyData = response
       this.loading = false
     })
   }
- 
+
   private getAllUserPassbook() {
     const reqBody = {
       "request": {
@@ -42,13 +43,21 @@ export class GainedComptencyCardComponent implements OnInit {
     return this.gainedService.fetchUserPassbook(reqBody)
   }
 
-
   private getAllEntity() {
     const reqBody = {
       "search": {
         "type": "Competency"
       }
     };
-    return  this.gainedService.fetchAllEntity(reqBody)
+    return this.gainedService.fetchAllEntity(reqBody)
+  }
+
+  selectLevel(selectedProficiencyIndex, selectedDisplayLevel) {
+    if (selectedDisplayLevel === '-1' && selectedProficiencyIndex === this.selectedProficiencyIndex) {
+      this.selectedProficiencyIndex = -1
+    } else {
+      this.selectedProficiencyIndex = selectedProficiencyIndex
+    }
+    this.selectedDisplayLevel = selectedDisplayLevel
   }
 }
