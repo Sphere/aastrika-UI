@@ -36,8 +36,10 @@ export class ActiveSummaryComponent implements OnInit {
         return this.getActivityByRole()
       }
     })).subscribe((res:any)=>{
+      console.log("get activity by id res", res)
       const formatedResponse =  this.requestUtil.formatedActivitityByPostion(res)
       this.roleactivitySummaries = formatedResponse
+      console.log("get activity by id", this.roleactivitySummaries)
       this.loading = false
     }) 
   }
@@ -67,6 +69,7 @@ export class ActiveSummaryComponent implements OnInit {
     const index = _.findIndex(this.roleactivitySummaries, {'id': id})
     this.roleactivitySummaries[index]['activities'] = []
     this.getEntityById(id).pipe(mergeMap((res)=>{
+      console.log("activity res", res)
       const respone = this.requestUtil.formatedActivitityByRoleId(res)
       this.roleactivitySummaries[index]['activities'] = respone
       const cidArr = _.map(this.roleactivitySummaries[index]['activities'], 'cid')
@@ -81,6 +84,8 @@ export class ActiveSummaryComponent implements OnInit {
       const response = this.requestUtil.formatedCompetency(res)
       this.roleactivitySummaries[index]['activities'] = _.values( _.merge(_.keyBy(response, 'cid'), 
            _.keyBy(this.roleactivitySummaries[index]['activities'], 'cid')))
+
+    console.log("activity", this.roleactivitySummaries)
     })
     
   }

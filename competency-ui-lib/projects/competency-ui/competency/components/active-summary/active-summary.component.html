@@ -1,14 +1,14 @@
 <lib-app-loader *ngIf="loading === true"></lib-app-loader>
 <ng-container *ngFor="let role of roleactivitySummaries">
-  <div class="">
+  <div class="card-container">
     <mat-accordion>
       <mat-expansion-panel
-        class="w-full panel r"
+        class=""
         (opened)="getActivityByRoleId(role.id)"
         (closed)="panelOpenState = false"
       >
         <mat-expansion-panel-header
-          class="card-containe flex-between items-center panel-header w-full"
+          class="flex-between items-center w-full"
           collapsedHeight="auto"
           expandedHeight="auto"
         >
@@ -20,21 +20,25 @@
         </mat-expansion-panel-header>
         <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader>
         <div class="expand-container" *ngIf="roleactivitySummaries.length>0">
+          <!-- list of activity -->
+          <div class="activity-badge">Activities</div>
           <ng-container
             *ngFor="let activity of role?.activities; let i = index"
           >
             <div class="activity-title">
               {{ i + 1 }}.{{ activity.title }}
             </div>
-            <div class="competency-container">
-              <div class="competency-title">{{ activity.competency }}</div>
+          </ng-container>
+            <div class="">
+              <lib-competency-accordion [competencyList]="role?.activities"></lib-competency-accordion>
+             
+              <!-- <div class="competency-title">{{ activity.competency }}</div>
               <div class="level">
                 <ng-container *ngFor="let level of activity.levels">
                   {{ level }}
                 </ng-container>
-              </div>
+              </div> -->
             </div>
-          </ng-container>
         </div>
       </mat-expansion-panel>
     </mat-accordion>

@@ -1,4 +1,4 @@
-@import '../../../assets/styles/global.scss';
+@import "../../../assets/styles/global.scss";
 
 .card-container {
   margin: 15px 2px;
@@ -54,7 +54,7 @@
   margin-top: 10px;
 }
 
-.logs{
+.logs {
   padding: 5px 5px;
 }
 
@@ -73,14 +73,28 @@
   background: rgb(255 255 255 / 98%) !important;
 }
 
-// .disable_ripple:hover{
-//   background: rgb(255 255 255 / 98%) !important;
-//   }
-
 :host ::ng-deep .mat-content {
   display: flex !important;
 }
 
 .level {
   place-self: flex-end;
+}
+
+.assess-btn {
+  background: #1c5d95;
+    border-radius: 50px;
+    width: fit-content;
+    padding: 3px 20px;
+    border: none;
+    color: #FFFFFF;
+}
+.btn-long {
+  border: 1px solid #1c5d95;
+    border-radius: 50px;
+    color: #1c5d95;
+    background-color: inherit;
+    width: fit-content;
+    padding: 3px 30px;
+
 }

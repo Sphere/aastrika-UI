@@ -1,6 +1,17 @@
 <ng-container *ngFor="let competency of competencyData"
   ><div class="card-container">
-    <mat-accordion>
+    <ng-container *ngIf="competency?.title">
+      <div class="title">{{ competency?.title }}</div>
+    </ng-container>
+    <div class="flex flex-row gap-3 mt-3">
+      <button class="assess-btn">Assess</button>
+      <button class="btn-long">View Courses</button>
+    </div>
+    
+  </div>
+</ng-container>
+
+<!-- <mat-accordion>
       <mat-expansion-panel
         class="w-full panel"
         (opened)="panelOpenState = true"
@@ -16,11 +27,11 @@
               <div class="title">{{ competency?.title }}</div>
             </ng-container>
           </mat-panel-description>
-          <!-- <div class="level mb-0 pointer-events">
+          <div class="level mb-0 pointer-events">
             <mat-icon [ngClass]="{ arrowReverse: panelOpenState }"
               >keyboard_arrow_down</mat-icon
             >
-          </div> -->
+          </div>
         </mat-expansion-panel-header>
 
         <lib-app-loader *ngIf="loading === true"></lib-app-loader>
@@ -37,6 +48,4 @@
           </ng-container>
         </div>
       </mat-expansion-panel>
-    </mat-accordion>
-  </div>
-</ng-container>
+    </mat-accordion> -->

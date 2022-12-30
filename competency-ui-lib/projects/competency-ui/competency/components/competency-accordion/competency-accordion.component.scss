@@ -1,0 +1,28 @@
+
+@import '../../../assets/styles/global.scss';
+
+.competency-badge{
+    font-weight: 400;
+    font-size: 14px;
+    color: #1C5D95;
+    padding: 0 24px;
+    margin-top: 20px;
+}
+
+.competency-title{
+    font-size: $size-l;
+  line-height: 19px;
+  letter-spacing: $spacing;
+  color: var(--black);
+}
+
+.expand-container{
+    padding: 0px 24px;
+}
+
+.Levels-badge{
+    font-size: 14px;
+    color: #1C5D95;
+    margin-bottom: 5px;
+
+}

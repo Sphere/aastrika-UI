@@ -1,5 +1,5 @@
 // @import 'ws-mixins';
-@import '../../../assets/styles/global.scss';
+@import "../../../assets/styles/global.scss";
 
 .content {
   padding: 60px 0px 50px;
@@ -10,7 +10,7 @@
     padding: 20px 20px 0px;
   }
 
-  @media only screen and (min-width: 1280px){
+  @media only screen and (min-width: 1280px) {
     max-width: 35%;
   }
 
@@ -22,7 +22,7 @@
     max-width: 50%;
   }
 
-  @media only screen and (max-width: 599px){
+  @media only screen and (max-width: 599px) {
     max-width: 90%;
   }
 }
@@ -42,12 +42,10 @@
   opacity: 1.6 !important;
   font-size: 16px !important;
   margin-right: 10px;
-
 }
 
 ::ng-deep .mat-tab-label-active {
   color: var(--blue) !important;
-
 }
 
 :host ::ng-deep .mat-ink-bar {
@@ -60,9 +58,6 @@
   background-color: var(--blue) !important;
 }
 
-
-
-
 .legend-container {
   display: flex;
   gap: 10px;
@@ -70,15 +65,15 @@
   align-items: center;
   margin-bottom: 20px;
 
-  @media only screen and (max-width: 599px){
+  @media only screen and (max-width: 599px) {
     gap: 5px;
   }
 
-  h5{
+  h5 {
     margin: 0;
     font-weight: 400;
     font-size: 16px;
-    @media only screen and (max-width: 599px){
+    @media only screen and (max-width: 599px) {
       font-size: 12px;
     }
   }
@@ -86,23 +81,19 @@
   .legend {
     min-width: 15px;
     height: 15px;
-    background:#DFEDF9;
+    background: #dfedf9;
     border-radius: 50%;
   }
 
   .legend-green {
-    background:  var(--teal);
+    background: var(--teal);
   }
   .legend-blue {
-    background: #7CB5E6;
+    background: #7cb5e6;
   }
   .legend-yellow {
-    background:  #FFFBB0;
-    ;
- }
-
-
-  
+    background: #fffbb0;
+  }
 }
 
 .required-comperencies {
@@ -110,37 +101,42 @@
   overflow: auto;
 }
 
-.btn-start{
+.btn-start {
   width: 311px;
   height: 35px;
   background: var(--blue);
   border-radius: 50px;
-  border: none ;
+  border: none;
   color: var(--white);
 }
 
-.tab-container{
+.tab-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+
+  .btn-container {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    position: relative;
+    justify-content: center;
+  }
 
-    .btn-container{
-        display: flex;
-        justify-content: center;
-
-    }
-
-    .sortIcon {
-      position: absolute;
-      right: 0px;
-      top: 13px;
-      width: 20px;
-    }
+  .sortIcon {
+    position: absolute;
+    right: 0px;
+    top: 13px;
+    width: 20px;
+  }
 }
 
 .mat-tab-header-sortIcon {
   ::ng-deep .mat-tab-header {
     width: calc(100% - 25px);
   }
+}
+
+.tab-badge {
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
 }
