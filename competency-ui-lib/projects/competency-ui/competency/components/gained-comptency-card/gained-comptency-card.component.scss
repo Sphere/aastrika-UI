@@ -14,6 +14,7 @@
 .card-container {
     background: var(--white);
     border-bottom: 1px solid #DDDDDD;
+    padding: 5px 4px;
   }
   
   .title {
@@ -46,11 +47,6 @@
     padding: 1px;
   }
 
-  .pointer-events {
-    // pointer-events: all;
-    // cursor: pointer;
-    width: auto;
-  }
 
   .arrowReverse {
     transform: rotateX(180deg);

@@ -24,12 +24,12 @@
                                 </div>
                             </ng-container>
                             <ng-template #addLevel>
-                                <div (click)="$event.stopPropagation();" class="level mb-1 pointer-events">
+                                <div (click)="$event.stopPropagation();" class="level mb-1">
                                     {{proficiencyLevel?.displayLevel}}
                                 </div>
                             </ng-template>
                         </ng-container>
-                        <div class="level mb-1 pointer-events" (click)="$event.stopPropagation(); selectLevel(i, -1)">
+                        <div class="level mb-1" (click)="$event.stopPropagation(); selectLevel(i, -1)">
                             <mat-icon [ngClass]="{'arrowReverse': selectedProficiencyIndex === i }">keyboard_arrow_down</mat-icon>
                         </div>
                     </mat-panel-description>
@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="justify-end">
                                         <mat-icon (click)="log.keyboardArrowUp = !log.keyboardArrowUp"
-                                            class="mr-3 pointer-events"
+                                            class="mr-3"
                                             [ngClass]="{'arrowReverse': log.keyboardArrowUp }">keyboard_arrow_down</mat-icon>
                                     </div>
                                 </ng-container>
