@@ -2,14 +2,11 @@ import { Injectable } from '@angular/core';
 import { DataService } from '@aastrika_npmjs/comptency/core';
 import { HttpClient } from '@angular/common/http';
 import { urlConfig  } from '@aastrika_npmjs/comptency/core';
-import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelfAssessmentService extends DataService {
-  public  startAssessment = new BehaviorSubject<any>(undefined);
-  startAssessment$ = this.startAssessment.asObservable();
   constructor(http:HttpClient) {
     super(http)
   }
