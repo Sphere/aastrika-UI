@@ -183,7 +183,7 @@ export class RequestUtil {
          case 'selfAssessment':{
            _.forEach(response, (level:any)=>{
              if(level.displayLevel == _.get(value,'competencyLevelId')){
-               level.color = '#7CB5E6';
+               level.color = '#A4DFCA';
                level.selected = true
                
              }
@@ -194,7 +194,7 @@ export class RequestUtil {
          case 'admin':{
            _.forEach(response, (level:any)=>{
              if(level.displayLevel == _.get(value,'competencyLevelId')){
-               level.color = '#A4DFCA';
+               level.color = '#7cb5e6';
                level.selected = true
              }
            } )
