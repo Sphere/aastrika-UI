@@ -114,8 +114,14 @@
   justify-content: center;
 }
 
-::ng-deep.theme-igot.day-mode .mat-progress-bar-fill::after {
-  background: #34d6a4 0% 0% no-repeat padding-box;
+::ng-deep.green-bar .theme-igot.day-mode .mat-progress-bar-fill::after {
+  background: #34d6a4 0% 0% no-repeat padding-box !important;
+  border-radius: 40px;
+}
+
+
+::ng-deep.warn-bar .mat-progress-bar-fill::after {
+  background: #F1CF8A 0% 0% no-repeat padding-box !important; 
   border-radius: 40px;
 }
 

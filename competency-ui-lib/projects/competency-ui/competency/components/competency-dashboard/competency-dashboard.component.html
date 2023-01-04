@@ -15,7 +15,7 @@
       [ngClass]="{ 'header-width-icon': tabIndex === 1 }"
       class="remove-border-bottom"
       animationDuration="0ms"
-      selectedIndex="0"
+      [selectedIndex]="tabIndex"
       (selectedTabChange)="changeTab($event)"
     >
       <!-- Active Summary as Job Description -->
@@ -47,11 +47,6 @@
             *ngIf="tabIndex === 2"
           ></lib-required-comptency-card>
         </div>
-        <!-- <div class="btn-container">
-          <button class="btn-start" (click)="startSelfAssessment()">
-            Start Self Assessment
-          </button>
-        </div> -->
       </mat-tab>
     </mat-tab-group>
   </div>

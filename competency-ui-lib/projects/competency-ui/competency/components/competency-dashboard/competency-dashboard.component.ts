@@ -8,11 +8,12 @@ import { Location } from '@angular/common'
 })
 export class CompetencyDashboardComponent implements OnInit {
   @Output() stateChange: EventEmitter<any> = new EventEmitter();
-  tabIndex = 0;
+  tabIndex = 1;
   constructor(private location: Location) {
    }
 
   ngOnInit() {
+    this.tabIndex = 1
   }
 
   navigateBack() {

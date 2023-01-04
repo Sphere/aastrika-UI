@@ -30,8 +30,20 @@ export class GainedComptencyCardComponent implements OnInit {
     forkJoin([allEntity, userPassbook]).subscribe((res) => {
       const response = this.requestUtil.formatedGainedCompetency(res[0].result.response, res[1].result.content)
       this.gainedproficencyData = response
+      if (this.gainedproficencyData) {
+        let res = []
+        _.forEach(this.gainedproficencyData, (competency: any) => {
+          if (competency.competencyStoreData) {
+            res.push(competency.competencyStoreData)
+           }
+        })
+        this.gainedService.competencyData.next(res)
+      }
       this.loading = false
     })
+    if (this.gainedproficencyData) {
+      this.gainedService.competencyData.next(this.gainedproficencyData.competencyStoreData)
+    }
   }
 
   private getAllUserPassbook() {

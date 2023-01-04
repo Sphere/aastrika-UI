@@ -4,7 +4,7 @@
     <mat-accordion>
       <mat-expansion-panel
         class=""
-        (opened)="getActivityByRoleId(role.id)"
+        (opened)="panelOpenState = true"
         (closed)="panelOpenState = false"
       >
         <mat-expansion-panel-header
@@ -17,12 +17,19 @@
             <ng-container *ngIf="role?.roles">
               <div class="flex flex-column w-full">
                 <div class="title">{{ role?.roles }}</div>
-                <div class="progress-status">In Progress</div>
-                <mat-progress-bar mode="determinate" value="40" class="mt-1"></mat-progress-bar>
+                <!-- <div class="progress-status-none" *ngIf="role?.averagePercentage == 0">kk</div> -->
+                <div class="progress-status" *ngIf="role?.averagePercentage < 100">In Progress</div>
+                <div class="progress-status" *ngIf="role?.averagePercentage == 100">Completed</div>
+                <ng-container >
+                  <!--  'warn-bar': role?.averagePercentage < 100 && role?.averagePercentage != 0, -->
+                  <div [ngClass]="{'green-bar': role?.averagePercentage == 100 , 'warn-bar': role?.averagePercentage < 100 && role?.averagePercentage != 0 }">
+                  <mat-progress-bar class="bar-progress-colour" mode="determinate" value={{role?.averagePercentage}} class="mt-1"></mat-progress-bar>
+                  </div>
+                </ng-container>
+               
               </div>
             </ng-container>
           </mat-panel-description>
-          <!-- <mat-progress-bar mode="determinate" value="40"></mat-progress-bar> -->
         </mat-expansion-panel-header>
         <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader>
         <div class="expand-container" *ngIf="roleactivitySummaries.length>0">
@@ -39,13 +46,6 @@
           </ng-container>
             <div class="">
               <lib-competency-accordion [competencyList]="role?.activities"></lib-competency-accordion>
-             
-              <!-- <div class="competency-title">{{ activity.competency }}</div>
-              <div class="level">
-                <ng-container *ngFor="let level of activity.levels">
-                  {{ level }}
-                </ng-container>
-              </div> -->
             </div>
         </div>
       </mat-expansion-panel>
