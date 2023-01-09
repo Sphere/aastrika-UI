@@ -35,7 +35,7 @@ export class GainedComptencyCardComponent implements OnInit {
         _.forEach(this.gainedproficencyData, (competency: any) => {
           if (competency.competencyStoreData) {
             res.push(competency.competencyStoreData)
-           }
+          }
         })
         this.gainedService.competencyData.next(res)
       }
@@ -65,7 +65,8 @@ export class GainedComptencyCardComponent implements OnInit {
   }
 
   selectLevel(selectedProficiencyIndex, selectedDisplayLevel) {
-    if (selectedDisplayLevel === -1 && selectedProficiencyIndex === this.selectedProficiencyIndex) {
+    if ((selectedProficiencyIndex === this.selectedProficiencyIndex) && (selectedDisplayLevel === -1 ||
+      selectedDisplayLevel === this.selectedDisplayLevel)) {
       this.selectedProficiencyIndex = -1
     } else {
       this.selectedProficiencyIndex = selectedProficiencyIndex
