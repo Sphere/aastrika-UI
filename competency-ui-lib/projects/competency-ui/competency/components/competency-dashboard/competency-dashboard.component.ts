@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Location } from '@angular/common'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'lib-competency-dashboard',
@@ -9,7 +9,7 @@ import { Location } from '@angular/common'
 export class CompetencyDashboardComponent implements OnInit {
   @Output() stateChange: EventEmitter<any> = new EventEmitter();
   tabIndex = 1;
-  constructor(private location: Location) {
+  constructor(  public router: Router,) {
    }
 
   ngOnInit() {
@@ -17,7 +17,7 @@ export class CompetencyDashboardComponent implements OnInit {
   }
 
   navigateBack() {
-    this.location.back()
+    this.router.navigate([`/app/profile-view`])
   }
   changeTab(event:any){
     this.tabIndex = event.index;
