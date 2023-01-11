@@ -44,7 +44,7 @@ id
 const */
   public fetchPrgressDetails(req) {
     const httpOptions: any = {
-      url: urlConfig.getContentProgress(req.courseId),
+      url: urlConfig.getContentProgress(req.request.courseId),
       data: req
     };
     

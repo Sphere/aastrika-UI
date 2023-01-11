@@ -47,16 +47,19 @@ export class SelfAssessmentComponent implements OnInit {
                   type: 'DONE'
                 })
               } else {
+                console.log('else');
                 this.btnType.push({
                   courseId: value.contentId,
                   type: 'RESUME'
                 })
               }
             }
-          } else {
+          } 
+          
+          if(res.result.contentList.length == 0 ) {
             this.btnType.push({
               courseId: value.contentId,
-              type: 'Start'
+              type: 'START'
             })
           }
         })
