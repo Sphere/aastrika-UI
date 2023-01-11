@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 export class SelfAssessmentCardComponent implements OnInit {
 
   @Input() cardData: any
+  @Input() btnType:any
 
 
   constructor(  

@@ -44,7 +44,9 @@ export class RequestUtil {
               'subTitle': _.get(value,'subTitle'),
               'description': _.get(value,'description'),
               'creator': _.get(value,'creator'),
-              'duration': _.get(value,'duration')
+              'duration': _.get(value,'duration'),
+              'batchId': this.getBatchData(value),
+              'childContent': _.get(value, 'childNodes').length
 
             })
            })
@@ -53,5 +55,16 @@ export class RequestUtil {
       
 
     }
+  }
+
+  getBatchData(data){
+    let batchId = ''
+    if(data.batches){
+      _.forEach(data.batches, (value:any)=>{
+        batchId = _.get(value, 'batchId')
+      })
+    }
+
+    return batchId;
   }
 }

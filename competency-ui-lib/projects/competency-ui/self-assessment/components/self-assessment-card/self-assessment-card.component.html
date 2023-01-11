@@ -7,8 +7,36 @@
   </ng-container> -->
   <div class="flex flex-row gap-3 mt-3">
     <!-- <button class="assess-btn">Assess</button> -->
-    <button mat-button class="assess-btn"(click)="startSelfAssesment(cardData)">Assess</button>
+    <ng-container *ngFor="let btn of btnType">
+      <ng-container *ngIf="btn.courseId == cardData.contentId">
+        <button
+          *ngIf="btn.type === 'START'"
+          mat-button
+          class="assess-btn btn-small"
+          (click)="startSelfAssesment(cardData)"
+        >
+        Assess
+        </button>
+        <button
+          *ngIf="btn.type === 'RESUME'"
+          mat-button
+          class="reassess-btn btn-small"
+          (click)="startSelfAssesment(cardData)"
+        >
+        Re-Assess
+        </button>
+        <button
+          *ngIf="btn.type === 'DONE'"
+          mat-button
+          disabled
+          class="done-btn btn-small"
+          (click)="startSelfAssesment(cardData)"
+        >
+        Done
+        </button>
+      </ng-container>
+    </ng-container>
+
     <button class="btn-long">View Courses</button>
   </div>
-
 </div>

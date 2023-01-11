@@ -1,61 +1,74 @@
-@import '../../../assets/styles/global.scss';
+@import "../../../assets/styles/global.scss";
 .card_box {
-    margin: 7px 2px 15px;
-      padding: 16px 10px 20px 14px;
-      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
-      border-radius: $radius-m;
-      background: #FFFFFF;
-  }
-  
-  .title {
-      font-size: $size-xl;
-      line-height: 29px;
-      letter-spacing: $spacing;
-    margin-bottom: 7px;
-  }
-  
-  .description {
-      font-size: $size-m;
-      line-height: 17px;
-      letter-spacing: $spacing;
-  }
-  
-  .startBtn {
-    background-color: #1C5D95 !important;
-    border-radius: $radius-l;
-    padding: 8px 32px;
-    gap: 8px;
-    font-size: 16px;
-    line-height: 19px;
-    color: #FFFFFF !important;
-    margin-top: 10px;
-    border: none;
-  }
-  
-  .proficiency {
-    color: #1C5D96;
-    font-style: italic;
-    font-size: $size-m;
-    line-height: 17px;
-    cursor: pointer;
-    margin-top: 4px;
-  }
+  margin: 7px 2px 15px;
+  padding: 16px 10px 20px 14px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+  border-radius: $radius-m;
+  background: #ffffff;
+}
 
-  
+.title {
+  font-size: $size-xl;
+  line-height: 29px;
+  letter-spacing: $spacing;
+  margin-bottom: 7px;
+}
+
+.description {
+  font-size: $size-m;
+  line-height: 17px;
+  letter-spacing: $spacing;
+}
+
+.startBtn {
+  background-color: #1c5d95 !important;
+  border-radius: $radius-l;
+  padding: 8px 32px;
+  gap: 8px;
+  font-size: 16px;
+  line-height: 19px;
+  color: #ffffff !important;
+  margin-top: 10px;
+  border: none;
+}
+
+.proficiency {
+  color: #1c5d96;
+  font-style: italic;
+  font-size: $size-m;
+  line-height: 17px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
 .assess-btn {
   background: #1c5d95;
-    border-radius: 50px;
-    width: fit-content;
-    padding: 3px 20px;
-    border: none;
-    color: #FFFFFF;
+
+  color: #ffffff;
+}
+
+.reassess-btn {
+  background: #52ad9d;
+
+  color: #ffffff;
+}
+
+.done-btn {
+  background-color: #bfbfbf;
+  color: #808080;
+}
+
+.btn-small {
+  border-radius: 50px;
+  width: fit-content;
+  padding: 3px 20px;
+  border: none;
 }
 .btn-long {
   border: 1px solid #1c5d95;
-    border-radius: 50px;
-    color: #1c5d95;
-    background-color: inherit;
-    width: fit-content;
-    padding: 3px 30px;
-
+  border-radius: 50px;
+  color: #1c5d95;
+  background-color: inherit;
+  width: fit-content;
+  padding: 3px 30px;
 }

@@ -38,5 +38,20 @@ export class SelfAssessmentService extends DataService {
     return this.get(httpOptions)
   }
 
+  /**
+   * fetchPrgressDetails
+id   
+const */
+  public fetchPrgressDetails(req) {
+    const httpOptions: any = {
+      url: urlConfig.getContentProgress(req.courseId),
+      data: req
+    };
+    
+    return this.post(httpOptions)
+    
+  }
+
+
 
 }

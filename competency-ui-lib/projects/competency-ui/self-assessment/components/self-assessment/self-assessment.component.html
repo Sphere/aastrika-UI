@@ -4,7 +4,7 @@
     <!-- <h1 class=" mb-1 pl-2 ">Self Assessment</h1> -->
     <ng-container *ngFor="let cardData   of selfAssessmentData">
         <ng-container *ngIf="cardData">
-            <lib-self-assessment-card [cardData]="cardData"></lib-self-assessment-card>
+            <lib-self-assessment-card [cardData]="cardData" [btnType]="btnType"></lib-self-assessment-card>
         </ng-container>
     </ng-container>
 </div>
