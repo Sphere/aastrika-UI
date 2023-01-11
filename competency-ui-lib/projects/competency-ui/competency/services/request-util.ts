@@ -54,7 +54,7 @@ export class RequestUtil {
               'competency': _.get(value, 'name'),
               'id': _.get(value, 'id'),
               'description': _.get(value, 'description'),
-              'levels': ['Level 4', 'Level 5'],
+              'levels': ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'],
               'cid': _.get(data, 'result.response').id,
               'lastLevel': this.getheighestLevel(_.get(value, 'id'), progrssData),
               'completionPercentage': this.getCompeletionPercentage(_.get(value, 'id'), progrssData),
@@ -63,7 +63,8 @@ export class RequestUtil {
         }
       }
     })
-    return result
+   
+    return  _.uniqBy(result, 'id');
   }
 
   getheighestLevel(competencyId, progrssData){

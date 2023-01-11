@@ -17,8 +17,8 @@
             <ng-container *ngIf="role?.roles">
               <div class="flex flex-column w-full">
                 <div class="title">{{ role?.roles }}</div>
-                <!-- <div class="progress-status-none" *ngIf="role?.averagePercentage == 0">kk</div> -->
-                <div class="progress-status" *ngIf="role?.averagePercentage < 100">In Progress</div>
+                <div class="progress-status-none" *ngIf="role?.averagePercentage == 0"></div>
+                <div class="progress-status" *ngIf="role?.averagePercentage < 100 && role?.averagePercentage != 0">In Progress</div>
                 <div class="progress-status" *ngIf="role?.averagePercentage == 100">Completed</div>
                 <ng-container >
                   <!--  'warn-bar': role?.averagePercentage < 100 && role?.averagePercentage != 0, -->
@@ -44,9 +44,9 @@
 
             
           </ng-container>
-            <div class="">
+            <ng-container *ngIf="role?.activities" class="">
               <lib-competency-accordion [competencyList]="role?.activities"></lib-competency-accordion>
-            </div>
+            </ng-container>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
