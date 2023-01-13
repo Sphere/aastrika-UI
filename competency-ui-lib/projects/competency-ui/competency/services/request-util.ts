@@ -71,7 +71,7 @@ export class RequestUtil {
    let respone = '' 
    _.forEach(progrssData, (value:any)=>{
     if(_.toNumber( value.competencyId )=== competencyId){
-      respone = value.levelId
+      respone = value.levelId.competencyLevelId
     }
    })
    return respone
@@ -82,7 +82,7 @@ export class RequestUtil {
     
     _.forEach(progrssData, (value:any)=>{
      if(_.toNumber( value.competencyId ) === competencyId){
-       respone = _.toNumber( value.levelId)
+       respone = _.toNumber(value.levelId.competencyLevelId)
      }
     })
     respone = (respone *100)/5
@@ -221,9 +221,7 @@ export class RequestUtil {
   response = {
     'competencyId': data.competencyId,
     'competencyName': data.additionalParams.competencyName,
-    // 'levelId': _.maxBy(data.acquiredDetails, 'competencyLevelId' ),
-    'levelId': data.acquiredDetails.reduce((prev, current) => (prev.competencyLevelId > current.competencyLevelId) ? prev.competencyLevelId : current.competencyLevelId)
-
+    'levelId': _.maxBy(data.acquiredDetails, 'competencyLevelId' )
   }
   return response
  }

@@ -41,9 +41,9 @@ export class GainedComptencyCardComponent implements OnInit {
       }
       this.loading = false
     })
-    if (this.gainedproficencyData) {
-      this.gainedService.competencyData.next(this.gainedproficencyData.competencyStoreData)
-    }
+    // if (this.gainedproficencyData) {
+    //   this.gainedService.competencyData.next(this.gainedproficencyData.competencyStoreData)
+    // }
   }
 
   private getAllUserPassbook() {
