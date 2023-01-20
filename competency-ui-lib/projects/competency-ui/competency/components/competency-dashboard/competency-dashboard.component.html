@@ -1,49 +1,53 @@
 <div class="content">
-  <mat-icon (click)="navigateBack()" class="cursor-pointer mb-3">chevron_left</mat-icon>
+  <mat-icon (click)="navigateBack()" class="cursor-pointer mb-3"
+    >chevron_left</mat-icon
+  >
 
-  <h1 class=" pl-2 mb-0">Competency Dashboard</h1>
+  <h1 class="pl-2 mb-0">Competency Dashboard</h1>
 
   <div class="pl-2 tab-container">
-    <ng-container *ngIf="tabIndex === 0">
+    <ng-container *ngIf="tabIndex === 1">
       <div class="sortIcon">
-        <img src="./assets/comptency/images/filter.png">
+        <img src="./assets/comptency/images/filter.png" />
       </div>
     </ng-container>
-    <mat-tab-group [ngClass]="{'header-width-icon': tabIndex === 0}" class="remove-border-bottom"
-      animationDuration="0ms" selectedIndex="0" (selectedTabChange)="changeTab($event)">
-
-        <!-- gained  -->
-        <mat-tab label="Gained">
-          <div class="legend-container">
-            <div class="legend legend-blue "></div>
-            <h5>Self Assessment</h5>
-            <div class="legend legend-yellow"></div>
-            <h5>Course</h5>
-            <div class="legend legend-green"></div>
-            <h5>Admin added</h5>
-          </div>      
-            <lib-gained-comptency-card *ngIf="tabIndex === 0"></lib-gained-comptency-card>
-        </mat-tab>
-     
-      <!-- Active Summary -->
-      <mat-tab label="Activity Summary" >         
-            <lib-active-summary *ngIf="tabIndex === 1"></lib-active-summary>
+    <mat-tab-group
+      [ngClass]="{ 'header-width-icon': tabIndex === 1 }"
+      class="remove-border-bottom"
+      animationDuration="0ms"
+      [selectedIndex]="tabIndex"
+      (selectedTabChange)="changeTab($event)"
+    >
+      <!-- Active Summary as Job Description -->
+      <mat-tab label="Job Description">
+        <h4 class="mt-4 mb-1">Roles</h4>
+        <lib-active-summary *ngIf="tabIndex === 0"></lib-active-summary>
       </mat-tab>
 
-       <!-- required -->
-       <mat-tab label="Required">
-        <div class="required-comperencies">          
-            <lib-required-comptency-card *ngIf="tabIndex === 2"></lib-required-comptency-card>
+      <!-- gained as Passbook  -->
+      <mat-tab label="Passbook">
+        <div class="legend-container">
+          <div class="legend legend-blue"></div>
+          <h5>External</h5>
+          <div class="legend legend-green"></div>
+          <h5>Self</h5>
+          <div class="legend legend-yellow"></div>
+          <h5>Course</h5>
         </div>
-        <div class="btn-container">
-          <button class="btn-start" (click)="startSelfAssessment()">Start Self Assessment</button>
-        </div>
+        <lib-gained-comptency-card
+          *ngIf="tabIndex === 1"
+        ></lib-gained-comptency-card>
       </mat-tab>
 
-
-
+      <!-- required -->
+      <mat-tab label="Required">
+        <div class="required-comperencies">
+          <div class="mt-2 tab-badge">Self Assessments</div>
+          <lib-required-comptency-card
+            *ngIf="tabIndex === 2"
+          ></lib-required-comptency-card>
+        </div>
+      </mat-tab>
     </mat-tab-group>
-
-
   </div>
 </div>

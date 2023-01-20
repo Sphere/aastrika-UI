@@ -1,5 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Location } from '@angular/common'
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,15 +8,16 @@ import { Router } from '@angular/router';
 })
 export class CompetencyDashboardComponent implements OnInit {
   @Output() stateChange: EventEmitter<any> = new EventEmitter();
-  tabIndex = 0;
-  constructor(private location: Location,public router:Router) {
+  tabIndex = 1;
+  constructor(  public router: Router,) {
    }
 
   ngOnInit() {
+    this.tabIndex = 1
   }
 
   navigateBack() {
-    this.router.navigate(['/app/profile-view'])
+    this.router.navigate([`/app/profile-view`])
   }
   changeTab(event:any){
     this.tabIndex = event.index;

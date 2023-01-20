@@ -2,14 +2,11 @@ import { Injectable } from '@angular/core';
 import { DataService } from '@aastrika_npmjs/comptency/core';
 import { HttpClient } from '@angular/common/http';
 import { urlConfig  } from '@aastrika_npmjs/comptency/core';
-import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelfAssessmentService extends DataService {
-  public  startAssessment = new BehaviorSubject<any>(undefined);
-  startAssessment$ = this.startAssessment.asObservable();
   constructor(http:HttpClient) {
     super(http)
   }
@@ -40,6 +37,21 @@ export class SelfAssessmentService extends DataService {
     };
     return this.get(httpOptions)
   }
+
+  /**
+   * fetchPrgressDetails
+id   
+const */
+  public fetchPrgressDetails(req) {
+    const httpOptions: any = {
+      url: urlConfig.getContentProgress(req.request.courseId),
+      data: req
+    };
+    
+    return this.post(httpOptions)
+    
+  }
+
 
 
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DataService, urlConfig } from '@aastrika_npmjs/comptency/core';
 import { HttpClient } from '@angular/common/http';
-import { forkJoin, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 /**
  * GainedService to extend Data Service 
@@ -13,6 +13,10 @@ import { forkJoin, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GainedService extends DataService {
+
+  public competencyData = new BehaviorSubject<any>(undefined)
+  competencyData$ = this.competencyData.asObservable();
+
 
   constructor(http:HttpClient) {
     super(http)

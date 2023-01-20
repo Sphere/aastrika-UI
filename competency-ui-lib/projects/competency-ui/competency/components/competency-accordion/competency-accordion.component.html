@@ -1,0 +1,60 @@
+<div class="competency-badge">Competencies :</div>
+<ng-container *ngFor="let competency of competencyList; let i = index">
+  <ng-container *ngIf="competency.competency">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header
+          class="flex-between items-center w-full"
+          collapsedHeight="auto"
+          expandedHeight="auto"
+        >
+          <mat-panel-description class="panel-header-description">
+            <ng-container *ngIf="competency.competency">
+              <div class="flex flex-row align-items-center gap-2">
+                <div>
+                  <ng-container *ngIf="competency.completionPercentage == 100">
+                    <mat-icon class="circle-tick cursor-pointer"
+                      >check_circle</mat-icon
+                    >
+                  </ng-container>
+                  <ng-container *ngIf="competency.completionPercentage < 100">
+                    <mat-progress-spinner
+                      diameter="20"
+                      strokeWidth="2"
+                      mode="determinate"
+                      [value]="competency.completionPercentage"
+                    ></mat-progress-spinner>
+                  </ng-container>
+                </div>
+                <div class="competency-title">{{ competency.competency }}</div>
+              </div>
+            </ng-container>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <!-- <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader> -->
+        <div class="expand-container">
+          <!-- list of levels -->
+          <div class="Levels-badge">Levels :</div>
+          <ng-container *ngFor="let level of competency.levels; let i = index">
+            <div class="flex flex-row align-items-center gap-2">
+              <div>
+                <ng-container *ngIf="competency.lastLevel == i + 1">
+                  <mat-icon class="circle-tick cursor-pointer"
+                    >check_circle</mat-icon
+                  ></ng-container
+                >
+                <ng-container *ngIf="competency.lastLevel != i + 1">
+                  <mat-icon class="non-progress cursor-pointer"
+                    >check_circle</mat-icon
+                  ></ng-container
+                >
+              </div>
+              <div class="Levels-title">{{ i + 1 }} : {{ level }}</div>
+            </div>
+          </ng-container>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <hr />
+  </ng-container>  
+</ng-container>

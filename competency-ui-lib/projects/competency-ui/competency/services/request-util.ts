@@ -15,6 +15,7 @@ export class RequestUtil {
             'roles': _.get(value, 'name'),
             'id': _.get(value, 'id'),
             'description': _.get(value, 'description'),
+            'averagePercentage': 0
           })
           return result
         }, [])
@@ -23,7 +24,7 @@ export class RequestUtil {
 
     }
 
-  }
+  } 
   formatedActivitityByRoleId = (data: any) => {
     if (_.get(data, 'result')) {
       const children = _.get(data, 'result.response').children
@@ -32,7 +33,7 @@ export class RequestUtil {
           result.push({
             'title': _.get(value, 'name'),
             'cid': _.get(value, 'id'),
-            'description': _.get(value, 'description')
+            'description': _.get(value, 'description'),
           })
           return result
         },[])
@@ -42,7 +43,7 @@ export class RequestUtil {
     }
 
   }
-  formatedCompetency = (data: any) => {
+  formatedCompetency = (data: any, progrssData) => {
     let result = []
     _.forEach(data,(data:any)=>{
       if (_.get(data, 'result')) {
@@ -53,16 +54,41 @@ export class RequestUtil {
               'competency': _.get(value, 'name'),
               'id': _.get(value, 'id'),
               'description': _.get(value, 'description'),
-              'levels': ['Level 4', 'Level 5'],
-              'cid': _.get(data, 'result.response').id
+              'levels': ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'],
+              'cid': _.get(data, 'result.response').id,
+              'lastLevel': this.getheighestLevel(_.get(value, 'id'), progrssData),
+              'completionPercentage': this.getCompeletionPercentage(_.get(value, 'id'), progrssData),
             })
           })
         }
       }
     })
-    return result
+   
+    return  _.uniqBy(result, 'id');
   }
 
+  getheighestLevel(competencyId, progrssData){
+   let respone = '' 
+   _.forEach(progrssData, (value:any)=>{
+    if(_.toNumber( value.competencyId )=== competencyId){
+      respone = value.levelId.competencyLevelId
+    }
+   })
+   return respone
+  }
+
+  getCompeletionPercentage(competencyId, progrssData){
+    let respone = 0 
+    
+    _.forEach(progrssData, (value:any)=>{
+     if(_.toNumber( value.competencyId ) === competencyId){
+       respone = _.toNumber(value.levelId.competencyLevelId)
+     }
+    })
+    respone = (respone *100)/5
+ 
+    return respone
+  }
   /**
  * util method to formate the gained competency  
  * for user 
@@ -78,9 +104,9 @@ export class RequestUtil {
               response.push({
                 'title': _.get(competency,'additionalParams.competencyName'),
                 'logs': this.acquiredPassbookLogs(_.get(competency, 'acquiredDetails')),
-                'proficiencyLevels': this.acauiredChannelColourCode(_.get(competency, 'acquiredDetails'))
-              })
-              
+                'proficiencyLevels': this.acauiredChannelColourCode(_.get(competency, 'acquiredDetails')),
+                'competencyStoreData': this.competencyStoreDataFomat(competency)
+              })             
             }
         })
     })
@@ -96,7 +122,7 @@ export class RequestUtil {
             'description': _.get(value,'acquiredChannel') === 'admin' ? 
              _.get(value, 'additionalParams.remarks') :  _.get(value, 'additionalParams.description'),
             'keyboardArrowUp':true,
-            'level': _.get(value,'competencyLevelId')
+            'level': _.toNumber(_.get(value,'competencyLevelId'))
           })
       })
     }
@@ -159,7 +185,7 @@ export class RequestUtil {
          case 'selfAssessment':{
            _.forEach(response, (level:any)=>{
              if(level.displayLevel == _.get(value,'competencyLevelId')){
-               level.color = '#7CB5E6';
+               level.color = '#A4DFCA';
                level.selected = true
                
              }
@@ -170,7 +196,7 @@ export class RequestUtil {
          case 'admin':{
            _.forEach(response, (level:any)=>{
              if(level.displayLevel == _.get(value,'competencyLevelId')){
-               level.color = '#A4DFCA';
+               level.color = '#7cb5e6';
                level.selected = true
              }
            } )
@@ -190,6 +216,15 @@ export class RequestUtil {
        }
    })
    return response
+ }
+ competencyStoreDataFomat(data){
+  let response  = {}
+  response = {
+    'competencyId': data.competencyId,
+    'competencyName': data.additionalParams.competencyName,
+    'levelId': _.maxBy(data.acquiredDetails, 'competencyLevelId' )
+  }
+  return response
  }
 }
 

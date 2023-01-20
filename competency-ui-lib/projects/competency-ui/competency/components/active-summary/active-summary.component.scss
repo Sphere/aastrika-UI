@@ -1,11 +1,11 @@
-@import '../../../assets/styles/global.scss';
+@import "../../../assets/styles/global.scss";
 
 .card-container {
   margin: 15px 2px;
-  padding: 16px 10px 20px 14px;
+  // padding: 16px 10px 20px 14px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
   border-radius: $radius-m;
-  background: var(--light-gray) !important;
+  // background: var(--light-gray) !important;
 }
 .spinner-loading {
   display: flex;
@@ -13,7 +13,7 @@
 }
 
 .title {
-  font-size: $size-l;
+  font-size: $size-lg;
   line-height: 19px;
   letter-spacing: $spacing;
   color: var(--blue);
@@ -21,43 +21,54 @@
 
 .icon-down {
   place-self: flex-end;
-  color: var(--blue) !important;
+  color: var(--black) !important;
 }
 
 :host ::ng-deep .mat-expansion-panel {
-  margin: 10px 0px;
+  // margin: 10px 0px;
   //padding: 10px 0px !important;
   height: auto;
 }
 
 :host ::ng-deep .mat-expansion-panel-header:hover {
-  background: rgb(239 246 252) !important;
+  background: inherit !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body {
+  padding: 0px 0px 16px !important;
 }
 
 :host ::ng-deep .mat-expansion-panel-header {
-  padding: 15px !important;
-  background-color: var(--light-gray) !important;
+  // padding: 15px !important;
+  // background-color: var(--light-gray) !important;
   border-radius: $radius-m !important;
+  padding: 10px 10px 0px;
 }
-:host ::ng-deep .mat-expansion-indicator:after{
-  color: var(--blue) !important;
+:host ::ng-deep .mat-expansion-indicator:after {
+  color: var(--black) !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-header-description {
+  margin-right: 0px !important;
 }
 
 .activity-title {
-  font-size: $size-xl;
-  line-height: 28px;
+  font-size: $size-l;
+  line-height: 19px;
   letter-spacing: $spacing;
   color: var(--black);
+  margin-bottom: 10px;
+  padding: 0 10px;
 }
 
-.competency-container{
+.competency-container {
   background: var(--white);
   box-shadow: 0px 0px 4px rgb(0 0 0 / 15%);
   border-radius: $radius-m;
   padding: 10px;
   margin: 18px 0 15px;
 
-  .competency-title{
+  .competency-title {
     font-size: $size-lg;
     line-height: 25px;
     letter-spacing: $spacing;
@@ -65,7 +76,7 @@
     margin-bottom: 20px;
   }
 
-  .level{
+  .level {
     font-size: $size-xl;
     line-height: 24px;
     letter-spacing: $spacing;
@@ -73,6 +84,61 @@
   }
 }
 
-.expand-container{
-  padding: 15px 15px 0;
+.expand-container {
+  padding: 15px 0px 0;
+}
+
+.activity-badge {
+  font-weight: 400;
+  font-size: 14px;
+  color: #1c5d95;
+  background: #ebf4fb;
+  border-radius: 50px;
+  width: fit-content;
+  padding: 5px 20px;
+  margin: 0 10px 15px;
+}
+
+.mat-progress-bar {
+  // width: 275px;
+  border-radius: 40px;
+  height: 4px;
+}
+
+.value {
+  position: relative;
+  bottom: 19px;
+  color: #1c5d95;
+  width: 275px;
+  display: flex;
+  justify-content: center;
+}
+
+::ng-deep.green-bar .theme-igot.day-mode .mat-progress-bar-fill::after {
+  background: #34d6a4 0% 0% no-repeat padding-box !important;
+  border-radius: 40px;
+}
+
+
+::ng-deep.warn-bar .mat-progress-bar-fill::after {
+  background: #F1CF8A 0% 0% no-repeat padding-box !important; 
+  border-radius: 40px;
+}
+
+::ng-deep.theme-igot.day-mode .mat-progress-bar-buffer {
+  // background-color: #EDEDED;
+  background-color: #f5f5f5;
+  // background-color: #E7E6E6 !important;
+}
+
+.progress-status {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  color: #000000;
+  place-self: end;
+}
+
+.progress-status-none{
+  visibility: hidden;
 }
