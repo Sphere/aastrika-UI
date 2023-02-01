@@ -18,8 +18,8 @@
               <div class="flex flex-column w-full">
                 <div class="title">{{ role?.roles }}</div>
                 <div class="progress-status-none" *ngIf="role?.averagePercentage == 0"></div>
-                <div class="progress-status" *ngIf="role?.averagePercentage < 100 && role?.averagePercentage != 0">In Progress</div>
-                <div class="progress-status" *ngIf="role?.averagePercentage == 100">Completed</div>
+                <div class="progress-status" *ngIf="role?.averagePercentage < 100 && role?.averagePercentage != 0" i18n>In Progress</div>
+                <div class="progress-status" *ngIf="role?.averagePercentage == 100" i18n>Completed</div>
                 <ng-container >
                   <!--  'warn-bar': role?.averagePercentage < 100 && role?.averagePercentage != 0, -->
                   <div [ngClass]="{'green-bar': role?.averagePercentage == 100 , 'warn-bar': role?.averagePercentage < 100 && role?.averagePercentage != 0 }">
@@ -34,7 +34,7 @@
         <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader>
         <div class="expand-container" *ngIf="roleactivitySummaries.length>0">
           <!-- list of activity -->
-          <div class="activity-badge">Activities</div>
+          <div class="activity-badge" i18n>Activities</div>
           <ng-container
             *ngFor="let activity of role?.activities; let i = index"
           >

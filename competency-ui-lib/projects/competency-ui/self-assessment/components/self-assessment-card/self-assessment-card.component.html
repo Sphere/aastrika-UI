@@ -14,6 +14,7 @@
           mat-button
           class="assess-btn btn-small"
           (click)="startSelfAssesment(cardData)"
+          i18n
         >
         Assess
         </button>
@@ -22,6 +23,7 @@
           mat-button
           class="reassess-btn btn-small"
           (click)="startSelfAssesment(cardData)"
+          i18n
         >
         Re-Assess
         </button>
@@ -31,12 +33,13 @@
           disabled
           class="done-btn btn-small"
           (click)="startSelfAssesment(cardData)"
+          i18n
         >
         Done
         </button>
       </ng-container>
     </ng-container>
 
-    <button class="btn-long">View Courses</button>
+    <button class="btn-long" i18n>View Courses</button>
   </div>
 </div>

@@ -8,7 +8,7 @@
             <div class="title">{{proficency?.title}}</div>
         </ng-container>
 
-        <div class="levelsTitle">
+        <div class="levelsTitle" i18n>
             Levels:
         </div>
         <mat-accordion>
@@ -35,7 +35,7 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div>
-                    <span class="log-header">Log:</span>
+                    <span class="log-header" i18n>Log:</span>
                     <ng-container *ngFor="let log of proficency?.logs; let logIndex = index">
                         <ng-container
                             *ngIf="(selectedDisplayLevel === -1 || (selectedProficiencyIndex === i && selectedDisplayLevel === log.level))">
