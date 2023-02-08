@@ -42,9 +42,17 @@ export class SelfAssessmentComponent implements OnInit {
           if (res.result) {
             if (res.result.contentList.length > 0) {
               if (res.result.contentList.length > 0 && value.childContent === res.result.contentList.length) {
+                let type = ''
+                _.forEach(res.result.contentList, (item:any)=>{
+                  if(item.completionPercentage === 100 && item.completionPercentage !== 0 ){
+                    type = 'DONE'
+                  }else{
+                    type = 'RESUME'
+                  }
+                })
                 this.btnType.push({
                   courseId: value.contentId,
-                  type: 'DONE'
+                  type
                 })
               } else {
                 console.log('else');
