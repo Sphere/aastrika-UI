@@ -13,7 +13,7 @@ import { GainedService } from '../../services/gained.service';
 })
 export class ActiveSummaryComponent implements OnInit {
   /**
- * Core Module  
+ * Core Module
  *
  * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
  */
@@ -75,15 +75,29 @@ export class ActiveSummaryComponent implements OnInit {
     if (this.profileData.professionalDetails) {
       designation = this.profileData.professionalDetails[0].designation
     }
+
+
     const reqBody = {
       filter: {
         "isDetail": true
       },
-      id: designation === 'AWW' ? 95 : 1
+      id: this.designationMap(designation)
     };
     return this.activeSummaryService.getActivityById(reqBody)
   }
 
+  private designationMap(designation: string){
+    const positionMap = {
+      "AWW" : 95,
+      "ANM" : 210
+    }
+
+    if(positionMap.hasOwnProperty(designation)){
+      return positionMap[designation]
+    }
+    else
+    return 1
+  }
   public getActivityByRoleId(id: any) {
     // this.panelOpenState = true
     this.acordianLoading = true
