@@ -92,7 +92,7 @@ export class SelfAssessmentComponent implements OnInit {
           "status": [
             "Live"
           ],
-          "competency": true
+          "competency": [true]
         }
       },
       "sort": [
