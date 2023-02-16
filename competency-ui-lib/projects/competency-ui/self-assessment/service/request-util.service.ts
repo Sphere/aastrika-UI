@@ -46,7 +46,8 @@ export class RequestUtil {
               'creator': _.get(value,'creator'),
               'duration': _.get(value,'duration'),
               'batchId': this.getBatchData(value),
-              'childContent': _.get(value, 'childNodes').length
+              'childContent': _.get(value, 'childNodes').length,
+              'competencyID': this.getCompetencyData(value.competencies_v1)
 
             })
            })
@@ -54,6 +55,13 @@ export class RequestUtil {
         }
       
 
+    }
+  }
+
+  getCompetencyData(competency:any){
+    if(competency){
+      let data = JSON.parse(competency)
+      return data[0].competencyId
     }
   }
 

@@ -38,12 +38,12 @@
           <ng-container *ngFor="let level of competency.levels; let i = index">
             <div class="flex flex-row align-items-center gap-2">
               <div>
-                <ng-container *ngIf="competency.lastLevel == i + 1">
+                <ng-container *ngIf="competency.lastLevel >= i + 1">
                   <mat-icon class="circle-tick cursor-pointer"
                     >check_circle</mat-icon
                   ></ng-container
                 >
-                <ng-container *ngIf="competency.lastLevel != i + 1">
+                <ng-container *ngIf="competency.lastLevel < i + 1">
                   <mat-icon class="non-progress cursor-pointer"
                     >check_circle</mat-icon
                   ></ng-container
