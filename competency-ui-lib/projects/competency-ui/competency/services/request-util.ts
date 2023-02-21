@@ -54,7 +54,7 @@ export class RequestUtil {
               'competency': _.get(value, 'name'),
               'id': _.get(value, 'id'),
               'description': _.get(value, 'description'),
-              'levels': ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'],
+              'levels': this.getLevels(_.get(value, 'id'), progrssData),
               'cid': _.get(data, 'result.response').id,
               'lastLevel': this.getheighestLevel(_.get(value, 'id'), progrssData),
               'completionPercentage': this.getCompeletionPercentage(_.get(value, 'id'), progrssData),
@@ -66,6 +66,45 @@ export class RequestUtil {
    
     return  _.uniqBy(result, 'id');
   }
+// ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'],
+  // getLevelsAcchived(competencyId, progrssData){
+  //  let response = null;
+  //  _.forEach(progrssData, (value:any)=>{
+  //   if(_.toNumber( value.competencyId ) === competencyId){
+
+  //     response = _.uniq(value.levelsAchieve);
+  //   }
+  //  })
+
+  //   return response
+  // }
+
+  getLevels(competencyId, progrssData){
+    let respone = [
+      {name: 'Level 1', achived: false, level: '1'}, 
+    {name: 'Level 2', achived: false, level: '2'},
+    {name: 'Level 3', achived: false, level: '3'},
+    {name: 'Level 4', achived: false, level: '4'},
+    {name: 'Level 5', achived: false, level: '5'}]
+    let achievedLevels = null
+    _.forEach(progrssData, (value:any)=>{
+      if(_.toNumber( value.competencyId ) === competencyId){
+  
+        achievedLevels = _.uniq(value.levelsAchieve);
+      }
+  })
+
+  _.forEach(respone, (value:any) => {
+    _.forEach(achievedLevels, (levels:any)=>{
+      if(levels == value.level){
+        value.achived = true
+      }
+    })
+  })
+  
+  return respone
+
+}
 
   getheighestLevel(competencyId, progrssData){
    let respone = '' 
@@ -218,10 +257,19 @@ export class RequestUtil {
  }
  competencyStoreDataFomat(data){
   let response  = {}
+  let levels = []
+  if(data.acquiredDetails){
+    _.forEach(data.acquiredDetails, (value:any)=>{
+      if(value.competencyLevelId){
+        levels.push(value.competencyLevelId)
+      }
+    })
+  }
   response = {
     'competencyId': data.competencyId,
     'competencyName': data.additionalParams.competencyName,
-    'levelId': _.maxBy(data.acquiredDetails, 'competencyLevelId' )
+    'levelId': _.maxBy(data.acquiredDetails, 'competencyLevelId' ),
+    'levelsAchieve' : levels
   }
   return response
  }
