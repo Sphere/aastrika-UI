@@ -26,6 +26,7 @@ export class ActiveSummaryComponent implements OnInit {
   loading = false
   acordianLoading = false
   profileData: any
+  language: any
   constructor(
     public activeSummaryService: ActiveSummaryService,
     public configService: ConfigService,
@@ -39,11 +40,12 @@ export class ActiveSummaryComponent implements OnInit {
     this.loading = true
     this.getUserDetails().pipe(mergeMap((res: any) => {
       this.profileData = res.profileDetails.profileReq
+      this.language = res.profileDetails.preferences.language;
       if (this.profileData) {
         return this.getActivityByRole()
       }
     })).subscribe((res: any) => {
-      const formatedResponse = this.requestUtil.formatedActivitityByPostion(res)
+      const formatedResponse = this.requestUtil.formatedActivitityByPostion(res, this.language)
       this.roleactivitySummaries = formatedResponse
       _.forEach(this.roleactivitySummaries, (value:any)=>{
         if(value.id){
@@ -104,7 +106,7 @@ export class ActiveSummaryComponent implements OnInit {
     const index = _.findIndex(this.roleactivitySummaries, { 'id': id })
     this.roleactivitySummaries[index]['activities'] = []
     this.getEntityById(id).pipe(mergeMap((res) => {
-      const respone = this.requestUtil.formatedActivitityByRoleId(res)
+      const respone = this.requestUtil.formatedActivitityByRoleId(res, this.language)
       this.roleactivitySummaries[index]['activities'] = respone
       const cidArr = _.map(this.roleactivitySummaries[index]['activities'], 'cid')
       let calls = [];
@@ -114,8 +116,7 @@ export class ActiveSummaryComponent implements OnInit {
       this.acordianLoading = false
       return forkJoin(...calls)
     })).subscribe((res: any) => {
-
-      const response = this.requestUtil.formatedCompetency(res, this.competencyProgress)
+      const response = this.requestUtil.formatedCompetency(res, this.competencyProgress, this.language)
       this.roleactivitySummaries[index]['activities'] = _.values(_.merge(_.keyBy(response, 'cid'),
         _.keyBy(this.roleactivitySummaries[index]['activities'], 'cid')))
 
@@ -123,7 +124,6 @@ export class ActiveSummaryComponent implements OnInit {
       let competencyLength = this.getAveragepercentage(response)
       this.roleactivitySummaries[index]['averagePercentage'] = competencyLength
     })
-
   }
   getEntityById(id: any) {
     const reqBody = {

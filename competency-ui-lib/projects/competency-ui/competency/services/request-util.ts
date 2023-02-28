@@ -6,13 +6,13 @@ export class RequestUtil {
     }
 
   }
-  formatedActivitityByPostion = (data: any) => {
+  formatedActivitityByPostion = (data: any, lang: any) => {
     if (_.get(data, 'result')) {
       const children = _.get(data, 'result.response').children
       if (children.length > 0) {
         const result = _.reduce(children, (result, value) => {
           result.push({
-            'roles': _.get(value, 'name'),
+            'roles': lang == 'hi'? this.getHiName(value) :   _.get(value, 'name'),
             'id': _.get(value, 'id'),
             'description': _.get(value, 'description'),
             'averagePercentage': 0
@@ -25,13 +25,23 @@ export class RequestUtil {
     }
 
   } 
-  formatedActivitityByRoleId = (data: any) => {
+
+  getHiName(data){
+    let res :any
+    if(_.get(data.additionalProperties, 'lang-hi-name')){
+      res = _.get(data.additionalProperties, 'lang-hi-name')
+    }else {
+      res =  _.get(data, 'name')
+    }
+    return res
+  }
+  formatedActivitityByRoleId = (data: any, lang:any) => {
     if (_.get(data, 'result')) {
       const children = _.get(data, 'result.response').children
       if (children.length > 0) {
         const result = _.reduce(children, (result, value) => {
           result.push({
-            'title': _.get(value, 'name'),
+            'title': lang == 'hi'? this.getHiName(value) :  _.get(value, 'name'),
             'cid': _.get(value, 'id'),
             'description': _.get(value, 'description'),
           })
@@ -43,7 +53,7 @@ export class RequestUtil {
     }
 
   }
-  formatedCompetency = (data: any, progrssData) => {
+  formatedCompetency = (data: any, progrssData, lang) => {
     let result = []
     _.forEach(data,(data:any)=>{
       if (_.get(data, 'result')) {
@@ -51,10 +61,10 @@ export class RequestUtil {
         if (children.length > 0) {
           _.forEach(children, (value:any)=>{
             result.push({
-              'competency': _.get(value, 'name'),
+              'levels': this.getLevels(_.get(value, 'id'), progrssData, lang),
+              'competency': lang = 'hi'? this.getHiName(value) : _.get(value, 'name'),
               'id': _.get(value, 'id'),
               'description': _.get(value, 'description'),
-              'levels': this.getLevels(_.get(value, 'id'), progrssData),
               'cid': _.get(data, 'result.response').id,
               'lastLevel': this.getheighestLevel(_.get(value, 'id'), progrssData),
               'completionPercentage': this.getCompeletionPercentage(_.get(value, 'id'), progrssData),
@@ -79,13 +89,13 @@ export class RequestUtil {
   //   return response
   // }
 
-  getLevels(competencyId, progrssData){
+  getLevels(competencyId, progrssData , lang){
     let respone = [
-      {name: 'Level 1', achived: false, level: '1'}, 
-    {name: 'Level 2', achived: false, level: '2'},
-    {name: 'Level 3', achived: false, level: '3'},
-    {name: 'Level 4', achived: false, level: '4'},
-    {name: 'Level 5', achived: false, level: '5'}]
+    {name:  lang == 'hi' ? 'स्तर 1' : 'Level 1', achived: false, level: '1'}, 
+    {name:  lang == 'hi' ? 'स्तर 2' :'Level 2', achived: false, level: '2'},
+    {name:  lang == 'hi' ? 'स्तर 3' :'Level 3', achived: false, level: '3'},
+    {name:  lang == 'hi' ? 'स्तर 4' :'Level 4', achived: false, level: '4'},
+    {name:  lang == 'hi' ? 'स्तर 5' :'Level 5', achived: false, level: '5'}]
     let achievedLevels = null
     _.forEach(progrssData, (value:any)=>{
       if(_.toNumber( value.competencyId ) === competencyId){
@@ -133,7 +143,7 @@ export class RequestUtil {
  * for user 
  */
 
-  formatedGainedCompetency(entity:any, passbook:any){
+  formatedGainedCompetency(entity:any, passbook:any, lang:any){
     let response = []
     _.forEach(entity,(value:any)=>{
         const cid =   _.get(value, 'id')
@@ -141,16 +151,35 @@ export class RequestUtil {
            if(passbookValue.competencies.hasOwnProperty(cid)){
               const competency =  passbookValue.competencies[cid]
               response.push({
-                'title': _.get(competency,'additionalParams.competencyName'),
+                'title': lang == 'hi'? this.getHiTitle(cid,  entity, competency ) :_.get(competency,'additionalParams.competencyName'),
                 'logs': this.acquiredPassbookLogs(_.get(competency, 'acquiredDetails')),
                 'proficiencyLevels': this.acauiredChannelColourCode(_.get(competency, 'acquiredDetails')),
-                'competencyStoreData': this.competencyStoreDataFomat(competency)
+                'competencyStoreData': this.competencyStoreDataFomat(competency),
+                'titleHi': this.getHiTitle(cid,  entity, competency)
               })             
             }
         })
     })
     return response
   }
+
+  getHiTitle(id, entity, competency){
+    let res:any
+    _.forEach(entity, (item:any)=>{
+      if(item.id == id){
+        if(_.get(item.additionalProperties, 'lang-hi-name')){
+          
+          res = _.get(item.additionalProperties, 'lang-hi-name')
+        }else{
+          res = _.get(competency,'additionalParams.competencyName')
+        }
+
+
+      }
+    })
+    return res
+  }
+
   acquiredPassbookLogs(acquiredDetails:any){
     let response  = []
     if(acquiredDetails.length>0){

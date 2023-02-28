@@ -1,67 +1,103 @@
 <lib-app-loader *ngIf="loading === true"></lib-app-loader>
 <ng-container *ngFor="let proficency of gainedproficencyData; let i = index">
-    <div class="card-container example-container container-balanced">
-        <!-- <div class="date justify-end mr-2">
-        {{date}}
-    </div> -->
-        <ng-container *ngIf="proficency?.title">
-            <div class="title">{{proficency?.title}}</div>
-        </ng-container>
+  <div class="card-container example-container container-balanced">
+    <ng-container *ngIf="proficency?.title">
+      <div class="title">{{ proficency?.title }}</div>
+    </ng-container>
 
-        <div class="levelsTitle" i18n>
-            Levels:
-        </div>
-        <mat-accordion>
-            <mat-expansion-panel [expanded]="i === selectedProficiencyIndex" class="w-full panel" hideToggle >
-                <mat-expansion-panel-header class="flex-between items-center panel-header w-full">
-                    <mat-panel-description class="panel-header-description">
-                        <ng-container *ngFor="let proficiencyLevel of proficency?.proficiencyLevels">
-                            <ng-container *ngIf="proficiencyLevel.selected; else addLevel">
-                                <div (click)="$event.stopPropagation(); selectLevel(i, proficiencyLevel.displayLevel)" class="level mb-1"
-                                    [ngStyle]="{'background-color': proficiencyLevel.color}"
-                                    [ngClass]="{'individual-select': selectedProficiencyIndex === i && selectedDisplayLevel === proficiencyLevel?.displayLevel}">
-                                    {{proficiencyLevel?.displayLevel}}
-                                </div>
-                            </ng-container>
-                            <ng-template #addLevel>
-                                <div (click)="$event.stopPropagation();" class="level mb-1">
-                                    {{proficiencyLevel?.displayLevel}}
-                                </div>
-                            </ng-template>
-                        </ng-container>
-                        <div class="level mb-1" (click)="$event.stopPropagation(); selectLevel(i, -1)">
-                            <mat-icon [ngClass]="{'arrowReverse': selectedProficiencyIndex === i }">keyboard_arrow_down</mat-icon>
-                        </div>
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <div>
-                    <span class="log-header" i18n>Log:</span>
-                    <ng-container *ngFor="let log of proficency?.logs; let logIndex = index">
-                        <ng-container
-                            *ngIf="(selectedDisplayLevel === -1 || (selectedProficiencyIndex === i && selectedDisplayLevel === log.level))">
-                            <div class="log">
-                                <div class="flex">
-                                    <ng-container *ngIf="log.header">
-                                        <span class="flex-1">Level {{log.level}}: {{log.header}}</span>
-                                        <span class="log-date mr-2">{{log?.date| date:'dd/MM/yyyy'}}</span>
-                                    </ng-container>
-                                </div>
-                                <ng-container *ngIf="log.description">
-                                    <div class="mt-2" [ngClass]="{'hide-content': !log.keyboardArrowUp}">
-                                        {{log.description}}
-                                    </div>
-                                    <div class="justify-end">
-                                        <mat-icon (click)="log.keyboardArrowUp = !log.keyboardArrowUp"
-                                            class="mr-3"
-                                            [ngClass]="{'arrowReverse': log.keyboardArrowUp }">keyboard_arrow_down</mat-icon>
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </ng-container>
-                    </ng-container>
+    <div class="levelsTitle" i18n>Levels:</div>
+    <mat-accordion>
+      <mat-expansion-panel
+        [expanded]="i === selectedProficiencyIndex"
+        class="w-full panel"
+        hideToggle
+      >
+        <mat-expansion-panel-header
+          class="flex-between items-center panel-header w-full"
+        >
+          <mat-panel-description class="panel-header-description">
+            <ng-container
+              *ngFor="let proficiencyLevel of proficency?.proficiencyLevels"
+            >
+              <ng-container *ngIf="proficiencyLevel.selected; else addLevel">
+                <div
+                  (click)="
+                    $event.stopPropagation();
+                    selectLevel(i, proficiencyLevel.displayLevel)
+                  "
+                  class="level mb-1"
+                  [ngStyle]="{ 'background-color': proficiencyLevel.color }"
+                  [ngClass]="{
+                    'individual-select':
+                      selectedProficiencyIndex === i &&
+                      selectedDisplayLevel === proficiencyLevel?.displayLevel
+                  }"
+                >
+                  {{ proficiencyLevel?.displayLevel }}
                 </div>
-            </mat-expansion-panel>
-        </mat-accordion>
-    </div>
-    <!-- <hr> -->
+              </ng-container>
+              <ng-template #addLevel>
+                <div (click)="$event.stopPropagation()" class="level mb-1">
+                  {{ proficiencyLevel?.displayLevel }}
+                </div>
+              </ng-template>
+            </ng-container>
+            <div
+              class="level mb-1"
+              (click)="$event.stopPropagation(); selectLevel(i, -1)"
+            >
+              <mat-icon
+                [ngClass]="{ arrowReverse: selectedProficiencyIndex === i }"
+                >keyboard_arrow_down</mat-icon
+              >
+            </div>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div>
+          <span class="log-header" i18n>Log:</span>
+          <ng-container
+            *ngFor="let log of proficency?.logs; let logIndex = index"
+          >
+            <ng-container
+              *ngIf="
+                selectedDisplayLevel === -1 ||
+                (selectedProficiencyIndex === i &&
+                  selectedDisplayLevel === log.level)
+              "
+            >
+              <div class="log">
+                <div class="flex">
+                  <ng-container *ngIf="log.header">
+                    <span class="flex-1"
+                    i18n>Level {{ log.level }}: {{ log.header }}</span
+                    >
+                    <span class="log-date mr-2">{{
+                      log?.date | date : "dd/MM/yyyy"
+                    }}</span>
+                  </ng-container>
+                </div>
+                <ng-container *ngIf="log.description">
+                  <div
+                    class="mt-2"
+                    [ngClass]="{ 'hide-content': !log.keyboardArrowUp }"
+                  >
+                    {{ log.description }}
+                  </div>
+                  <div class="justify-end">
+                    <mat-icon
+                      (click)="log.keyboardArrowUp = !log.keyboardArrowUp"
+                      class="mr-3"
+                      [ngClass]="{ arrowReverse: log.keyboardArrowUp }"
+                      >keyboard_arrow_down</mat-icon
+                    >
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <!-- <hr> -->
 </ng-container>
