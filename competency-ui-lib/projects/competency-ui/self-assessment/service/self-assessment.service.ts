@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { DataService } from '@aastrika_npmjs/comptency/core';
 import { HttpClient } from '@angular/common/http';
 import { urlConfig  } from '@aastrika_npmjs/comptency/core';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,14 @@ const */
     
     return this.post(httpOptions)
     
+  }
+
+
+  public getUserdetailsFromRegistry(reqBody:any){
+    const httpOptions: any = {
+      url: urlConfig.getUserdetailsFromRegistry(reqBody.id),
+    };
+    return this.get(httpOptions).pipe(map((res: any) => res.result.response))
   }
 
 

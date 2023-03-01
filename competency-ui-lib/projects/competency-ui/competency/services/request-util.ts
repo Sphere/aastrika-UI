@@ -10,15 +10,19 @@ export class RequestUtil {
     if (_.get(data, 'result')) {
       const children = _.get(data, 'result.response').children
       if (children.length > 0) {
-        const result = _.reduce(children, (result, value) => {
+        let  result = _.reduce(children, (result, value) => {
           result.push({
             'roles': lang == 'hi'? this.getHiName(value) :   _.get(value, 'name'),
             'id': _.get(value, 'id'),
             'description': _.get(value, 'description'),
-            'averagePercentage': 0
+            'averagePercentage': 0,
+            'code': _.get(value.additionalProperties, 'Code')
           })
+         
           return result
         }, [])
+        result =  _.sortBy(result, [function(o) { return o.code; }]);
+        // console.log("sort result", result);
         return result
       }
 
@@ -44,10 +48,11 @@ export class RequestUtil {
             'title': lang == 'hi'? this.getHiName(value) :  _.get(value, 'name'),
             'cid': _.get(value, 'id'),
             'description': _.get(value, 'description'),
+            'code': _.get(value.additionalProperties, 'Code')
           })
           return result
         },[])
-        return result
+        return _.sortBy(result, [function(o) { return o.code; }]);
       }
 
     }
@@ -68,12 +73,14 @@ export class RequestUtil {
               'cid': _.get(data, 'result.response').id,
               'lastLevel': this.getheighestLevel(_.get(value, 'id'), progrssData),
               'completionPercentage': this.getCompeletionPercentage(_.get(value, 'id'), progrssData),
+              'code': _.get(value.additionalProperties, 'Code')
             })
+           
           })
         }
       }
     })
-   
+    result = _.sortBy(result, [function(o) { return o.code; }]);
     return  _.uniqBy(result, 'id');
   }
 // ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'],

@@ -17,6 +17,7 @@ export class SelfAssessmentComponent implements OnInit {
   requestUtil: any
   loading = false
   btnType = [];
+  profileData : any
   constructor(
     private location: Location,
     private selfAssessmentService: SelfAssessmentService,
@@ -31,6 +32,11 @@ export class SelfAssessmentComponent implements OnInit {
    */
   ngOnInit() {
     this.loading = true
+    this.getUserDetails().subscribe(
+      (res: any) => {
+        this.profileData = res.profileDetails.preferences.language;
+      })
+
     this.getCompetencyCourse().pipe(map((res: any) => {
       const formatedResponse = this.requestUtil.formatedCompetencyCourseData(res)
       return formatedResponse
@@ -79,6 +85,13 @@ export class SelfAssessmentComponent implements OnInit {
 
   }
 
+  getUserDetails() {
+    const reqBody = {
+      id: this.configService.getConfig().id
+    }
+    return this.selfAssessmentService.getUserdetailsFromRegistry(reqBody)
+  }
+
   getCompetencyCourse() {
     const reqBody = {
       "request": {
@@ -92,7 +105,8 @@ export class SelfAssessmentComponent implements OnInit {
           "status": [
             "Live"
           ],
-          "competency": [true]
+          "competency": [true],
+          "lang": this.profileData = 'hi' ? 'hi' : 'en'
         }
       },
       "sort": [
