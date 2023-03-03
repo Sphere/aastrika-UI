@@ -16,8 +16,29 @@ export class SelfAssessmentService extends DataService {
    *searching for the content Identifier
    * 
    */
-  public getCompetencyCourseIdentifier(reqBody:any){ 
-   
+  public getCompetencyCourseIdentifier(data:any){ 
+    const reqBody = {
+      "request": {
+        "filters": {
+          "primaryCategory": [
+            "Course"
+          ],
+          "contentType": [
+            "Course"
+          ],
+          "status": [
+            "Live"
+          ],
+          "competency": [true],
+          "lang": data == 'hi' ? 'hi' : 'en'
+        }
+      },
+      "sort": [
+        {
+          "lastUpdatedOn": "desc"
+        }
+      ]
+    }
     const httpOptions: any = {
       url: urlConfig.getSearch(),
       data: reqBody

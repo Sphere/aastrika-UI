@@ -67,7 +67,7 @@ export class RequestUtil {
           _.forEach(children, (value:any)=>{
             result.push({
               'levels': this.getLevels(_.get(value, 'id'), progrssData, lang),
-              'competency': lang = 'hi'? this.getHiName(value) : _.get(value, 'name'),
+              'competency': lang == 'hi'? this.getHiName(value) : _.get(value, 'name'),
               'id': _.get(value, 'id'),
               'description': _.get(value, 'description'),
               'cid': _.get(data, 'result.response').id,
