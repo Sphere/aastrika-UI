@@ -29,13 +29,16 @@ export class SelfAssessmentComponent implements OnInit {
   }
   /**
    *getting the details of course by pasing the identifier and hierarchyType
-   * 
+   *
    */
   ngOnInit() {
     this.loading = true
 
     this.getUserDetails().pipe(mergeMap((res: any) => {
         this.profileData = res.profileDetails.preferences.language;
+        if(!this.profileData){
+          this.profileData = 'en'
+        }
         if(this.profileData){
           return this.getCompetencyCourse()
         }
@@ -65,8 +68,8 @@ export class SelfAssessmentComponent implements OnInit {
                   })
                 }
               }
-            } 
-            
+            }
+
             if(res.result.contentList.length == 0 ) {
               this.btnType.push({
                 courseId: value.contentId,
@@ -77,14 +80,14 @@ export class SelfAssessmentComponent implements OnInit {
         })
         this.loading = false
       })
-    
-    
+
+
     // if(this.profileData !== undefined ){
 
     //   this.getCompetencyData()
     // }
 
-    
+
 
 
   }
@@ -119,8 +122,8 @@ export class SelfAssessmentComponent implements OnInit {
                 })
               }
             }
-          } 
-          
+          }
+
           if(res.result.contentList.length == 0 ) {
             this.btnType.push({
               courseId: value.contentId,

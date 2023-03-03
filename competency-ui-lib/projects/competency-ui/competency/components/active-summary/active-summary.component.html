@@ -26,7 +26,7 @@
                   <mat-progress-bar class="bar-progress-colour" mode="determinate" value={{role?.averagePercentage}} class="mt-1"></mat-progress-bar>
                   </div>
                 </ng-container>
-               
+
               </div>
             </ng-container>
           </mat-panel-description>
@@ -38,11 +38,11 @@
           <ng-container
             *ngFor="let activity of role?.activities; let i = index"
           >
-            <div class="activity-title">
-              {{ i + 1 }}.{{ activity.title }}
+            <div class="activity-title" *ngIf="activity.title">
+             - {{ activity.title }}
             </div>
 
-            
+
           </ng-container>
             <ng-container *ngIf="role?.activities" class="">
               <lib-competency-accordion [competencyList]="role?.activities"></lib-competency-accordion>
@@ -50,6 +50,6 @@
         </div>
       </mat-expansion-panel>
     </mat-accordion>
-   
+
   </div>
 </ng-container>

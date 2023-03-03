@@ -40,7 +40,9 @@ export class ActiveSummaryComponent implements OnInit {
     this.loading = true
     this.getUserDetails().pipe(mergeMap((res: any) => {
       this.profileData = res.profileDetails.profileReq
-      this.language = res.profileDetails.preferences.language;
+      this.language = res.profileDetails.preferences.language
+      if(!this.language)
+      this.language = 'en'
       if (this.profileData) {
         return this.getActivityByRole()
       }
@@ -114,10 +116,13 @@ export class ActiveSummaryComponent implements OnInit {
         calls.push(this.getEntityById(value))
       })
       this.acordianLoading = false
+
       return forkJoin(...calls)
     })).subscribe((res: any) => {
+
       const response = this.requestUtil.formatedCompetency(res, this.competencyProgress, this.language)
-      this.roleactivitySummaries[index]['activities'] = _.values(_.merge(_.keyBy(response, 'cid'),
+
+      this.roleactivitySummaries[index]['activities'] = _.values(_.merge(_.keyBy(response, 'id'),
         _.keyBy(this.roleactivitySummaries[index]['activities'], 'cid')))
 
       this.roleactivitySummaries[index]['averagePercentage'] = []
