@@ -40,7 +40,8 @@ export class ActiveSummaryComponent implements OnInit {
     this.loading = true
     this.getUserDetails().pipe(mergeMap((res: any) => {
       this.profileData = res.profileDetails.profileReq
-      this.language = res.profileDetails.preferences.language
+      // this.language = res.profileDetails.preferences.language
+      this.language = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
       if(!this.language)
       this.language = 'en'
       if (this.profileData) {

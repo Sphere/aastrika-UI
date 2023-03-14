@@ -31,7 +31,7 @@ export class GainedComptencyCardComponent implements OnInit {
   ngOnInit() {
     this.getUserDetails().subscribe(
     (res: any) => {
-      this.profileData = res.profileDetails.preferences.language;
+      this.profileData = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
     })
     this.loading = true
     const allEntity = this.getAllEntity()
