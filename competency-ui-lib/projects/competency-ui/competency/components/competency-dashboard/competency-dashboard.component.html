@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content" [ngClass]="isMobileApp ? 'content-mobile' : 'content'">
   <mat-icon (click)="navigateBack()" class="cursor-pointer mb-3"
     >chevron_left</mat-icon
   >

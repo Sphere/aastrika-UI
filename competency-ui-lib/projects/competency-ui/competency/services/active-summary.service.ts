@@ -3,6 +3,7 @@ import { DataService } from '@aastrika_npmjs/comptency/core';
 import { HttpClient } from '@angular/common/http';
 import { urlConfig  } from '@aastrika_npmjs/comptency/core';
 import { map } from 'rxjs/operators';
+import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 /**
  * ActiveSummaryService to extend Data Service 
  *
@@ -13,8 +14,8 @@ import { map } from 'rxjs/operators';
 })
 export class ActiveSummaryService extends DataService {
 
-  constructor(http:HttpClient) {
-    super(http)
+  constructor(http:HttpClient, public configService: ConfigService) {
+    super(http, configService)
   }
 
    /**
@@ -23,8 +24,9 @@ export class ActiveSummaryService extends DataService {
    */
     public getActivityById(reqBody:any){
       // console.log('calling getActivityById>>')
+      let config = this.configService.getConfig()
       const httpOptions: any = {
-        url: urlConfig.getEntityById(reqBody.id),
+        url: config!.isMobileApp ? urlConfig.getEntityByIdMobile(reqBody.id) : urlConfig.getEntityById(reqBody.id),
         data: reqBody
       };
       // console.log('reqBody',httpOptions)
@@ -34,9 +36,10 @@ export class ActiveSummaryService extends DataService {
    * for making  api calls to get userDetails
    * 
    */
-    public getUserdetailsFromRegistry(reqBody:any){
+    public getUserdetailsFromRegistry(reqBody:any ){
+      let config = this.configService.getConfig()
       const httpOptions: any = {
-        url: urlConfig.getUserdetailsFromRegistry(reqBody.id),
+        url: config!.isMobileApp? urlConfig.getUserdetailsMobile(reqBody.id) : urlConfig.getUserdetailsFromRegistry(reqBody.id),
       };
       return this.get(httpOptions).pipe(map((res: any) => res.result.response))
     }

@@ -11,39 +11,6 @@ import { RequiredCompetencyService } from '../../services/required-competency.se
 })
 export class RequiredComptencyCardComponent implements OnInit, OnDestroy {
 
-  competencyData = [
-    {
-      title: 'Procurement and Distribution of HCM',
-      description: 'Manages procurement and store raw materials for HCMs as per the pre-decided menu Supervises the preparation and distribution of HCM by Anganwadi Helper (AWH)',
-      requiredLevel: 'level 4'
-    },
-    {
-      title: 'Store management and planning and coordination of THR and Dry ration',
-      description: 'Mobilizes children and conducts ECCE activities as per the yearly activity calendar and the ECCE manual ',
-      requiredLevel: 'level 4'
-    },
-    {
-      title: 'Procurement and Distribution of HCM',
-      description: 'Manages procurement and store raw materials for HCMs as per the pre-decided menu Supervises the preparation and distribution of HCM by Anganwadi Helper (AWH)',
-      requiredLevel: 'level 4'
-    },
-    {
-      title: 'Early Childhood Care Education',
-      description: 'Mobilizes children and conducts ECCE activities as per the yearly activity calendar and the ECCE manual ',
-      requiredLevel: 'level 4'
-    },
-    {
-      title: 'Procurement and Distribution of HCM',
-      description: 'Manages procurement and store raw materials for HCMs as per the pre-decided menu Supervises the preparation and distribution of HCM by Anganwadi Helper (AWH)',
-      requiredLevel: 'level 4'
-    },
-    {
-      title: 'Early Childhood Care Education',
-      description: 'Mobilizes children and conducts ECCE activities as per the yearly activity calendar and the ECCE manual ',
-      requiredLevel: 'level 4'
-    },
-  ]
-
   panelOpenState: Boolean = true
   customCollapsedHeight = '100px'
   customExpandedHeight = '100px'

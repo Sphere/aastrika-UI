@@ -1,3 +1,4 @@
+import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,11 +10,14 @@ import { Router } from '@angular/router';
 export class CompetencyDashboardComponent implements OnInit {
   @Output() stateChange: EventEmitter<any> = new EventEmitter();
   tabIndex = 1;
-  constructor(  public router: Router,) {
+  isMobileApp
+
+  constructor(  public router: Router, public configService: ConfigService) {
    }
 
   ngOnInit() {
     this.tabIndex = 1
+    this.isMobileApp = this.configService.getConfig().isMobileApp
   }
 
   navigateBack() {

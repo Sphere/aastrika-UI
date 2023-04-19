@@ -19,6 +19,7 @@ export class GainedComptencyCardComponent implements OnInit {
   selectedProficiencyIndex = -1;
   selectedDisplayLevel = -1;
   public profileData: any
+  
   constructor(
     public gainedService: GainedService,
     public configService: ConfigService,
@@ -30,15 +31,19 @@ export class GainedComptencyCardComponent implements OnInit {
 
   ngOnInit() {
     this.getUserDetails().subscribe(
-    (res: any) => {
-      this.profileData = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
-    })
+      (res: any) => {
+        console.log(res)
+        this.profileData = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
+      })
     this.loading = true
     const allEntity = this.getAllEntity()
     const userPassbook = this.getAllUserPassbook()
     forkJoin([allEntity, userPassbook]).subscribe((res) => {
-      const response = this.requestUtil.formatedGainedCompetency(res[0].result.response, res[1].result.content, this.profileData )
+      console.log(res)
+      const response = this.requestUtil.formatedGainedCompetency(res[0].result.response, res[1].result.content, this.profileData)
       this.gainedproficencyData = response
+      // this.gainedproficencyData = this.dummyData
+      console.log(response)
       if (this.gainedproficencyData) {
         let res = []
         _.forEach(this.gainedproficencyData, (competency: any) => {
@@ -50,9 +55,6 @@ export class GainedComptencyCardComponent implements OnInit {
       }
       this.loading = false
     })
-    // if (this.gainedproficencyData) {
-    //   this.gainedService.competencyData.next(this.gainedproficencyData.competencyStoreData)
-    // }
   }
 
   getUserDetails() {
@@ -63,12 +65,13 @@ export class GainedComptencyCardComponent implements OnInit {
   }
 
   private getAllUserPassbook() {
+    let id = this.configService.getConfig().id
     const reqBody = {
       "request": {
         "typeName": "competency"
       }
     };
-    return this.gainedService.fetchUserPassbook(reqBody)
+    return this.gainedService.fetchUserPassbook(reqBody,id)
   }
 
   private getAllEntity() {

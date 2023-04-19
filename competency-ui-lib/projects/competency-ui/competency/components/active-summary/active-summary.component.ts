@@ -42,22 +42,23 @@ export class ActiveSummaryComponent implements OnInit {
       this.profileData = res.profileDetails.profileReq
       // this.language = res.profileDetails.preferences.language
       this.language = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
-      if(!this.language)
-      this.language = 'en'
+      if (!this.language)
+        this.language = 'en'
       if (this.profileData) {
         return this.getActivityByRole()
       }
     })).subscribe((res: any) => {
       const formatedResponse = this.requestUtil.formatedActivitityByPostion(res, this.language)
       this.roleactivitySummaries = formatedResponse
-      _.forEach(this.roleactivitySummaries, (value:any)=>{
-        if(value.id){
+      _.forEach(this.roleactivitySummaries, (value: any) => {
+        if (value.id) {
           this.getActivityByRoleId(value.id)
         }
-      } )
+      })
       console.log(this.roleactivitySummaries);
       this.loading = false
     })
+    console.log(this.roleactivitySummaries)
   }
 
   getProgress() {
@@ -91,17 +92,17 @@ export class ActiveSummaryComponent implements OnInit {
     return this.activeSummaryService.getActivityById(reqBody)
   }
 
-  private designationMap(designation: string){
+  private designationMap(designation: string) {
     const positionMap = {
-      "AWW" : 95,
-      "ANM" : 210
+      "AWW": 95,
+      "ANM": 210
     }
 
-    if(positionMap.hasOwnProperty(designation)){
+    if (positionMap.hasOwnProperty(designation)) {
       return positionMap[designation]
     }
     else
-    return 1
+      return 1
   }
   public getActivityByRoleId(id: any) {
     // this.panelOpenState = true

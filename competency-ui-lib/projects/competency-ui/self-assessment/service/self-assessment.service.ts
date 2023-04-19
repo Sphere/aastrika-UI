@@ -3,13 +3,14 @@ import { DataService } from '@aastrika_npmjs/comptency/core';
 import { HttpClient } from '@angular/common/http';
 import { urlConfig  } from '@aastrika_npmjs/comptency/core';
 import { map } from 'rxjs/operators';
+import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelfAssessmentService extends DataService {
-  constructor(http:HttpClient) {
-    super(http)
+  constructor(http:HttpClient,  public configService: ConfigService) {
+    super(http, configService)
   }
 
   /**
@@ -39,8 +40,9 @@ export class SelfAssessmentService extends DataService {
         }
       ]
     }
+    let config = this.configService.getConfig()
     const httpOptions: any = {
-      url: urlConfig.getSearch(),
+      url:   config!.isMobileApp?   urlConfig.getSearchMobile() : urlConfig.getSearch(),
       data: reqBody
     };
     
@@ -65,8 +67,9 @@ export class SelfAssessmentService extends DataService {
 id   
 const */
   public fetchPrgressDetails(req) {
+    let config = this.configService.getConfig()
     const httpOptions: any = {
-      url: urlConfig.getContentProgress(req.request.courseId),
+      url: config!.isMobileApp ? urlConfig.getContentProgressMobile() : urlConfig.getContentProgress(req.request.courseId),
       data: req
     };
     
@@ -76,8 +79,9 @@ const */
 
 
   public getUserdetailsFromRegistry(reqBody:any){
+    let config = this.configService.getConfig()
     const httpOptions: any = {
-      url: urlConfig.getUserdetailsFromRegistry(reqBody.id),
+      url: config!.isMobileApp ? urlConfig.getUserdetailsMobile(reqBody.id) : urlConfig.getUserdetailsFromRegistry(reqBody.id),
     };
     return this.get(httpOptions).pipe(map((res: any) => res.result.response))
   }

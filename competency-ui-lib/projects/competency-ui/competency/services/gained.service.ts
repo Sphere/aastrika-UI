@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { DataService, urlConfig } from '@aastrika_npmjs/comptency/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 
 /**
  * GainedService to extend Data Service 
@@ -18,8 +19,8 @@ export class GainedService extends DataService {
   competencyData$ = this.competencyData.asObservable();
 
 
-  constructor(http:HttpClient) {
-    super(http)
+  constructor(http:HttpClient, public configService: ConfigService) {
+    super(http, configService)
   }
 
   /**
@@ -27,21 +28,23 @@ export class GainedService extends DataService {
    * 
    */
 
-   public fetchUserPassbook(reqBody:any){
-    
+   public fetchUserPassbook(reqBody:any, id?:any){
+    let config = this.configService.getConfig()
     const httpOptions: any = {
-      url: urlConfig.getUserPassbook(),
-      data: reqBody
+      url: config!.isMobileApp ? urlConfig.getUserPassbookMobile() :  urlConfig.getUserPassbook(),
+      data: reqBody,
+      header: config!.isMobileApp ? {'x-authenticated-userid': id } : ''
     };
     return this.post(httpOptions)
   }
 
   
   public fetchAllEntity(reqBody:any){
-    
+    let config = this.configService.getConfig()
     const httpOptions: any = {
-      url: urlConfig.getAllEntity(),
-      data: reqBody
+      url: config!.isMobileApp ?  urlConfig.getAllEntityMobile()  : urlConfig.getAllEntity(),
+      data: reqBody,
+      
     };
     return this.post(httpOptions)
   }

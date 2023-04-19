@@ -21,7 +21,7 @@ export class SelfAssessmentCardComponent implements OnInit {
     console.log(this.cardData)
   }
   startSelfAssesment(data: any) {
-
+    console.log("query data ", data)
     this.router.navigate([`app/user/self-assessment`], { queryParams: data })
   }
 
