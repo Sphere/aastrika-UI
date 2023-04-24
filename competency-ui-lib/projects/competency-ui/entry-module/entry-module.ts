@@ -6,12 +6,14 @@ import { MatIconModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { ConfigurationContext } from './services/configuration-context';
 import { ConfigService } from './services/config.service';
+import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
   declarations: [SlefAssessmentEntryComponent, CompetencyEntryComponent,],
   imports: [
     CommonModule,
     RouterModule,
     MatIconModule,
+    TranslateModule
   ],
   exports: [
     SlefAssessmentEntryComponent,
@@ -19,7 +21,7 @@ import { ConfigService } from './services/config.service';
   ],
   providers:[]
 })
-export class EntryModule { 
+export class EntryModule {
   /**
  * Take the config from consuming apps
  *

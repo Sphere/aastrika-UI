@@ -5,7 +5,7 @@ import { SelfAssessmentComponent } from './components/self-assessment/self-asses
 import { MatIconModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '@aastrika_npmjs/comptency/core';
-
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -14,7 +14,8 @@ import { CoreModule } from '@aastrika_npmjs/comptency/core';
     CommonModule,
     MatIconModule,
     HttpClientModule,
-    CoreModule
+    CoreModule,
+    TranslateModule
   ],
   exports:[SelfAssessmentCardComponent, SelfAssessmentComponent]
 })
