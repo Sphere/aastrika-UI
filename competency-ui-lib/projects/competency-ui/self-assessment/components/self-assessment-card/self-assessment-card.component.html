@@ -16,7 +16,7 @@
           (click)="startSelfAssesment(cardData)"
           i18n
         >
-        Assess
+        {{'ASSESS' | translate}}
         </button>
         <button
           *ngIf="btn.type === 'RESUME'"
@@ -35,11 +35,11 @@
           (click)="startSelfAssesment(cardData)"
           i18n
         >
-        Done
+        {{'DONE' | translate}}
         </button>
       </ng-container>
     </ng-container>
 
-    <button class="btn-long" i18n (click)="viewCourses(cardData)">View Courses</button>
+    <button class="btn-long" i18n (click)="viewCourses(cardData)">{{'VIEW_COURSES' | translate}}</button>
   </div>
 </div>

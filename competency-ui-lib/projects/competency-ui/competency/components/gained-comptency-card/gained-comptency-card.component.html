@@ -5,7 +5,7 @@
       <div class="title">{{ proficency?.title }}</div>
     </ng-container>
 
-    <div class="levelsTitle" i18n>Levels:</div>
+    <div class="levelsTitle" i18n>{{'LEVELS' | translate}}</div>
     <mat-accordion>
       <mat-expansion-panel
         [expanded]="i === selectedProficiencyIndex"
@@ -54,7 +54,7 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <div>
-          <span class="log-header" i18n>Log:</span>
+          <span class="log-header" i18n>{{'LOG' | translate}}</span>
           <ng-container
             *ngFor="let log of proficency?.logs; let logIndex = index; let last = last; "
           >
@@ -69,7 +69,7 @@
                 <div class="flex">
                   <ng-container *ngIf="log.header">
                     <span class=""
-                    i18n>Level </span> <span>{{ log.level }}: {{ log.header }}</span
+                    i18n>{{'LEVEL' | translate}} </span> <span>{{ log.level }}: {{ log.header }}</span
                     >
                     <span class="log-date mr-2">{{
                       log?.date | date : "dd/MM/yyyy"

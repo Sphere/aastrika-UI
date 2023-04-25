@@ -7,7 +7,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class CompetencyEntryComponent implements OnInit {
   @Output() stateChange: EventEmitter<any> = new EventEmitter();
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
   }
