@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { GainedService } from '../../services/gained.service';
 import { RequestUtil } from '../../services/request-util';
@@ -8,7 +8,8 @@ import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 @Component({
   selector: 'lib-gained-comptency-card',
   templateUrl: './gained-comptency-card.component.html',
-  styleUrls: ['./gained-comptency-card.component.scss']
+  styleUrls: ['./gained-comptency-card.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class GainedComptencyCardComponent implements OnInit {
 

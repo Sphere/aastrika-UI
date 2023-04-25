@@ -1,11 +1,12 @@
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'lib-competency-dashboard',
   templateUrl: './competency-dashboard.component.html',
-  styleUrls: ['./competency-dashboard.component.scss']
+  styleUrls: ['./competency-dashboard.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CompetencyDashboardComponent implements OnInit {
   @Output() stateChange: EventEmitter<any> = new EventEmitter();

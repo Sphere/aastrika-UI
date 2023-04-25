@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { RequestUtil } from '../../services/request-util';
 import { ActiveSummaryService } from '../../services/active-summary.service';
 import { mergeMap } from 'rxjs/operators';
@@ -9,7 +9,8 @@ import { GainedService } from '../../services/gained.service';
 @Component({
   selector: 'lib-active-summary',
   templateUrl: './active-summary.component.html',
-  styleUrls: ['./active-summary.component.scss']
+  styleUrls: ['./active-summary.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ActiveSummaryComponent implements OnInit {
   /**

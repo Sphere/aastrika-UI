@@ -1,6 +1,6 @@
 <lib-app-loader *ngIf="loading === true"></lib-app-loader>
 <ng-container *ngFor="let role of roleactivitySummaries">
-  <div class="card-container">
+  <div class="activity-card-container">
     <mat-accordion>
       <mat-expansion-panel
         class=""
@@ -8,6 +8,7 @@
         (closed)="panelOpenState = false"
       >
         <mat-expansion-panel-header
+        id="activity-header"
           class="flex-between items-center w-full"
           collapsedHeight="auto"
           expandedHeight="auto"
@@ -16,7 +17,7 @@
           <mat-panel-description class="panel-header-description">
             <ng-container *ngIf="role?.roles">
               <div class="flex flex-column w-full">
-                <div class="title">{{ role?.roles }}</div>
+                <div class="role-title">{{ role?.roles }}</div>
                 <div class="progress-status-none" *ngIf="role?.averagePercentage == 0"></div>
                 <div class="progress-status" *ngIf="role?.averagePercentage < 100 && role?.averagePercentage != 0" i18n>In Progress</div>
                 <div class="progress-status" *ngIf="role?.averagePercentage == 100" i18n>Completed</div>

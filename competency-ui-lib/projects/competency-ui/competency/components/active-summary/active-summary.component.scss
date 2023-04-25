@@ -1,18 +1,19 @@
 @import "../../../assets/styles/global.scss";
 
-.card-container {
+.activity-card-container {
   margin: 15px 2px;
   // padding: 16px 10px 20px 14px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
   border-radius: $radius-m;
   // background: var(--light-gray) !important;
 }
+
 .spinner-loading {
   display: flex;
   justify-content: center;
 }
 
-.title {
+.role-title {
   font-size: $size-lg;
   line-height: 19px;
   letter-spacing: $spacing;
@@ -24,31 +25,32 @@
   color: var(--black) !important;
 }
 
-:host ::ng-deep .mat-expansion-panel {
+::ng-deep .mat-expansion-panel {
   // margin: 10px 0px;
   //padding: 10px 0px !important;
-  height: auto;
+  height: auto !important;
 }
 
-:host ::ng-deep .mat-expansion-panel-header:hover {
+::ng-deep  .mat-expansion-panel-header:hover {
   background: inherit !important;
 }
 
-:host ::ng-deep .mat-expansion-panel-body {
+::ng-deep .mat-expansion-panel-body {
   padding: 0px 0px 16px !important;
 }
 
-:host ::ng-deep .mat-expansion-panel-header {
+#activity-header .mat-expansion-panel-header {
   // padding: 15px !important;
   // background-color: var(--light-gray) !important;
   border-radius: $radius-m !important;
-  padding: 10px 10px 0px;
+  padding: 10px 10px 0px !important;
 }
-:host ::ng-deep .mat-expansion-indicator:after {
+
+::ng-deep .mat-expansion-indicator:after {
   color: var(--black) !important;
 }
 
-:host ::ng-deep .mat-expansion-panel-header-description {
+::ng-deep .mat-expansion-panel-header-description {
   margin-right: 0px !important;
 }
 
@@ -102,7 +104,7 @@
 .mat-progress-bar {
   // width: 275px;
   border-radius: 40px;
-  height: 4px;
+  height: 10px !important;
 }
 
 .value {
@@ -121,13 +123,13 @@
 
 
 ::ng-deep.warn-bar .mat-progress-bar-fill::after {
-  background: #F1CF8A 0% 0% no-repeat padding-box !important; 
+  background: #F1CF8A 0% 0% no-repeat padding-box !important;
   border-radius: 40px;
 }
 
 ::ng-deep.theme-igot.day-mode .mat-progress-bar-buffer {
   // background-color: #EDEDED;
-  background-color: #f5f5f5;
+  background-color: #f5f5f5 !important;
   // background-color: #E7E6E6 !important;
 }
 
@@ -139,6 +141,6 @@
   place-self: end;
 }
 
-.progress-status-none{
+.progress-status-none {
   visibility: hidden;
 }
