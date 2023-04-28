@@ -63,6 +63,9 @@
 ::ng-deep .theme-igot.day-mode .mat-ink-bar {
   background-color: var(--blue) !important;
 }
+::ng-deep .theme-sphere.day-mode .mat-ink-bar {
+  background-color: var(--blue) !important;
+}
 
 .legend-container {
   display: flex;

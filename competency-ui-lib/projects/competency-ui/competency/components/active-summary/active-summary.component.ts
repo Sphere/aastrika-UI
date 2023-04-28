@@ -28,6 +28,7 @@ export class ActiveSummaryComponent implements OnInit {
   acordianLoading = false
   profileData: any
   language: any
+  isMobileApp
   constructor(
     public activeSummaryService: ActiveSummaryService,
     public configService: ConfigService,
@@ -37,6 +38,7 @@ export class ActiveSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isMobileApp = this.configService.getConfig().isMobileApp
     this.getProgress()
     this.loading = true
     this.getUserDetails().pipe(mergeMap((res: any) => {

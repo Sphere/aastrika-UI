@@ -73,7 +73,8 @@ export class RequestUtil {
               'cid': _.get(data, 'result.response').id,
               'lastLevel': this.getheighestLevel(_.get(value, 'id'), progrssData),
               'completionPercentage': this.getCompeletionPercentage(_.get(value, 'id'), progrssData),
-              'code': _.get(value.additionalProperties, 'Code')
+              'code': _.get(value.additionalProperties, 'Code'),
+              'levelDescription': _.get(value.additionalProperties, 'competencyLevelDescription') ? this.getLevelDescription(_.get(value.additionalProperties, 'competencyLevelDescription'), progrssData, _.get(value, 'id'), lang) : ''
             })
            
           })
@@ -95,6 +96,40 @@ export class RequestUtil {
 
   //   return response
   // }
+
+  getLevelDescription(data, progrssData, competencyId, lang){
+    // console.log(data)
+    // console.log(JSON.parse(data))
+    let result = []
+    _.forEach(JSON.parse(data), (value)=>{
+      if(value){
+        result.push({
+          'levelId': _.get(value, 'level'),
+          'name': lang == 'hi'? _.get(value, 'lang-hi-name'): _.get(value, 'name'),
+          'description': lang == 'hi'?   _.get(value, 'lang-hi-description') :  _.get(value, 'description'),
+          'description-hi':  _.get(value, 'lang-hi-description'),
+          'achived': false
+        })
+      }
+    })
+    let achievedLevels = null
+    _.forEach(progrssData, (value:any)=>{
+      if(_.toNumber( value.competencyId ) === competencyId){
+  
+        achievedLevels = _.uniq(value.levelsAchieve);
+      }
+  })
+
+  _.forEach(result, (value:any) => {
+    _.forEach(achievedLevels, (levels:any)=>{
+      if(levels == value.levelId){
+        value.achived = true
+      }
+    })
+  })
+
+    return result;
+  }
 
   getLevels(competencyId, progrssData , lang){
     let respone = [
