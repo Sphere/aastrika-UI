@@ -46,7 +46,7 @@
 
           </ng-container>
             <ng-container *ngIf="role?.activities">
-              <lib-competency-accordion [competencyList]="role?.activities"></lib-competency-accordion>
+              <lib-competency-accordion [competencyList]="role?.activities" [assessmentData]="assessmentData" [assessBtnType]="btnType"></lib-competency-accordion>
             </ng-container>
         </div>
       </mat-expansion-panel>

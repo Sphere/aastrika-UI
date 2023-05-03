@@ -43,4 +43,37 @@ export class ActiveSummaryService extends DataService {
       };
       return this.get(httpOptions).pipe(map((res: any) => res.result.response))
     }
+
+    public getCompetencyCourseIdentifier(data:any){ 
+      const reqBody = {
+        "request": {
+          "filters": {
+            "primaryCategory": [
+              "Course"
+            ],
+            "contentType": [
+              "Course"
+            ],
+            "status": [
+              "Live"
+            ],
+            "competency": [true],
+            "lang": data == 'hi' ? 'hi' : 'en'
+          }
+        },
+        "sort": [
+          {
+            "lastUpdatedOn": "desc"
+          }
+        ]
+      }
+      let config = this.configService.getConfig()
+      const httpOptions: any = {
+        url:   config!.isMobileApp?   urlConfig.getSearchMobile() : urlConfig.getSearch(),
+        data: reqBody
+      };
+      
+      return this.post(httpOptions)
+    }
+  
 }

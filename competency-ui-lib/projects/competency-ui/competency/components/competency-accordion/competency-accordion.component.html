@@ -5,21 +5,61 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header class="flex-between items-center w-full" collapsedHeight="auto"
           expandedHeight="auto">
-          <mat-panel-description class="panel-header-description">
+          <mat-panel-description class="panel-header-description" (click)="$event.stopPropagation();">
             <ng-container *ngIf="competency.competency">
-              <div class="flex flex-row align-items-center gap-2">
-                <div>
-                  <ng-container *ngIf="competency.completionPercentage == 100">
-                    <mat-icon class="circle-tick cursor-pointer">check_circle</mat-icon>
-                  </ng-container>
-                  <ng-container *ngIf="competency.completionPercentage < 100">
-                    <mat-progress-spinner diameter="20" strokeWidth="2" mode="determinate"
-                      [value]="competency.completionPercentage"></mat-progress-spinner>
-                  </ng-container>
+              <div class="flex flex-col">
+                <div class="flex flex-row align-items-center gap-2">
+                  <div>
+                    <ng-container *ngIf="competency.completionPercentage == 100">
+                      <mat-icon class="circle-tick cursor-pointer">check_circle</mat-icon>
+                    </ng-container>
+                    <ng-container *ngIf="competency.completionPercentage < 100">
+                      <mat-progress-spinner diameter="20" strokeWidth="2" mode="determinate"
+                        [value]="competency.completionPercentage"></mat-progress-spinner>
+                    </ng-container>
+                  </div>
+                  <div class="competency-title">{{ competency.competency }}</div>
                 </div>
-                <div class="competency-title">{{ competency.competency }}</div>
+                <div class="flex flex-row gap-3 mt-3">
+                  <ng-container *ngFor="let btn of assessBtnType">
+                    <ng-container *ngIf="btn.courseId == competency.assessmentData.contentId">
+                      <button
+                        *ngIf="btn.type === 'START'"
+                        mat-button
+                        class="assess-btn btn-small"
+                        (click)="startSelfAssesment(competency.assessmentData)"
+                        i18n
+                      >
+                      {{'ASSESS' | translate}}
+                      </button>
+                      <button
+                        *ngIf="btn.type === 'RESUME'"
+                        mat-button
+                        class="reassess-btn btn-small"
+                        (click)="startSelfAssesment(competency.assessmentData)"
+                        i18n
+                      >
+                      Re-Assess
+                      </button>
+                      <button
+                        *ngIf="btn.type === 'DONE'"
+                        mat-button
+                        disabled
+                        class="done-btn btn-small"
+                        (click)="startSelfAssesment(competency.assessmentData)"
+                        i18n
+                      >
+                      {{'DONE' | translate}}
+                      </button>
+                    </ng-container>
+                  </ng-container>
+              
+                  <button class="btn-long" i18n (click)="viewCourses(competency.assessmentData)">{{'VIEW_COURSES' | translate}}</button>
+                </div>
               </div>
+              
             </ng-container>
+            
           </mat-panel-description>
         </mat-expansion-panel-header>
         <!-- <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader> -->

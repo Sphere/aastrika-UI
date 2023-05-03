@@ -43,3 +43,37 @@
   box-shadow: none !important;
 }
 
+.btn-long {
+  border: 1px solid #1c5d95;
+  border-radius: 50px;
+  color: #1c5d95;
+  background-color: inherit;
+  width: fit-content;
+  padding: 3px 25px;
+  cursor: pointer;
+}
+
+.btn-small {
+  border-radius: 50px;
+  width: fit-content;
+  padding: 3px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.assess-btn {
+  background: #1c5d95;
+
+  color: #ffffff;
+}
+
+.reassess-btn {
+  background: #52ad9d;
+
+  color: #ffffff;
+}
+
+.done-btn {
+  background-color: #bfbfbf;
+  color: #808080;
+}
