@@ -34,7 +34,7 @@
 }
 
 .remove-border-bottom .mat-tab-header {
-  border-bottom: none;
+  border-bottom: none !important;
 }
 
 :host ::ng-deep .remove-border-bottom .mat-tab-header {
@@ -50,8 +50,16 @@
   margin-right: 10px;
 }
 
+.theme-sphere.day-mode .mat-tab-label
+
 ::ng-deep .mat-tab-label-active {
   color: var(--blue) !important;
+}
+
+.theme-sphere.day-mode .mat-ink-bar{
+  height: 3px !important;
+  background: var(--blue) !important;
+  border-radius: 5px !important;
 }
 
 :host ::ng-deep .mat-ink-bar {

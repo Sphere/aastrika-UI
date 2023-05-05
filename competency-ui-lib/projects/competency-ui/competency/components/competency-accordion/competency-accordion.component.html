@@ -22,7 +22,7 @@
                 </div>
                 <div class="flex flex-row gap-3 mt-3">
                   <ng-container *ngFor="let btn of assessBtnType">
-                    <ng-container *ngIf="btn.courseId == competency.assessmentData.contentId">
+                  <ng-container *ngIf="btn.courseId == competency?.assessmentData?.contentId">
                       <button
                         *ngIf="btn.type === 'START'"
                         mat-button
@@ -51,7 +51,7 @@
                       >
                       {{'DONE' | translate}}
                       </button>
-                    </ng-container>
+                    </ng-container> 
                   </ng-container>
               
                   <button class="btn-long" i18n (click)="viewCourses(competency.assessmentData)">{{'VIEW_COURSES' | translate}}</button>
