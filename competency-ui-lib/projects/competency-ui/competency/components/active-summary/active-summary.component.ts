@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { RequestUtil } from '../../services/request-util';
 import { ActiveSummaryService } from '../../services/active-summary.service';
 import { mergeMap } from 'rxjs/operators';
@@ -19,6 +19,8 @@ export class ActiveSummaryComponent implements OnInit {
  *
  * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
  */
+  @Input()language;
+  @Input()isMobileApp;
   panelOpenState: Boolean = true
   requestUtil: any
   private unsubscribe: Subscription;
@@ -28,8 +30,6 @@ export class ActiveSummaryComponent implements OnInit {
   loading = false
   acordianLoading = false
   profileData: any
-  language: any
-  isMobileApp
   assessmentData: any
   btnType = [];
   constructor(
@@ -42,15 +42,13 @@ export class ActiveSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isMobileApp = this.configService.getConfig().isMobileApp
     this.getProgress()
     this.loading = true
     this.getUserDetails().pipe(mergeMap((res: any) => {
       this.profileData = res.profileDetails.profileReq
-      // this.language = res.profileDetails.preferences.language
-      this.language = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
-      if (!this.language)
-        this.language = 'en'
+      if(!this.language){
+        this.language = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
+      }
       if (this.profileData) {
         const getActivity = this.getActivityByRole()
         const getCourses = this.getCompetencyCourse()        
@@ -65,8 +63,7 @@ export class ActiveSummaryComponent implements OnInit {
         if (value.id) {
           this.getActivityByRoleId(value.id)
         }
-      })
-      this.loading = false
+      })      
     })
   }
 
@@ -189,6 +186,7 @@ export class ActiveSummaryComponent implements OnInit {
       this.roleactivitySummaries[index]['averagePercentage'] = []
       let competencyLength = this.getAveragepercentage(response)
       this.roleactivitySummaries[index]['averagePercentage'] = competencyLength    
+      this.loading = false
     })
   }
   getEntityById(id: any) {
@@ -213,7 +211,7 @@ export class ActiveSummaryComponent implements OnInit {
 
   getCompetencyCourse() {
     let assessData;
-    assessData = this.activeSummaryService.getCompetencyCourseIdentifier(this.profileData)
+    assessData = this.activeSummaryService.getCompetencyCourseIdentifier(this.language)
     return assessData;
   }
   

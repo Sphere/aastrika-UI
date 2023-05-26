@@ -1,6 +1,7 @@
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { ActiveSummaryService } from '../../services/active-summary.service';
 
 @Component({
   selector: 'lib-competency-dashboard',
@@ -11,18 +12,34 @@ import { Router } from '@angular/router';
 export class CompetencyDashboardComponent implements OnInit {
   @Output() stateChange: EventEmitter<any> = new EventEmitter();
   tabIndex = 1;
-  isMobileApp
+  isMobileApp;
+  language;
 
-  constructor(  public router: Router, public configService: ConfigService) {
+  constructor(  public router: Router, 
+    public configService: ConfigService,
+    public activeSummaryService: ActiveSummaryService,
+    ) {
    }
 
   ngOnInit() {
-    this.tabIndex = 1
+    this.tabIndex = 1     
     this.isMobileApp = this.configService.getConfig().isMobileApp
+
+    this.getUserDetails().subscribe(
+      (res)=>{
+        this.language = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
+      }
+    )
   }
 
+  getUserDetails() {
+    const reqBody = {
+      id: this.configService.getConfig().id
+    }
+    return this.activeSummaryService.getUserdetailsFromRegistry(reqBody)
+  }
   navigateBack() {
-    this.router.navigate([`/app/profile-view`])
+    this.router.navigate([`/page/home`])
   }
   changeTab(event:any){
     this.tabIndex = event.index;

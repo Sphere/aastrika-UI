@@ -1,4 +1,4 @@
-import { Component ,OnInit } from '@angular/core';
+import { Component ,Input,OnInit } from '@angular/core';
 import { Location } from '@angular/common'
 import { SelfAssessmentService } from '../../service/self-assessment.service';
 import { RequestUtil } from '../../service/request-util.service';
@@ -13,12 +13,11 @@ import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
   styleUrls: ['./self-assessment.component.scss']
 })
 export class SelfAssessmentComponent implements OnInit {
-
+  @Input()language;
   selfAssessmentData = []
   requestUtil: any
   loading = false
   btnType = [];
-  profileData : any
   constructor(
     private location: Location,
     private selfAssessmentService: SelfAssessmentService,
@@ -35,11 +34,10 @@ export class SelfAssessmentComponent implements OnInit {
     this.loading = true
 
     this.getUserDetails().pipe(mergeMap((res: any) => {
-        this.profileData = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
-        if(!this.profileData){
-          this.profileData = 'en'
+      if(!this.language){
+          this.language = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
         }
-        if(this.profileData){
+        if(this.language){
           return this.getCompetencyCourse()
         }
       })).subscribe((res: any) =>{
@@ -80,16 +78,6 @@ export class SelfAssessmentComponent implements OnInit {
         })
         this.loading = false
       })
-
-
-    // if(this.profileData !== undefined ){
-
-    //   this.getCompetencyData()
-    // }
-
-
-
-
   }
 
   getCompetencyData(){
@@ -145,7 +133,7 @@ export class SelfAssessmentComponent implements OnInit {
   }
 
   getCompetencyCourse() {
-    return this.selfAssessmentService.getCompetencyCourseIdentifier(this.profileData)
+    return this.selfAssessmentService.getCompetencyCourseIdentifier(this.language)
   }
 
   getProgress(data) {

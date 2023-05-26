@@ -20,7 +20,7 @@ export class CompetencyAccordionComponent implements OnInit {
   }
 
   viewCourses(data){
-    // console.log("viewer data ", data)
+   // console.log("viewer data ", data)
     if (data.competencyID) {
 
       this.router.navigate(['/app/search'], {
@@ -30,7 +30,10 @@ export class CompetencyAccordionComponent implements OnInit {
           `${data.competencyID}-3`,
           `${data.competencyID}-4`,
           `${data.competencyID}-5`
-        ] , competency: true},
+        ] , 
+        competency: true,
+        redirect: 'app/user/competency'
+      },
         queryParamsHandling: 'merge',
       })
       

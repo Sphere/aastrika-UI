@@ -6,11 +6,6 @@
   <h1 class="pl-2 mb-0" i18n>{{'COMPETENCY_DASHBOARD' | translate}}</h1>
 
   <div class="pl-2 tab-container">
-    <!-- <ng-container *ngIf="tabIndex === 1">
-      <div class="sortIcon">
-        <img src="./assets/comptency/images/filter.png" />
-      </div>
-    </ng-container> -->
     <mat-tab-group
       [ngClass]="{ 'header-width-icon': tabIndex === 1 }"
       class="remove-border-bottom"
@@ -21,7 +16,7 @@
       <!-- Active Summary as Job Description -->
       <mat-tab i18n-label label="{{'JOB_DESCRIPTION' | translate}}">
         <h4 class="mt-4 mb-1" i18n>{{'ROLES' | translate}}</h4>
-        <lib-active-summary *ngIf="tabIndex === 0"></lib-active-summary>
+        <lib-active-summary [language]="language" [isMobileApp]="isMobileApp" *ngIf="tabIndex === 0"></lib-active-summary>
       </mat-tab>
 
       <!-- gained as Passbook  -->
@@ -35,6 +30,7 @@
           <h5 class="mb-0" i18n>{{'CRS_TRK_FRMELEMNTS_LBL_TRAINING' | translate}}</h5>
         </div>
         <lib-gained-comptency-card
+        [language]="language"
           *ngIf="tabIndex === 1"
         ></lib-gained-comptency-card>
       </mat-tab>
@@ -44,6 +40,7 @@
         <div class="required-comperencies">
           <div class="mt-2 tab-badge" i18n>{{'SELF_ASSESSMENTS' | translate}}</div>
           <lib-required-comptency-card
+          [language]="language"
             *ngIf="tabIndex === 2"
           ></lib-required-comptency-card>
         </div>

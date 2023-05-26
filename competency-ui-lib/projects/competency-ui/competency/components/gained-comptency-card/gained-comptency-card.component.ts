@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { GainedService } from '../../services/gained.service';
 import { RequestUtil } from '../../services/request-util';
@@ -12,14 +12,15 @@ import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
   encapsulation: ViewEncapsulation.None
 })
 export class GainedComptencyCardComponent implements OnInit {
-
+  @Input()language;
   requestUtil: any
   loading = false
   panelOpenState: Boolean = false;
   gainedproficencyData: any
   selectedProficiencyIndex = -1;
   selectedDisplayLevel = -1;
-  public profileData: any
+  // public profileData: any
+  // appLanguage: any
   
   constructor(
     public gainedService: GainedService,
@@ -31,15 +32,18 @@ export class GainedComptencyCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserDetails().subscribe(
-      (res: any) => {
-        this.profileData = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
-      })
+    this
+    if(!this.language){
+      this.getUserDetails().subscribe(
+        (res: any) => {
+          this.language = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
+        })
+    }
     this.loading = true
     const allEntity = this.getAllEntity()
     const userPassbook = this.getAllUserPassbook()
     forkJoin([allEntity, userPassbook]).subscribe((res) => {
-      const response = this.requestUtil.formatedGainedCompetency(res[0].result.response, res[1].result.content, this.profileData)
+      const response = this.requestUtil.formatedGainedCompetency(res[0].result.response, res[1].result.content, this.language)
       this.gainedproficencyData = response
       // this.gainedproficencyData = this.dummyData
       if (this.gainedproficencyData) {

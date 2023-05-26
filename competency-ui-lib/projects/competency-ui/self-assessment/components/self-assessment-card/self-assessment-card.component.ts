@@ -36,7 +36,10 @@ export class SelfAssessmentCardComponent implements OnInit {
           `${data.competencyID}-3`,
           `${data.competencyID}-4`,
           `${data.competencyID}-5`
-        ] , competency: true},
+        ] ,
+        competency: true,
+        redirect: 'app/user/competency'
+      },
         queryParamsHandling: 'merge',
       })
       // reqBody = {
