@@ -154,7 +154,8 @@ export class ActiveSummaryComponent implements OnInit {
   private designationMap(designation: string) {
     const positionMap = {
       "AWW": 95,
-      "ANM": 210
+      "ANM": 210,
+      "GNM": 521
     }
 
     if (positionMap.hasOwnProperty(designation)) {
