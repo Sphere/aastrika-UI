@@ -12,13 +12,15 @@ import { RequiredCompetencyService } from '../../services/required-competency.se
 export class RequiredComptencyCardComponent implements OnInit, OnDestroy {
   @Input() language;
   @Input() isMobileApp;
+  @Input() role;
   seletectedLang: any;
-
+  position: any;
 
   constructor() {}
 
   ngOnInit() {
-    this.seletectedLang = this.language
+    this.seletectedLang = this.language;
+    this.position = this.role;
   }
 
 

@@ -41,6 +41,7 @@
           <div class="mt-2 tab-badge" i18n>{{'SELF_ASSESSMENTS' | translate}}</div>
           <lib-required-comptency-card
           [language]="language"
+          [role]="role"
             *ngIf="tabIndex === 2"
           ></lib-required-comptency-card>
         </div>

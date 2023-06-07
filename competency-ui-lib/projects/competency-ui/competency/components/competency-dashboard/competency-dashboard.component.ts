@@ -14,6 +14,7 @@ export class CompetencyDashboardComponent implements OnInit {
   tabIndex = 1;
   isMobileApp;
   language;
+  role;
 
   constructor(  public router: Router, 
     public configService: ConfigService,
@@ -24,10 +25,14 @@ export class CompetencyDashboardComponent implements OnInit {
   ngOnInit() {
     this.tabIndex = 1     
     this.isMobileApp = this.configService.getConfig().isMobileApp
-
+    this.role = this.configService.getConfig().profileData[0].designation;
+    this.language = this.configService.getConfig().language;
     this.getUserDetails().subscribe(
       (res)=>{
-        this.language = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
+        this.language = this.configService.getConfig().language ==  res.profileDetails!.preferences!.language ? this.configService.getConfig().language :  res.profileDetails!.preferences!.language;
+        this.role = this.configService.getConfig().profileData[0].designation ==  res.profileDetails.profileReq.professionalDetails[0].designation
+         ? this.configService.getConfig().profileData[0].designation 
+         : res.profileDetails.profileReq.professionalDetails[0].designation;
       }
     )
   }
