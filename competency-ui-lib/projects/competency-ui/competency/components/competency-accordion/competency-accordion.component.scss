@@ -77,3 +77,11 @@
   background-color: #bfbfbf;
   color: #808080;
 }
+
+ 
+:host  ::ng-deep .mat-expansion-indicator {
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

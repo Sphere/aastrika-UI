@@ -21,15 +21,16 @@ export class CompetencyAccordionComponent implements OnInit {
 
   viewCourses(data){
    // console.log("viewer data ", data)
-    if (data.competencyID) {
 
+    if (data) {
+      let id = data.id ? data.id : data.assessmentData.competencyID
       this.router.navigate(['/app/search'], {
         queryParams: { q: [
-          `${data.competencyID}-1`,
-          `${data.competencyID}-2`,
-          `${data.competencyID}-3`,
-          `${data.competencyID}-4`,
-          `${data.competencyID}-5`
+          `${id}-1`,
+          `${id}-2`,
+          `${id}-3`,
+          `${id}-4`,
+          `${id}-5`
         ] , 
         competency: true,
         redirect: 'app/user/competency'
