@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { DataService } from '@aastrika_npmjs/comptency/core';
+import { DataService } from '@aastrika_npmjs/competency-web/core';
 import { HttpClient } from '@angular/common/http';
-import { urlConfig  } from '@aastrika_npmjs/comptency/core';
+import { urlConfig  } from '@aastrika_npmjs/competency-web/core';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -14,9 +14,9 @@ export class SelfAssessmentService extends DataService {
 
   /**
    *searching for the content Identifier
-   * 
+   *
    */
-  public getCompetencyCourseIdentifier(data:any){ 
+  public getCompetencyCourseIdentifier(data:any){
     const reqBody = {
       "request": {
         "filters": {
@@ -43,17 +43,17 @@ export class SelfAssessmentService extends DataService {
       url: urlConfig.getSearch(),
       data: reqBody
     };
-    
+
     return this.post(httpOptions)
   }
 
    /**
    *getting the details of course by pasing the identifier and hierarchyType
-   * 
+   *
    */
 
   public fetchHiearchyDetails(identifier, hierarchyType){
-    
+
     const httpOptions: any = {
       url: urlConfig.getHierachyDetails(identifier, hierarchyType),
     };
@@ -62,16 +62,16 @@ export class SelfAssessmentService extends DataService {
 
   /**
    * fetchPrgressDetails
-id   
+id
 const */
   public fetchPrgressDetails(req) {
     const httpOptions: any = {
       url: urlConfig.getContentProgress(req.request.courseId),
       data: req
     };
-    
+
     return this.post(httpOptions)
-    
+
   }
 
 

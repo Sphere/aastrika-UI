@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { DataService } from '@aastrika_npmjs/comptency/core';
+import { DataService } from '@aastrika_npmjs/competency-web/core';
 import { HttpClient } from '@angular/common/http';
-import { urlConfig  } from '@aastrika_npmjs/comptency/core';
+import { urlConfig  } from '@aastrika_npmjs/competency-web/core';
 import { map } from 'rxjs/operators';
 /**
- * ActiveSummaryService to extend Data Service 
+ * ActiveSummaryService to extend Data Service
  *
  * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
  */
@@ -19,7 +19,7 @@ export class ActiveSummaryService extends DataService {
 
    /**
    * for making getall activity api calls
-   * 
+   *
    */
     public getActivityById(reqBody:any){
       // console.log('calling getActivityById>>')
@@ -32,7 +32,7 @@ export class ActiveSummaryService extends DataService {
     }
      /**
    * for making  api calls to get userDetails
-   * 
+   *
    */
     public getUserdetailsFromRegistry(reqBody:any){
       const httpOptions: any = {

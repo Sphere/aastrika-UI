@@ -4,7 +4,7 @@ import { SelfAssessmentService } from '../../service/self-assessment.service';
 import { RequestUtil } from '../../service/request-util.service';
 import { map, mergeMap } from 'rxjs/operators';
 import * as _ from 'lodash-es';
-import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
+import { ConfigService } from '@aastrika_npmjs/competency-web/entry-module';
 
 
 @Component({

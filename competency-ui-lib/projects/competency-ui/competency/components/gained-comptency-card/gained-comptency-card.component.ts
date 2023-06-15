@@ -4,7 +4,7 @@ import { GainedService } from '../../services/gained.service';
 import { RequestUtil } from '../../services/request-util';
 import * as _ from 'lodash-es';
 import { ActiveSummaryService } from '../../services/active-summary.service';
-import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
+import { ConfigService } from '@aastrika_npmjs/competency-web/entry-module';
 @Component({
   selector: 'lib-gained-comptency-card',
   templateUrl: './gained-comptency-card.component.html',

@@ -1,6 +1,6 @@
 {
-  "name": "@aastrika_npmjs/comptency",
-  "version": "0.0.0",
+  "name": "@aastrika_npmjs/competency-web",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

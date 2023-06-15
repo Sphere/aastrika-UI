@@ -4,7 +4,7 @@ import { SelfAssessmentCardComponent } from './components/self-assessment-card/s
 import { SelfAssessmentComponent } from './components/self-assessment/self-assessment.component';
 import { MatIconModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
-import { CoreModule } from '@aastrika_npmjs/comptency/core';
+import { CoreModule } from '@aastrika_npmjs/competency-web/core';
 
 
 

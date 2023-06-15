@@ -4,7 +4,7 @@ import { ActiveSummaryService } from '../../services/active-summary.service';
 import { mergeMap } from 'rxjs/operators';
 import { forkJoin, of, Subscription } from 'rxjs';
 import * as _ from 'lodash-es';
-import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
+import { ConfigService } from '@aastrika_npmjs/competency-web/entry-module';
 import { GainedService } from '../../services/gained.service';
 @Component({
   selector: 'lib-active-summary',
@@ -94,7 +94,8 @@ export class ActiveSummaryComponent implements OnInit {
   private designationMap(designation: string){
     const positionMap = {
       "AWW" : 95,
-      "ANM" : 210
+      "ANM" : 210,
+      "GNM" :  521
     }
 
     if(positionMap.hasOwnProperty(designation)){
