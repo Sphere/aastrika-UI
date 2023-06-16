@@ -22,6 +22,9 @@ export class SelfAssessmentComponent implements OnInit {
   btnType = [];
   roleBasedCompetency: any = competencyRoleData;
   roleCompetencyData = [];
+  noResultData :{
+    'message': 'No result found'
+  }
   constructor(
     private location: Location,
     private selfAssessmentService: SelfAssessmentService,
@@ -38,7 +41,6 @@ export class SelfAssessmentComponent implements OnInit {
     this.loading = true
     if (this.roleBasedCompetency) {
       _.forEach(this.roleBasedCompetency, (item) => {
-        // console.log("rolese data json", item)
 
         _.forEach(item, (data) => {
           if (data.position == this.position) {
@@ -56,11 +58,6 @@ export class SelfAssessmentComponent implements OnInit {
 
       })
     }
-    //  this.selfAssessmentService.getRoleBasedCompetency().subscribe(
-    //   res =>{
-    //   }
-    //  )
-
     this.getUserDetails().pipe(mergeMap((res: any) => {
       if (!this.language) {
         this.language = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
@@ -70,7 +67,6 @@ export class SelfAssessmentComponent implements OnInit {
       }
     })).subscribe((res: any) => {
       let assessData = this.requestUtil.formatedCompetencyCourseData(res)
-      // console.log(this.roleCompetencyData, assessData)
       this.selfAssessmentData = this.getCompetencyFilter(assessData);
       
       _.forEach(this.selfAssessmentData, (value: any) => {
@@ -109,52 +105,54 @@ export class SelfAssessmentComponent implements OnInit {
       })
       this.loading = false
     })
+
+    console.log("self", this.selfAssessmentData)
   }
 
-  getCompetencyData() {
-    this.getCompetencyCourse().pipe(map((res: any) => {
-      const formatedResponse = this.requestUtil.formatedCompetencyCourseData(res)
-      return formatedResponse
-    })).subscribe((res) => {
-      this.selfAssessmentData = res
-      _.forEach(res, (value: any) => {
-        this.getProgress(value).subscribe((res) => {
-          if (res.result) {
-            if (res.result.contentList.length > 0) {
-              if (res.result.contentList.length > 0 && value.childContent === res.result.contentList.length) {
-                let type = ''
-                _.forEach(res.result.contentList, (item: any) => {
-                  if (item.completionPercentage === 100 && item.completionPercentage !== 0) {
-                    type = 'DONE'
-                  } else {
-                    type = 'RESUME'
-                  }
-                })
-                this.btnType.push({
-                  courseId: value.contentId,
-                  type
-                })
-              } else {
-                this.btnType.push({
-                  courseId: value.contentId,
-                  type: 'RESUME'
-                })
-              }
-            }
-          }
+  // getCompetencyData() {
+  //   this.getCompetencyCourse().pipe(map((res: any) => {
+  //     const formatedResponse = this.requestUtil.formatedCompetencyCourseData(res)
+  //     return formatedResponse
+  //   })).subscribe((res) => {
+  //     this.selfAssessmentData = res
+  //     _.forEach(res, (value: any) => {
+  //       this.getProgress(value).subscribe((res) => {
+  //         if (res.result) {
+  //           if (res.result.contentList.length > 0) {
+  //             if (res.result.contentList.length > 0 && value.childContent === res.result.contentList.length) {
+  //               let type = ''
+  //               _.forEach(res.result.contentList, (item: any) => {
+  //                 if (item.completionPercentage === 100 && item.completionPercentage !== 0) {
+  //                   type = 'DONE'
+  //                 } else {
+  //                   type = 'RESUME'
+  //                 }
+  //               })
+  //               this.btnType.push({
+  //                 courseId: value.contentId,
+  //                 type
+  //               })
+  //             } else {
+  //               this.btnType.push({
+  //                 courseId: value.contentId,
+  //                 type: 'RESUME'
+  //               })
+  //             }
+  //           }
+  //         }
 
-          if (res.result.contentList.length == 0) {
-            this.btnType.push({
-              courseId: value.contentId,
-              type: 'START'
-            })
-          }
-        })
-      })
+  //         if (res.result.contentList.length == 0) {
+  //           this.btnType.push({
+  //             courseId: value.contentId,
+  //             type: 'START'
+  //           })
+  //         }
+  //       })
+  //     })
 
-      this.loading = false
-    })
-  }
+  //     this.loading = false
+  //   })
+  // }
 
   getCompetencyFilter(data){
     let result = []

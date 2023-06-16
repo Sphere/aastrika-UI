@@ -22,9 +22,8 @@
                 <div class="progress-status" *ngIf="role?.averagePercentage < 100 && role?.averagePercentage != 0" i18n>{{'IN_PROGRESS' | translate }}</div>
                 <div class="progress-status" *ngIf="role?.averagePercentage == 100" i18n>{{'COMPLETED' | translate}}</div>
                 <ng-container >
-                  <!--  'warn-bar': role?.averagePercentage < 100 && role?.averagePercentage != 0, -->
                   <div [ngClass]="{'green-bar': role?.averagePercentage == 100 , 'warn-bar': role?.averagePercentage < 100 && role?.averagePercentage != 0 }">
-                  <mat-progress-bar mode="determinate" value={{role?.averagePercentage}} [ngClass]="{'green-bar': role?.averagePercentage == 100 , 'warn-bar': role?.averagePercentage < 100 && role?.averagePercentage != 0 }" class="mt-1"></mat-progress-bar>
+                  <mat-progress-bar mode="determinate" value={{role?.averagePercentage}}  class="mt-1"></mat-progress-bar>
                   </div>
                 </ng-container>
 
