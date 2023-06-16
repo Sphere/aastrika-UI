@@ -21,6 +21,7 @@ export class ActiveSummaryComponent implements OnInit {
  */
   @Input()language;
   @Input()isMobileApp;
+  @Input()desigination;
   panelOpenState: Boolean = true
   requestUtil: any
   private unsubscribe: Subscription;
@@ -32,6 +33,7 @@ export class ActiveSummaryComponent implements OnInit {
   profileData: any
   assessmentData: any
   btnType = [];
+  roleId;
   constructor(
     public activeSummaryService: ActiveSummaryService,
     public configService: ConfigService,
@@ -42,6 +44,7 @@ export class ActiveSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.designationMap(this.desigination)
     this.getProgress()
     this.loading = true
     this.getUserDetails().pipe(mergeMap((res: any) => {
@@ -49,8 +52,13 @@ export class ActiveSummaryComponent implements OnInit {
       if(!this.language){
         this.language = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
       }
+      if(!this.desigination){
+        this.desigination = res.profileDetails!.profileReq!.professionalDetails[0]!.designation;
+        this.designationMap(this.desigination)
+      }
+
       if (this.profileData) {
-        const getActivity = this.getActivityByRole()
+        const getActivity = this.getActivityByRole(this.roleId)
         const getCourses = this.getCompetencyCourse()        
         return forkJoin([getActivity , getCourses ]);
       }
@@ -135,7 +143,7 @@ export class ActiveSummaryComponent implements OnInit {
     return this.activeSummaryService.getUserdetailsFromRegistry(reqBody)
   }
 
-  private getActivityByRole() {
+  private getActivityByRole(id) {
     let designation: any
     if (this.profileData.professionalDetails) {
       designation = this.profileData.professionalDetails[0].designation
@@ -146,24 +154,38 @@ export class ActiveSummaryComponent implements OnInit {
       filter: {
         "isDetail": true
       },
-      id: this.designationMap(designation)
+      id: id
     };
     return this.activeSummaryService.getActivityById(reqBody)
   }
 
   private designationMap(designation: string) {
-    const positionMap = {
-      "AWW": 95,
-      "ANM": 210,
-      "GNM": 521
-    }
+    let positionMap :any
+    this.activeSummaryService.getRolesMapping().pipe().subscribe((res:any)=>{
+      console.log(res)
+      positionMap = res
+      if (positionMap.hasOwnProperty(designation)) {
+        this.roleId = positionMap[designation]
+        return this.roleId
+      }else
+      this.roleId = 1
+        return 1
+    },
+    (err)=>{
+      console.log("error", err)
+      positionMap = err
+      if (positionMap.hasOwnProperty(designation)) {
+        this.roleId = positionMap[designation]
+        return this.roleId
+      }else
+      this.roleId = 1
+        return 1
+    },
+    
 
-    if (positionMap.hasOwnProperty(designation)) {
-      return positionMap[designation]
-    }
-    else
-      return 1
+    )
   }
+
   public getActivityByRoleId(id: any) { 
     this.acordianLoading = true
     const index = _.findIndex(this.roleactivitySummaries, { 'id': id })

@@ -44,6 +44,14 @@ export class ActiveSummaryService extends DataService {
       return this.get(httpOptions).pipe(map((res: any) => res.result.response))
     }
 
+    public getRolesMapping(){
+     const httpOtions: any = {
+      url: urlConfig.getRoleMapping()
+     };
+
+     return this.getwithouTAuthorization(httpOtions)
+    }
+
     public getCompetencyCourseIdentifier(data:any){ 
       const reqBody = {
         "request": {

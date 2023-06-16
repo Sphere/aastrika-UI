@@ -1,4 +1,4 @@
-<div class="content" [ngClass]="isMobileApp ? 'content-mobile' : 'content'">
+<div [ngClass]="isMobileApp ? 'content-mobile' : 'content'">
   <mat-icon (click)="navigateBack()" class="cursor-pointer mb-3"
     >chevron_left</mat-icon
   >
@@ -16,7 +16,7 @@
       <!-- Active Summary as Job Description -->
       <mat-tab i18n-label label="{{'JOB_DESCRIPTION' | translate}}">
         <h4 class="mt-4 mb-1" i18n>{{'ROLES' | translate}}</h4>
-        <lib-active-summary [language]="language" [isMobileApp]="isMobileApp" *ngIf="tabIndex === 0"></lib-active-summary>
+        <lib-active-summary [language]="language" [isMobileApp]="isMobileApp" [desigination]="role" *ngIf="tabIndex === 0"></lib-active-summary>
       </mat-tab>
 
       <!-- gained as Passbook  -->
