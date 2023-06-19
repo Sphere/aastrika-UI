@@ -148,8 +148,6 @@ export class ActiveSummaryComponent implements OnInit {
     if (this.profileData.professionalDetails) {
       designation = this.profileData.professionalDetails[0].designation
     }
-
-
     const reqBody = {
       filter: {
         "isDetail": true

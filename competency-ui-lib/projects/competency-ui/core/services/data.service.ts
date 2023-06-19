@@ -54,9 +54,9 @@ export class DataService {
     };
     return this.http.get(requestParam.url, httpOptions).pipe(
       mergeMap(({ body, headers }: any) => {
-        if (body.responseCode !== 'OK') {
-          return observableThrowError(body);
-        }
+        // if (body.responseCode !== 'OK') {
+        //   return observableThrowError(body);
+        // }
         return observableOf(body);
       }));
 

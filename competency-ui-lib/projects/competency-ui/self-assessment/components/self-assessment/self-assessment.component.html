@@ -8,6 +8,8 @@
         </ng-container>
     </ng-container>
     <ng-template #noData>
-        <lib-no-result [data]="noResultData"></lib-no-result>
+        <ng-container *ngIf="!loading">
+            <lib-no-result [data]="noResultData"></lib-no-result>
+        </ng-container>
     </ng-template>
 </div>
