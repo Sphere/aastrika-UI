@@ -28,6 +28,6 @@ export const urlConfig = {
   getSearchMobile: () => `${urlConfig.mobileHost}${urlConfig.apiPublic}/publicSearch/getCourses`,
   getContentProgressMobile: () => `${urlConfig.mobileHost}/api/course/v1/content/state/read`,
   
-  getRoleMapping:() => `https://aastar-app-assets.s3.ap-south-1.amazonaws.com/roleMapping.json`
+  getRoleMapping:() => `${urlConfig.apiBasePublic()}/competencyAssets/rolesMappingData`
 
 }

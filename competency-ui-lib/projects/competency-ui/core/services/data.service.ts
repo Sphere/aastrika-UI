@@ -54,10 +54,11 @@ export class DataService {
     };
     return this.http.get(requestParam.url, httpOptions).pipe(
       mergeMap(({ body, headers }: any) => {
-        // if (body.responseCode !== 'OK') {
-        //   return observableThrowError(body);
-        // }
-        return observableOf(body);
+        if (body.status === 200 ) {
+          return observableOf(body);
+        }else {
+          return observableThrowError(body);
+        }
       }));
 
   }
