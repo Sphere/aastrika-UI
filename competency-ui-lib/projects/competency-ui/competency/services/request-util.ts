@@ -15,6 +15,7 @@ export class RequestUtil {
       competencyData =  this.formatedCompetency(children, prgressData, lang, assessData, activityObject.id)
 
     })
+    let activityMasterData = _.get(data, 'activity')
     console.log(competencyData)
     if (_.get(data, 'roles')) {
       _.forEach(data.roles, (role) => {
@@ -27,7 +28,8 @@ export class RequestUtil {
             'description': _.get(roleObject, 'description'),
             'averagePercentage': 0,
             'code': _.get(roleObject.additionalProperties, 'Code'),
-            'activities': this.formatedActivitityByRoleId(roleObject.children, lang)
+            'activities': this.formatedActivitityByRoleId(roleObject.children, lang, activityMasterData, 
+              prgressData, assessData)
           });
           return result;
         },
@@ -68,11 +70,20 @@ export class RequestUtil {
     }
     return res
   }
-  formatedActivitityByRoleId = (data: any, lang: any) => {
+  formatedActivitityByRoleId = (data: any, lang: any, activityMasterData, prgressData, assessData) => {
     // if (_.get(data, 'result')) {
     // const children = _.get(data, 'result.response').children
     if (data.length > 0) {
       const result = _.reduce(data, (result,value) => {
+        const filteredData = _.filter(activityMasterData, (obj) =>
+          _.has(obj, _.get(value, 'id'))
+        );
+        console.log('filteredData',filteredData);
+        _.forEach(filteredData, obj => {
+          const childrenFilterData = _.get(obj, _.get(value, 'id') + '.children');
+          this.formatedCompetency(childrenFilterData, prgressData, lang, assessData, _.get(value, 'id') )
+        })
+        
         result.push({
           'title': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
           'cid': _.get(value, 'id'),
