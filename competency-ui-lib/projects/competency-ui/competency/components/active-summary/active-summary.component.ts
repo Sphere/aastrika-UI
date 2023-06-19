@@ -161,7 +161,7 @@ export class ActiveSummaryComponent implements OnInit {
     let positionMap :any
     this.activeSummaryService.getRolesMapping().pipe().subscribe((res:any)=>{
       console.log(res)
-      positionMap = res.respone
+      positionMap = res.response
       if (positionMap.hasOwnProperty(designation)) {
         this.roleId = positionMap[designation]
         return this.roleId
