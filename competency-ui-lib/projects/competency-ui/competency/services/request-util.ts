@@ -6,25 +6,54 @@ export class RequestUtil {
     }
 
   }
-  formatedActivitityByPostion = (data: any, lang: any) => {
-    if (_.get(data, 'result')) {
-      const children = _.get(data, 'result.response').children
-      if (children.length > 0) {
+  formatedActivitityByPostion = (data: any, lang: any, assessData, prgressData) => {
+    let result = [];
+    let competencyData
+    _.forEach(data.activity, (activity) =>{
+      const activityObject = _.values(activity)[0];
+      const children = activityObject.children;
+      competencyData =  this.formatedCompetency(children, prgressData, lang, assessData, activityObject.id)
+
+    })
+    console.log(competencyData)
+    if (_.get(data, 'roles')) {
+      _.forEach(data.roles, (role) => {
+        const roleObject = _.values(role)[0];
+        const children = roleObject.children;
         let result = _.reduce(children, (result, value) => {
           result.push({
-            'roles': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
-            'id': _.get(value, 'id'),
-            'description': _.get(value, 'description'),
+            'roles': lang == 'hi' ? this.getHiName(roleObject) : _.get(roleObject, 'name'),
+            'id': _.get(roleObject, 'id'),
+            'description': _.get(roleObject, 'description'),
             'averagePercentage': 0,
-            'code': _.get(value.additionalProperties, 'Code')
-          })
+            'code': _.get(roleObject.additionalProperties, 'Code'),
+            'activities': this.formatedActivitityByRoleId(roleObject.children, lang)
+          });
+          return result;
+        },
+          []
+        );
+        console.log(result);
 
-          return result
-        }, [])
-        result = _.sortBy(result, [function (o) { return o.code; }]);
-        // console.log("sort result", result);
-        return result
-      }
+      });
+     
+      // const children = _.get(data, 'result.response').children
+      // if (children.length > 0) {
+      //   let result = _.reduce(children, (result, value) => {
+      //     result.push({
+      //       'roles': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
+      //       'id': _.get(value, 'id'),
+      //       'description': _.get(value, 'description'),
+      //       'averagePercentage': 0,
+      //       'code': _.get(value.additionalProperties, 'Code')
+      //     })
+
+      //     return result
+      //   }, [])
+      //   result = _.sortBy(result, [function (o) { return o.code; }]);
+      //   // console.log("sort result", result);
+      //   return result
+      // }
 
     }
 
@@ -40,53 +69,54 @@ export class RequestUtil {
     return res
   }
   formatedActivitityByRoleId = (data: any, lang: any) => {
-    if (_.get(data, 'result')) {
-      const children = _.get(data, 'result.response').children
-      if (children.length > 0) {
-        const result = _.reduce(children, (result, value) => {
-          result.push({
-            'title': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
-            'cid': _.get(value, 'id'),
-            'description': _.get(value, 'description'),
-            'code': _.get(value.additionalProperties, 'Code')
-          })
-          return result
-        }, [])
-        return _.sortBy(result, [function (o) { return o.code; }]);
-      }
+    // if (_.get(data, 'result')) {
+    // const children = _.get(data, 'result.response').children
+    if (data.length > 0) {
+      const result = _.reduce(data, (result,value) => {
+        result.push({
+          'title': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
+          'cid': _.get(value, 'id'),
+          'description': _.get(value, 'description'),
+          'code': _.get(value.additionalProperties, 'Code')
+        })
+        
+        return result
+      }, [])
 
+      return _.sortBy(result, [function (o) { return o.code; }]);
     }
-
   }
-  formatedCompetency = (data: any, progrssData, lang, assessmentData) => {
+
+
+  formatedCompetency = (data: any, progrssData, lang, assessmentData, cid) => {
     let result = []
-    _.forEach(data, (data: any) => {
-      if (_.get(data, 'result')) {
-        const children = _.get(data, 'result.response').children
-        if (children.length > 0) {
-          _.forEach(children, (value: any) => {
+    // _.forEach(data, (data: any) => {
+      // if (_.get(data, 'result')) {
+        // const children = _.get(data, 'result.response').children
+        if (data.length > 0) {
+          _.forEach(data, (value: any) => {
             result.push({
               'levels': this.getLevels(_.get(value, 'id'), progrssData, lang),
               'competency': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
               'id': _.get(value, 'id'),
               'description': _.get(value, 'description'),
-              'cid': _.get(data, 'result.response').id,
+              'cid': cid,
               'lastLevel': this.getheighestLevel(_.get(value, 'id'), progrssData),
               'completionPercentage': this.getCompeletionPercentage(_.get(value, 'id'), progrssData),
               'code': _.get(value.additionalProperties, 'Code'),
               'levelDescription': _.get(value.additionalProperties, 'competencyLevelDescription') ? this.getLevelDescription(_.get(value.additionalProperties, 'competencyLevelDescription'), progrssData, _.get(value, 'id'), lang) : '',
-              'assessmentData' : this.setAssessmentData( _.get(value, 'id') ,assessmentData)
+              'assessmentData': this.setAssessmentData(_.get(value, 'id'), assessmentData)
             })
 
           })
         }
-      }
-    })
+      // }
+    // })
     result = _.sortBy(result, [function (o) { return o.code; }]);
-
+console.log("competency", result)
     return _.uniqBy(result, 'id');
   }
- 
+
   getLevelDescription(data, progrssData, competencyId, lang) {
     let result = []
     _.forEach(JSON.parse(data), (value) => {
@@ -169,10 +199,10 @@ export class RequestUtil {
     return respone
   }
 
-  setAssessmentData( competencyId,assessData){
+  setAssessmentData(competencyId, assessData) {
     let result;
-    _.forEach(assessData, (value)=>{
-      if(competencyId == value.competencyID){
+    _.forEach(assessData, (value) => {
+      if (competencyId == value.competencyID) {
         result = value
       }
     })
@@ -227,7 +257,7 @@ export class RequestUtil {
     if (acquiredDetails.length > 0) {
       _.forEach(acquiredDetails, (value: any) => {
         response.push({
-          'header': _.get(value, 'courseName') ? _.get(value, 'courseName') : lang == 'hi' ? this.getHindiName(_.get(value, 'acquiredChannel'))   :  _.get(value, 'acquiredChannel'),
+          'header': _.get(value, 'courseName') ? _.get(value, 'courseName') : lang == 'hi' ? this.getHindiName(_.get(value, 'acquiredChannel')) : _.get(value, 'acquiredChannel'),
           'date': _.get(value, 'createdDate'),
           'description': _.get(value, 'additionalParams.description'),
           'keyboardArrowUp': true,
@@ -238,10 +268,10 @@ export class RequestUtil {
     return response
   }
 
-  getHindiName(channelName){
+  getHindiName(channelName) {
     let name;
-    switch (channelName){
-      case 'selfAssessment': name =  'आत्म मूल्यांकन'
+    switch (channelName) {
+      case 'selfAssessment': name = 'आत्म मूल्यांकन'
       case 'admin': name = 'व्यवस्थापक'
     }
 
@@ -376,7 +406,7 @@ export class RequestUtil {
 
           })
         })
-       
+
       }
 
 

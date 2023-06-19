@@ -58,21 +58,30 @@ export class ActiveSummaryComponent implements OnInit {
       }
 
       if (this.profileData) {
-        const getActivity = this.getActivityByRole(this.roleId)
+        const getActivity = this.getRolesWiseCompetencyData()
         const getCourses = this.getCompetencyCourse()        
         return forkJoin([getActivity , getCourses ]);
       }
     })).subscribe((res: any) => {
+      console.log(res)
+      let rolesCompetencyData =  _.find(res[0].response, {'position': this.desigination })
+      console.log(rolesCompetencyData)
       this.assessmentData = this.requestUtil.formatedCompetencyCourseData(res[1]);
       this.getAssessmentBtnType(this.assessmentData);
-      const formatedResponse = this.requestUtil.formatedActivitityByPostion(res[0], this.language)
+      const formatedResponse = this.requestUtil.formatedActivitityByPostion(rolesCompetencyData, this.language, this.assessmentData, this.competencyProgress)
+      // const formatedResponse = this.requestUtil.formatedActivitityByPostion(rolesCompetencyData, this.language, this.assessmentData, this.competencyProgress)
       this.roleactivitySummaries = formatedResponse
-      _.forEach(this.roleactivitySummaries, (value: any) => {
-        if (value.id) {
-          this.getActivityByRoleId(value.id)
-        }
-      })      
+
+      console.log("data after the activity", this.roleactivitySummaries)
+      // _.forEach(this.roleactivitySummaries, (value: any) => {
+      //   if (value.id) {
+      //     this.getActivityByRoleId(value.id)
+      //   }
+      // })      
     })
+    
+
+    console.log("data after the activity", this.roleactivitySummaries)
   }
 
   getProgress() {
@@ -141,6 +150,14 @@ export class ActiveSummaryComponent implements OnInit {
       id: this.configService.getConfig().id
     }
     return this.activeSummaryService.getUserdetailsFromRegistry(reqBody)
+  }
+
+  getRolesWiseCompetencyData() {
+    let designation: any
+    if (this.profileData.professionalDetails) {
+      designation = this.profileData.professionalDetails[0].designation
+    }
+    return this.activeSummaryService.getRolesWiseCompetency()
   }
 
   private getActivityByRole(id) {

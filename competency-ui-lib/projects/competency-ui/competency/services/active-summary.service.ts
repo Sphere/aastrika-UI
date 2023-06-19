@@ -52,6 +52,14 @@ export class ActiveSummaryService extends DataService {
      return this.getwithouTAuthorization(httpOtions)
     }
 
+    public getRolesWiseCompetency(){
+      const httpOtions: any = {
+       url: urlConfig.getRoleWiseCompetency()
+      };
+ 
+      return this.getwithouTAuthorization(httpOtions)
+     }
+
     public getCompetencyCourseIdentifier(data:any){ 
       const reqBody = {
         "request": {
