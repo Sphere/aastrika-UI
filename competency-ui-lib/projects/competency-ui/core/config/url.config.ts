@@ -28,6 +28,6 @@ export const urlConfig = {
   getSearchMobile: () => `${urlConfig.mobileHost}${urlConfig.apiPublic}/publicSearch/getCourses`,
   getContentProgressMobile: () => `${urlConfig.mobileHost}/api/course/v1/content/state/read`,
   
-  getRoleMapping:() => `${urlConfig.apiBasePublic()}/competencyAssets/rolesMappingData`
+  getRoleMapping:() => `${urlConfig.mobileHost}${urlConfig.apiPublic}/competencyAssets/rolesMappingData`
 
 }
