@@ -8,15 +8,15 @@ export class RequestUtil {
   }
   formatedActivitityByPostion = (data: any, lang: any, assessData, prgressData) => {
     let result = [];
-    let competencyData
-    _.forEach(data.activity, (activity) =>{
-      const activityObject = _.values(activity)[0];
-      const children = activityObject.children;
-      competencyData =  this.formatedCompetency(children, prgressData, lang, assessData, activityObject.id)
+    // let competencyData
+    // _.forEach(data.activity, (activity) =>{
+    //   const activityObject = _.values(activity)[0];
+    //   const children = activityObject.children;
+    //   competencyData =  this.formatedCompetency(children, prgressData, lang, assessData, activityObject.id)
 
-    })
+    // })
     let activityMasterData = _.get(data, 'activity')
-    console.log(competencyData)
+    // console.log(competencyData)
     if (_.get(data, 'roles')) {
       _.forEach(data.roles, (role) => {
         const roleObject = _.values(role)[0];
@@ -28,7 +28,7 @@ export class RequestUtil {
             'description': _.get(roleObject, 'description'),
             'averagePercentage': 0,
             'code': _.get(roleObject.additionalProperties, 'Code'),
-            'activities': this.formatedActivitityByRoleId(roleObject.children, lang, activityMasterData, 
+            'activities': this.formatedActivitityByRoleId(roleObject.children, lang, activityMasterData,
               prgressData, assessData)
           });
           return result;
@@ -38,7 +38,9 @@ export class RequestUtil {
         console.log(result);
 
       });
-     
+      result = _.sortBy(result, [function (o) { return o.code; }]);
+      console.log("sort result", result);
+      return result;
       // const children = _.get(data, 'result.response').children
       // if (children.length > 0) {
       //   let result = _.reduce(children, (result, value) => {
@@ -73,27 +75,28 @@ export class RequestUtil {
   formatedActivitityByRoleId = (data: any, lang: any, activityMasterData, prgressData, assessData) => {
     // if (_.get(data, 'result')) {
     // const children = _.get(data, 'result.response').children
+    let competencydata;
     if (data.length > 0) {
-      const result = _.reduce(data, (result,value) => {
+      const result = _.reduce(data, (result, value) => {
         const filteredData = _.filter(activityMasterData, (obj) =>
           _.has(obj, _.get(value, 'id'))
         );
-        console.log('filteredData',filteredData);
+        console.log('filteredData', filteredData);
         _.forEach(filteredData, obj => {
           const childrenFilterData = _.get(obj, _.get(value, 'id') + '.children');
-          this.formatedCompetency(childrenFilterData, prgressData, lang, assessData, _.get(value, 'id') )
+          competencydata = this.formatedCompetency(childrenFilterData, prgressData, lang, assessData, _.get(value, 'id'))
         })
-        
+
         result.push({
           'title': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
           'cid': _.get(value, 'id'),
           'description': _.get(value, 'description'),
           'code': _.get(value.additionalProperties, 'Code')
         })
-        
-        return result
+        console.log(competencydata)
+        return [result, ...competencydata]
       }, [])
-
+      console.log(result)
       return _.sortBy(result, [function (o) { return o.code; }]);
     }
   }
@@ -102,29 +105,29 @@ export class RequestUtil {
   formatedCompetency = (data: any, progrssData, lang, assessmentData, cid) => {
     let result = []
     // _.forEach(data, (data: any) => {
-      // if (_.get(data, 'result')) {
-        // const children = _.get(data, 'result.response').children
-        if (data.length > 0) {
-          _.forEach(data, (value: any) => {
-            result.push({
-              'levels': this.getLevels(_.get(value, 'id'), progrssData, lang),
-              'competency': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
-              'id': _.get(value, 'id'),
-              'description': _.get(value, 'description'),
-              'cid': cid,
-              'lastLevel': this.getheighestLevel(_.get(value, 'id'), progrssData),
-              'completionPercentage': this.getCompeletionPercentage(_.get(value, 'id'), progrssData),
-              'code': _.get(value.additionalProperties, 'Code'),
-              'levelDescription': _.get(value.additionalProperties, 'competencyLevelDescription') ? this.getLevelDescription(_.get(value.additionalProperties, 'competencyLevelDescription'), progrssData, _.get(value, 'id'), lang) : '',
-              'assessmentData': this.setAssessmentData(_.get(value, 'id'), assessmentData)
-            })
+    // if (_.get(data, 'result')) {
+    // const children = _.get(data, 'result.response').children
+    if (data.length > 0) {
+      _.forEach(data, (value: any) => {
+        result.push({
+          'levels': this.getLevels(_.get(value, 'id'), progrssData, lang),
+          'competency': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
+          'id': _.get(value, 'id'),
+          'description': _.get(value, 'description'),
+          'cid': cid,
+          'lastLevel': this.getheighestLevel(_.get(value, 'id'), progrssData),
+          'completionPercentage': this.getCompeletionPercentage(_.get(value, 'id'), progrssData),
+          'code': _.get(value.additionalProperties, 'Code'),
+          'levelDescription': _.get(value.additionalProperties, 'competencyLevelDescription') ? this.getLevelDescription(_.get(value.additionalProperties, 'competencyLevelDescription'), progrssData, _.get(value, 'id'), lang) : '',
+          'assessmentData': this.setAssessmentData(_.get(value, 'id'), assessmentData)
+        })
 
-          })
-        }
-      // }
+      })
+    }
+    // }
     // })
     result = _.sortBy(result, [function (o) { return o.code; }]);
-console.log("competency", result)
+    console.log("competency", result)
     return _.uniqBy(result, 'id');
   }
 
