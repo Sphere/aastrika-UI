@@ -8,13 +8,7 @@ export class RequestUtil {
   }
   formatedActivitityByPostion = (data: any, lang: any, assessData, prgressData) => {
     let result = [];
-    // let competencyData
-    // _.forEach(data.activity, (activity) =>{
-    //   const activityObject = _.values(activity)[0];
-    //   const children = activityObject.children;
-    //   competencyData =  this.formatedCompetency(children, prgressData, lang, assessData, activityObject.id)
-
-    // })
+  
     let activityMasterData = _.get(data, 'activity')
     // console.log(competencyData)
     if (_.get(data, 'roles')) {
@@ -28,8 +22,12 @@ export class RequestUtil {
             'description': _.get(roleObject, 'description'),
             'averagePercentage': 0,
             'code': _.get(roleObject.additionalProperties, 'Code'),
-            'activities': this.formatedActivitityByRoleId(roleObject.children, lang, activityMasterData,
-              prgressData, assessData)
+             activities: _.map(children, (child) => ({
+              'title': lang == 'hi' ? this.getHiName(value) : _.get(child, 'name'),
+              'cid': _.get(child, 'id'),
+              'description': _.get(child, 'description'),
+              'code': _.get(child.additionalProperties, 'Code')
+            }))
           });
           return result;
         },
@@ -41,24 +39,6 @@ export class RequestUtil {
       result = _.sortBy(result, [function (o) { return o.code; }]);
       console.log("sort result", result);
       return result;
-      // const children = _.get(data, 'result.response').children
-      // if (children.length > 0) {
-      //   let result = _.reduce(children, (result, value) => {
-      //     result.push({
-      //       'roles': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
-      //       'id': _.get(value, 'id'),
-      //       'description': _.get(value, 'description'),
-      //       'averagePercentage': 0,
-      //       'code': _.get(value.additionalProperties, 'Code')
-      //     })
-
-      //     return result
-      //   }, [])
-      //   result = _.sortBy(result, [function (o) { return o.code; }]);
-      //   // console.log("sort result", result);
-      //   return result
-      // }
-
     }
 
   }
@@ -82,11 +62,12 @@ export class RequestUtil {
           _.has(obj, _.get(value, 'id'))
         );
         console.log('filteredData', filteredData);
-        _.forEach(filteredData, obj => {
-          const childrenFilterData = _.get(obj, _.get(value, 'id') + '.children');
-          competencydata = this.formatedCompetency(childrenFilterData, prgressData, lang, assessData, _.get(value, 'id'))
-        })
-
+        if(filteredData.length>0){
+          _.forEach(filteredData, obj => {
+            const childrenFilterData = _.get(obj, _.get(value, 'id') + '.children');
+            competencydata = this.formatedCompetency(childrenFilterData, prgressData, lang, assessData, _.get(value, 'id'))
+          })
+        }
         result.push({
           'title': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
           'cid': _.get(value, 'id'),
@@ -94,7 +75,7 @@ export class RequestUtil {
           'code': _.get(value.additionalProperties, 'Code')
         })
         console.log(competencydata)
-        return [result, ...competencydata]
+        return [...result, ...competencydata]
       }, [])
       console.log(result)
       return _.sortBy(result, [function (o) { return o.code; }]);
