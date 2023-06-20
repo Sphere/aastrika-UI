@@ -71,16 +71,10 @@ export class ActiveSummaryComponent implements OnInit {
       const formatedResponse = this.requestUtil.formatedActivitityByPostion(rolesCompetencyData, this.language, this.assessmentData, this.competencyProgress)
       // const formatedResponse = this.requestUtil.formatedActivitityByPostion(rolesCompetencyData, this.language, this.assessmentData, this.competencyProgress)
       this.roleactivitySummaries = formatedResponse
-
+      this.loading = false
       console.log("data after the activity", this.roleactivitySummaries)
-      // _.forEach(this.roleactivitySummaries, (value: any) => {
-      //   if (value.id) {
-      //     this.getActivityByRoleId(value.id)
-      //   }
-      // })      
+     
     })
-    
-
     console.log("data after the activity", this.roleactivitySummaries)
   }
 
