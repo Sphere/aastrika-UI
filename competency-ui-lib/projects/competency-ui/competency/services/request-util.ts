@@ -6,42 +6,59 @@ export class RequestUtil {
     }
 
   }
-  formatedActivitityByPostion = (data: any, lang: any, assessData, prgressData) => {
+  formatedActivitityByPostion = (data: any, lang: any, assessmentData, progrssData) => {
     let result = [];
+    let activityMasterData = _.get(data, 'activity');
+    console.log(activityMasterData);
   
-    let activityMasterData = _.get(data, 'activity')
-    // console.log(competencyData)
     if (_.get(data, 'roles')) {
       _.forEach(data.roles, (role) => {
         const roleObject = _.values(role)[0];
         const children = roleObject.children;
-        let result = _.reduce(children, (result, value) => {
-          result.push({
-            'roles': lang == 'hi' ? this.getHiName(roleObject) : _.get(roleObject, 'name'),
-            'id': _.get(roleObject, 'id'),
-            'description': _.get(roleObject, 'description'),
-            'averagePercentage': 0,
-            'code': _.get(roleObject.additionalProperties, 'Code'),
-             activities: _.map(children, (child) => ({
-              'title': lang == 'hi' ? this.getHiName(value) : _.get(child, 'name'),
-              'cid': _.get(child, 'id'),
-              'description': _.get(child, 'description'),
-              'code': _.get(child.additionalProperties, 'Code')
-            }))
+        let activities = _.reduce(children, (activitiesResult, value) => {
+          const cid = _.get(value, 'id');
+          const filteredData = _.filter(activityMasterData, (obj) => _.has(obj, cid));
+          console.log(filteredData);
+  
+          const childrenActivities = _.flatMap(filteredData, obj => {
+            const filterDatachildren = _.get(obj, cid + '.children');
+            if (filterDatachildren) {
+              return _.map(filterDatachildren, child => ({
+                'title': lang == 'hi' ? this.getHiName(child) : _.get(child, 'name'),
+                'cid': _.get(child, 'id'),
+                'description': _.get(child, 'description'),
+                'code': _.get(child.additionalProperties, 'Code'),
+                'levels': this.getLevels(_.get(child, 'id'), progrssData, lang),
+                'competency': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
+                'id': _.get(value, 'id'),
+                'lastLevel': this.getheighestLevel(_.get(value, 'id'), progrssData),
+                'completionPercentage': this.getCompeletionPercentage(_.get(value, 'id'), progrssData),
+                'levelDescription': _.get(value.additionalProperties, 'competencyLevelDescription') ? this.getLevelDescription(_.get(value.additionalProperties, 'competencyLevelDescription'), progrssData, _.get(value, 'id'), lang) : '',
+                'assessmentData': this.setAssessmentData(_.get(value, 'id'), assessmentData)
+              }));
+            }
+            return [];
           });
-          return result;
-        },
-          []
-        );
-        console.log(result);
-
+  
+          return activitiesResult.concat(childrenActivities);
+        }, []);
+  
+        console.log(activities);
+  
+        result.push({
+          'roles': lang == 'hi' ? this.getHiName(roleObject) : _.get(roleObject, 'name'),
+          'id': _.get(roleObject, 'id'),
+          'description': _.get(roleObject, 'description'),
+          'averagePercentage': 0,
+          'code': _.get(roleObject.additionalProperties, 'Code'),
+          'activities': activities
+        });
       });
-      result = _.sortBy(result, [function (o) { return o.code; }]);
-      console.log("sort result", result);
+      console.log(result);
       return result;
     }
-
   }
+  
 
   getHiName(data) {
     let res: any
