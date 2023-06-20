@@ -30,7 +30,7 @@ export class RequestUtil {
                 'code': _.get(value.additionalProperties, 'Code'),
                 'levels': this.getLevels(_.get(child, 'id'), progrssData, lang),
                 'competency': lang == 'hi' ? this.getHiName(value) : _.get(child, 'name'),
-                'id': _.get(value, 'id'),
+                'id': _.get(child, 'id'),
                 'lastLevel': this.getheighestLevel(_.get(child, 'id'), progrssData),
                 'completionPercentage': this.getCompeletionPercentage(_.get(child, 'id'), progrssData),
                 'levelDescription': _.get(child.additionalProperties, 'competencyLevelDescription') ? this.getLevelDescription(_.get(child.additionalProperties, 'competencyLevelDescription'), progrssData, _.get(child, 'id'), lang) : '',
@@ -39,8 +39,8 @@ export class RequestUtil {
             }
             return [];
           });
-  
-          return activitiesResult.concat(childrenActivities);
+         
+          return activitiesResult.concat( _.uniqBy(childrenActivities, 'id'));
         }, []);
   
         console.log(activities);
@@ -49,14 +49,27 @@ export class RequestUtil {
           'roles': lang == 'hi' ? this.getHiName(roleObject) : _.get(roleObject, 'name'),
           'id': _.get(roleObject, 'id'),
           'description': _.get(roleObject, 'description'),
-          'averagePercentage': 0,
+          'averagePercentage': this.getAveragepercentage(activities),
           'code': _.get(roleObject.additionalProperties, 'Code'),
           'activities': activities
         });
       });
+      
       console.log(result);
+
       return result;
     }
+  }
+
+  getAveragepercentage(data) {
+    let totalLength = data.length
+    let percentage = []
+    let totalPercent = 0
+    _.forEach(data, (value: any) => {
+      percentage.push(value.completionPercentage)
+    })
+    totalPercent = _.round(_.sum(percentage) / totalLength)
+    return totalPercent
   }
   
 
