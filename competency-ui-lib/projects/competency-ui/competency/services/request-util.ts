@@ -37,10 +37,18 @@ export class RequestUtil {
                 'assessmentData': this.setAssessmentData(_.get(child, 'id'), assessmentData)
               }));
             }
-            return [];
+            return [{
+              'title': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
+              'cid': _.get(value, 'id'),
+              'description': _.get(value, 'description'),
+              'code': _.get(value.additionalProperties, 'Code'),
+            }];
           });
-         
-          return activitiesResult.concat( _.uniqBy(childrenActivities, 'id'));
+          if (_.some(childrenActivities, 'id')) {
+            return activitiesResult.concat(_.uniqBy(childrenActivities, 'id'));
+          } else {
+            return activitiesResult.concat(childrenActivities);
+          }
         }, []);
   
         console.log(activities);
@@ -54,12 +62,13 @@ export class RequestUtil {
           'activities': activities
         });
       });
-      
+  
       console.log(result);
-
+  
       return result;
     }
   }
+  
 
   getAveragepercentage(data) {
     let totalLength = data.length
