@@ -32,5 +32,7 @@ export class ConfigService {
     })
     return config
   }
- 
+  public clearConfig() {
+    this.config$.next({});
+  }
 }
