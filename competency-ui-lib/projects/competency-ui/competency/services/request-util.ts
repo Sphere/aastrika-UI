@@ -24,16 +24,16 @@ export class RequestUtil {
             const filterDatachildren = _.get(obj, cid + '.children');
             if (filterDatachildren) {
               return _.map(filterDatachildren, child => ({
-                'title': lang == 'hi' ? this.getHiName(child) : _.get(child, 'name'),
-                'cid': _.get(child, 'id'),
-                'description': _.get(child, 'description'),
-                'code': _.get(child.additionalProperties, 'Code'),
+                'title': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
+                'cid': _.get(value, 'id'),
+                'description': _.get(value, 'description'),
+                'code': _.get(value.additionalProperties, 'Code'),
                 'levels': this.getLevels(_.get(child, 'id'), progrssData, lang),
                 'competency': lang == 'hi' ? this.getHiName(value) : _.get(child, 'name'),
                 'id': _.get(value, 'id'),
                 'lastLevel': this.getheighestLevel(_.get(child, 'id'), progrssData),
                 'completionPercentage': this.getCompeletionPercentage(_.get(child, 'id'), progrssData),
-                'levelDescription': _.get(child.additionalProperties, 'competencyLevelDescription') ? this.getLevelDescription(_.get(value.additionalProperties, 'competencyLevelDescription'), progrssData, _.get(value, 'id'), lang) : '',
+                'levelDescription': _.get(child.additionalProperties, 'competencyLevelDescription') ? this.getLevelDescription(_.get(child.additionalProperties, 'competencyLevelDescription'), progrssData, _.get(child, 'id'), lang) : '',
                 'assessmentData': this.setAssessmentData(_.get(child, 'id'), assessmentData)
               }));
             }
