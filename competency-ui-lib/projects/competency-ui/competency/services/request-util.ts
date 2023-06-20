@@ -48,9 +48,10 @@ export class RequestUtil {
 
           });
           if (_.some(childrenActivities, 'id')) {
-            return activitiesResult.concat(_.uniqBy(childrenActivities, 'id'));
+
+            return activitiesResult.concat(_.uniqBy(childrenActivities, 'id') && _.uniqBy(childrenActivities, 'cid') );
           } else {
-            return activitiesResult.concat(childrenActivities);
+            return activitiesResult.concat( _.uniqBy(childrenActivities, 'cid'));
           }
         }, []);
 
