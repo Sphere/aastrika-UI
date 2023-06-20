@@ -29,12 +29,12 @@ export class RequestUtil {
                 'description': _.get(child, 'description'),
                 'code': _.get(child.additionalProperties, 'Code'),
                 'levels': this.getLevels(_.get(child, 'id'), progrssData, lang),
-                'competency': lang == 'hi' ? this.getHiName(value) : _.get(value, 'name'),
+                'competency': lang == 'hi' ? this.getHiName(value) : _.get(child, 'name'),
                 'id': _.get(value, 'id'),
-                'lastLevel': this.getheighestLevel(_.get(value, 'id'), progrssData),
-                'completionPercentage': this.getCompeletionPercentage(_.get(value, 'id'), progrssData),
-                'levelDescription': _.get(value.additionalProperties, 'competencyLevelDescription') ? this.getLevelDescription(_.get(value.additionalProperties, 'competencyLevelDescription'), progrssData, _.get(value, 'id'), lang) : '',
-                'assessmentData': this.setAssessmentData(_.get(value, 'id'), assessmentData)
+                'lastLevel': this.getheighestLevel(_.get(child, 'id'), progrssData),
+                'completionPercentage': this.getCompeletionPercentage(_.get(child, 'id'), progrssData),
+                'levelDescription': _.get(child.additionalProperties, 'competencyLevelDescription') ? this.getLevelDescription(_.get(value.additionalProperties, 'competencyLevelDescription'), progrssData, _.get(value, 'id'), lang) : '',
+                'assessmentData': this.setAssessmentData(_.get(child, 'id'), assessmentData)
               }));
             }
             return [];
