@@ -81,6 +81,16 @@
   margin-top: 10px;
 }
 
+.log-level-id{
+  width: fit-content;
+  // width: 15%;
+}
+
+.log-level-details{
+  // width: 65%;
+  width: fit-content;
+}
+
 .log-date {
   font-style: normal;
   font-size: $size-s;
@@ -88,6 +98,7 @@
   letter-spacing: $spacing;
   color: var(--gray-400);
   margin: 0 auto;
+  width: fit-content;
 }
 
 ::ng-deep .mat-expansion-panel-body {

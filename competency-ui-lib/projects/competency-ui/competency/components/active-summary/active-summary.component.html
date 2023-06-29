@@ -36,7 +36,7 @@
           <!-- list of activity -->
           <div class="activity-badge" i18n>{{'ACTIVITIES' | translate}}</div>
           <ng-container
-            *ngFor="let activity of role?.activities; let i = index"
+            *ngFor="let activity of (role?.activities| removeDuplicatesPipe:['cid', 'name'] ); let i = index"
           >
             <div class="activity-title" *ngIf="activity.title">
              - {{ activity.title }}

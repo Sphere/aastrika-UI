@@ -30,7 +30,7 @@ export class RequestUtil {
                 'description': _.get(value, 'description'),
                 'code': _.get(value.additionalProperties, 'Code'),
                 'levels': this.getLevels(_.get(child, 'id'), progrssData, lang),
-                'competency': lang == 'hi' ? this.getHiName(value) : _.get(child, 'name'),
+                'competency': lang == 'hi' ? this.getHiName(child) : _.get(child, 'name'),
                 'id': _.get(child, 'id'),
                 'lastLevel': this.getheighestLevel(_.get(child, 'id'), progrssData),
                 'completionPercentage': this.getCompeletionPercentage(_.get(child, 'id'), progrssData),
@@ -49,7 +49,7 @@ export class RequestUtil {
           });
           if (_.some(childrenActivities, 'id')) {
 
-            return activitiesResult.concat(_.uniqBy(childrenActivities, 'id') && _.uniqBy(childrenActivities, 'cid') );
+            return activitiesResult.concat(childrenActivities);
           } else {
             return activitiesResult.concat( _.uniqBy(childrenActivities, 'cid'));
           }

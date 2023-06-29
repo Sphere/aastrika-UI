@@ -1,5 +1,5 @@
 <div class="competency-badge" i18n>{{'COMPETENCIES' | translate}} :</div>
-<ng-container *ngFor="let competency of competencyList; let i = index; let last = last;">
+<div *ngFor="let competency of (competencyList | removeDuplicatesPipe:['id', 'name']); let i = index; let last = last;">
   <ng-container *ngIf="competency.competency">
     <mat-accordion>
       <mat-expansion-panel>
@@ -102,4 +102,4 @@
 
     <hr class="mt-3 mb-3" [ngClass]="{'d-none' : last}" />
   </ng-container>
-</ng-container>
+</div>

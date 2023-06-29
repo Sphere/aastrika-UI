@@ -66,14 +66,15 @@
               "
             >
               <div class="log" [ngClass]="{'border-bottom-0': last}">
-                <div class="flex">
+                <div class="flex w-full">
                   <ng-container *ngIf="log.header">
-                    <span class=""
-                    i18n>{{'LEVEL' | translate}} </span> <span> {{ log.level }}: {{ log.header }}</span
+                    <div class="log-level-id"
+                    i18n>{{'LEVEL' | translate}}{{ log.level }}  </div> 
+                    <div class="log-level-details">  {{ log.header }}</div
                     >
-                    <span class="log-date mr-2">{{
+                    <div class="log-date mr-2">{{
                       log?.date | date : "dd/MM/yyyy"
-                    }}</span>
+                    }}</div>
                   </ng-container>
                 </div>
                 <ng-container *ngIf="log.description">
