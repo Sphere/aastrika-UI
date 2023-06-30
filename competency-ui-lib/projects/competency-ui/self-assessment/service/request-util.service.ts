@@ -69,11 +69,9 @@ export class RequestUtil {
     let batchId = ''
     if(data.batches){
         batchId = data.batches[0].batchId
-      //   _.forEach(data.batches, (value:any)=>{
-          
+      //   _.forEach(data.batches, (value:any)=>{          
       //     batchId = _.get(value, 'batchId')
       //   })
-      // }
     }
 
     return batchId;
