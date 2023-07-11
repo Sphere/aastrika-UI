@@ -40,23 +40,24 @@ export class SelfAssessmentComponent implements OnInit {
    */
 
 
-   ngOnInit() {
+  ngOnInit() {
     this.loading = true;
-    this.roleCompetencyData = []; 
-  
+    this.roleCompetencyData = [];
+
     this.selfAssessmentService.getRolesWiseCompetency()
       .pipe(
         mergeMap((result) => {
-          this.roleBasedCompetency = _.find(result[0].response, { 'position': this.position });
+          this.roleBasedCompetency = _.find(result.response, { 'position': this.position });
           if (this.roleBasedCompetency) {
-            const competencyIds = _.flatMap(this.roleBasedCompetency, (item) =>
-              _.flatMap(item, (data) =>
-                _.flatMap(data.competency, (competency) =>
-                  _.map(competency, 'id')
-                )
+            const competencyIds = _.flatMap(this.roleBasedCompetency.competency, (item) =>
+              _.flatMap(item, (competency) => {
+                console.log(competency.id)
+                this.roleCompetencyData.push(competency.id)
+             
+              }
+
               )
             );
-            this.roleCompetencyData.push(...competencyIds); // Push the competencyIds into the roleCompetencyData array
           }
           return of(null); // Return null or an empty value since you're not using this result in the subsequent mergeMap
         }),
@@ -72,8 +73,8 @@ export class SelfAssessmentComponent implements OnInit {
             mergeMap((res: any) => {
               const assessData = this.requestUtil.formatedCompetencyCourseData(res);
               this.selfAssessmentData = this.getCompetencyFilter(assessData);
-  
-              return forkJoin( 
+
+              return forkJoin(
                 _.map(this.selfAssessmentData, (value: any) =>
                   this.getProgress(value).pipe(
                     map((res) => {
@@ -100,7 +101,7 @@ export class SelfAssessmentComponent implements OnInit {
                           }
                         }
                       }
-  
+
                       if (res.result.contentList.length === 0) {
                         this.btnType.push({
                           courseId: value.contentId,
@@ -120,7 +121,7 @@ export class SelfAssessmentComponent implements OnInit {
         console.log('self', this.selfAssessmentData);
       });
   }
-  
+
 
 
   getCompetencyFilter(data) {
