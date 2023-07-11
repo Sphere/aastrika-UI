@@ -76,7 +76,13 @@ const */
     return this.post(httpOptions)
     
   }
+  public getRolesWiseCompetency(){
+    const httpOtions: any = {
+     url: urlConfig.getRoleWiseCompetency()
+    };
 
+    return this.getwithouTAuthorization(httpOtions)
+   }
 
   public getUserdetailsFromRegistry(reqBody:any){
     let config = this.configService.getConfig()

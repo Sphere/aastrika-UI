@@ -6,6 +6,7 @@ import { map, mergeMap } from 'rxjs/operators';
 import * as _ from 'lodash-es';
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 import * as competencyRoleData from '../../rolesWiseCompetencyData.json';
+import { forkJoin, of } from 'rxjs';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class SelfAssessmentComponent implements OnInit {
   btnType = [];
   roleBasedCompetency: any = competencyRoleData;
   roleCompetencyData = [];
-  noResultData :{
+  noResultData: {
     'message': 'No result found'
   }
   constructor(
@@ -37,129 +38,97 @@ export class SelfAssessmentComponent implements OnInit {
    *getting the details of course by pasing the identifier and hierarchyType
    *
    */
+
+
   ngOnInit() {
-    this.loading = true
-    if (this.roleBasedCompetency) {
-      _.forEach(this.roleBasedCompetency, (item) => {
+    this.loading = true;
 
-        _.forEach(item, (data) => {
-          if (data.position == this.position) {
-            // console.log("competency", data)
-            _.forEach(data.competency, (competency) => {
-              _.forEach(competency, (data) => {
-                // console.log("competency", data.id)
-                this.roleCompetencyData.push(data.id)
-              })
-
-            })
+    this.selfAssessmentService.getRolesWiseCompetency()
+      .pipe(
+        mergeMap((result) => {
+          this.roleBasedCompetency = _.find(result[0].response, { 'position': this.position })
+          if (this.roleBasedCompetency) {
+            const competencyIds = _.flatMap(this.roleBasedCompetency, (item) =>
+              _.flatMap(item, (data) =>
+                _.flatMap(data.competency, (competency) =>
+                  _.map(competency, 'id')
+                )
+              )
+            );
+            console.log('competencyIds', competencyIds)
+            this.roleCompetencyData.push(...competencyIds);
           }
-        })
-
-
-      })
-    }
-    this.getUserDetails().pipe(mergeMap((res: any) => {
-      if (!this.language) {
-        this.language = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
-      }
-      if (this.language) {
-        return this.getCompetencyCourse()
-      }
-    })).subscribe((res: any) => {
-      let assessData = this.requestUtil.formatedCompetencyCourseData(res)
-      this.selfAssessmentData = this.getCompetencyFilter(assessData);
-      
-      _.forEach(this.selfAssessmentData, (value: any) => {
-        this.getProgress(value).subscribe((res) => {
-          if (res.result) {
-            if (res.result.contentList.length > 0) {
-              if (res.result.contentList.length > 0 && value.childContent === res.result.contentList.length) {
-                let type = ''
-                _.forEach(res.result.contentList, (item: any) => {
-                  if (item.completionPercentage === 100 && item.completionPercentage !== 0) {
-                    type = 'DONE'
-                  } else {
-                    type = 'RESUME'
-                  }
-                })
-                this.btnType.push({
-                  courseId: value.contentId,
-                  type
-                })
-              } else {
-                this.btnType.push({
-                  courseId: value.contentId,
-                  type: 'RESUME'
-                })
+          return of(null);
+        }),
+        mergeMap((competencyIds) => {
+          return this.getUserDetails().pipe(
+            mergeMap((res: any) => {
+              if (!this.language) {
+                this.language = res.profileDetails!.preferences?.language || 'en';
               }
-            }
-          }
+              if (this.language) {
+                return this.getCompetencyCourse();
+              }
+              return of(null); // Return an observable using 'of' operator
+            }),
+            mergeMap((res: any) => {
+              const assessData = this.requestUtil.formatedCompetencyCourseData(res);
+              this.selfAssessmentData = this.getCompetencyFilter(assessData);
 
-          if (res.result.contentList.length == 0) {
-            this.btnType.push({
-              courseId: value.contentId,
-              type: 'START'
+              return forkJoin( // Use 'forkJoin' to handle multiple inner observables
+                _.map(this.selfAssessmentData, (value: any) =>
+                  this.getProgress(value).pipe(
+                    map((res) => {
+                      if (res.result) {
+                        if (res.result.contentList.length > 0) {
+                          if (res.result.contentList.length > 0 && value.childContent === res.result.contentList.length) {
+                            let type = '';
+                            _.forEach(res.result.contentList, (item: any) => {
+                              if (item.completionPercentage === 100 && item.completionPercentage !== 0) {
+                                type = 'DONE';
+                              } else {
+                                type = 'RESUME';
+                              }
+                            });
+                            this.btnType.push({
+                              courseId: value.contentId,
+                              type,
+                            });
+                          } else {
+                            this.btnType.push({
+                              courseId: value.contentId,
+                              type: 'RESUME',
+                            });
+                          }
+                        }
+                      }
+
+                      if (res.result.contentList.length === 0) {
+                        this.btnType.push({
+                          courseId: value.contentId,
+                          type: 'START',
+                        });
+                      }
+                    })
+                  )
+                )
+              );
             })
-          }
+          );
         })
-      })
-      this.loading = false
-    })
-
-    console.log("self", this.selfAssessmentData)
+      )
+      .subscribe(() => {
+        this.loading = false;
+        console.log('self', this.selfAssessmentData);
+      });
   }
 
-  // getCompetencyData() {
-  //   this.getCompetencyCourse().pipe(map((res: any) => {
-  //     const formatedResponse = this.requestUtil.formatedCompetencyCourseData(res)
-  //     return formatedResponse
-  //   })).subscribe((res) => {
-  //     this.selfAssessmentData = res
-  //     _.forEach(res, (value: any) => {
-  //       this.getProgress(value).subscribe((res) => {
-  //         if (res.result) {
-  //           if (res.result.contentList.length > 0) {
-  //             if (res.result.contentList.length > 0 && value.childContent === res.result.contentList.length) {
-  //               let type = ''
-  //               _.forEach(res.result.contentList, (item: any) => {
-  //                 if (item.completionPercentage === 100 && item.completionPercentage !== 0) {
-  //                   type = 'DONE'
-  //                 } else {
-  //                   type = 'RESUME'
-  //                 }
-  //               })
-  //               this.btnType.push({
-  //                 courseId: value.contentId,
-  //                 type
-  //               })
-  //             } else {
-  //               this.btnType.push({
-  //                 courseId: value.contentId,
-  //                 type: 'RESUME'
-  //               })
-  //             }
-  //           }
-  //         }
-
-  //         if (res.result.contentList.length == 0) {
-  //           this.btnType.push({
-  //             courseId: value.contentId,
-  //             type: 'START'
-  //           })
-  //         }
-  //       })
-  //     })
-
-  //     this.loading = false
-  //   })
-  // }
-
-  getCompetencyFilter(data){
+  getCompetencyFilter(data) {
     let result = []
-    _.forEach(this.roleCompetencyData, (value)=>{
+    _.forEach(this.roleCompetencyData, (value) => {
       // console.log("data", value)
-      _.forEach(data, (item)=>{
-        if(item.competencyID == value ){
+      _.forEach(data, (item) => {
+        if (item.competencyID == value) {
           result.push(item);
         }
       })
@@ -191,8 +160,6 @@ export class SelfAssessmentComponent implements OnInit {
 
     return this.selfAssessmentService.fetchPrgressDetails(reqbody)
   }
-
-
   navigateBack() {
     this.location.back()
   }
