@@ -29,14 +29,12 @@ export class GainedComptencyCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserDetails().subscribe(
-    (res: any) => {
-      this.profileData = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
-    })
+    const userDetails = this.getUserDetails()
     this.loading = true
     const allEntity = this.getAllEntity()
     const userPassbook = this.getAllUserPassbook()
-    forkJoin([allEntity, userPassbook]).subscribe((res) => {
+    forkJoin([allEntity, userPassbook, userDetails]).subscribe((res) => {
+      this.profileData = _.get(res[2], 'profileDetails.preferences.language', 'en')
       const response = this.requestUtil.formatedGainedCompetency(res[0].result.response, res[1].result.content, this.profileData )
       this.gainedproficencyData = response
       if (this.gainedproficencyData) {
