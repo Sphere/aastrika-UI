@@ -309,8 +309,14 @@ export class RequestUtil {
   getHindiName(channelName) {
     let name;
     switch (channelName) {
-      case 'selfAssessment': name = 'आत्म मूल्यांकन'
-      case 'admin': name = 'व्यवस्थापक'
+      case 'selfAssessment': {
+        name = 'आत्म मूल्यांकन';
+        break
+      }
+      case 'admin': {
+        name = 'व्यवस्थापक';
+        break;
+      }
     }
 
     return name;
