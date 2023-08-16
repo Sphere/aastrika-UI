@@ -159,7 +159,7 @@ export class RequestUtil {
               const competency =  passbookValue.competencies[cid]
               response.push({
                 'title': lang == 'hi'? this.getHiTitle(cid,  entity, competency ) :_.get(competency,'additionalParams.competencyName'),
-                'logs': this.acquiredPassbookLogs(_.get(competency, 'acquiredDetails')),
+                'logs': this.acquiredPassbookLogs(_.get(competency, 'acquiredDetails'), lang),
                 'proficiencyLevels': this.acauiredChannelColourCode(_.get(competency, 'acquiredDetails')),
                 'competencyStoreData': this.competencyStoreDataFomat(competency),
                 'titleHi': this.getHiTitle(cid,  entity, competency)
@@ -187,12 +187,12 @@ export class RequestUtil {
     return res
   }
 
-  acquiredPassbookLogs(acquiredDetails:any){
+  acquiredPassbookLogs(acquiredDetails:any, lang){
     let response  = []
     if(acquiredDetails.length>0){
       _.forEach(acquiredDetails,(value:any)=>{
           response.push({
-            'header': _.get(value, 'courseName') ? _.get(value, 'courseName') : _.get(value,'acquiredChannel'),
+            'header': _.get(value, 'courseName', lang === 'hi' ? this.getHindiName(_.get(value, 'acquiredChannel')) : _.get(value, 'acquiredChannel')),
             'date':  _.get(value,'createdDate'),
             'description': _.get(value, 'additionalParams.description'),
             'keyboardArrowUp':true,
@@ -203,6 +203,21 @@ export class RequestUtil {
    return response
   }
 
+  getHindiName(channelName) {
+    let name;
+    switch (channelName) {
+      case 'selfAssessment': {
+        name = 'आत्म मूल्यांकन';
+        break
+      }
+      case 'admin': {
+        name = 'व्यवस्थापक';
+        break;
+      }
+    }
+
+    return name;
+  }
   
   acauiredChannelColourCode(acquiredDetails:any){
     let response  = [
