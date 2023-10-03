@@ -23,7 +23,7 @@ export class CompetencyDashboardComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.tabIndex = 1     
+    this.tabIndex = 2     
     this.isMobileApp = this.configService.getConfig().isMobileApp
     this.role = this.configService.getConfig().profileData[0].designation;
     this.language = this.configService.getConfig().language;

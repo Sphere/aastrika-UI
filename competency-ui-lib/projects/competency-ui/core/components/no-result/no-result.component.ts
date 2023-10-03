@@ -10,6 +10,7 @@ export class NoResultComponent implements OnInit {
 
 
   @Input() data?: any
+  @Input() languagePreferred?: any
   /**
 
    * no result message
@@ -20,12 +21,13 @@ export class NoResultComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log("no data ",this.data)
     this.setMessage();
   }
 
   setMessage() {
-
     this.message = _.get(this.data, 'message') ? _.get(this.data, 'message') : ' No result found'
+    this.message = this.languagePreferred == "en" ?  _.get(this.data, 'message') ? _.get(this.data, 'message') : ' No result found'  : _.get(this.data, 'messageHi') ? _.get(this.data, 'messageHi') : 'कोई परिणाम नहीं मिला'
   }
 
 }

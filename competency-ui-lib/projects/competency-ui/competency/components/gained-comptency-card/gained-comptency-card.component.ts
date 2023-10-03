@@ -21,6 +21,10 @@ export class GainedComptencyCardComponent implements OnInit {
   selectedDisplayLevel = -1;
   // public profileData: any
   // appLanguage: any
+  noResultData:any =  {
+    'message': 'No data to display, please take self-assessment or pass courses to see data in the passbook',
+    'messageHi': 'प्रदर्शित करने के लिए कोई डेटा नहीं है, कृपया पासबुक में डेटा देखने के लिए स्व-मूल्यांकन करें या कोर्स पास करें।'
+  }
   
   constructor(
     public gainedService: GainedService,
@@ -32,7 +36,7 @@ export class GainedComptencyCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this
+    
     if(!this.language){
       this.getUserDetails().subscribe(
         (res: any) => {
@@ -55,7 +59,13 @@ export class GainedComptencyCardComponent implements OnInit {
         })
         this.gainedService.competencyData.next(res)
       }
+      // if(this.gainedproficencyData && this.gainedproficencyData < 0){
+      //   this.noResultData = {
+      //     'message': 'No Data to Display, Please take self assessement or pass courses to see data in passbook'
+      //   }
+      // }
       this.loading = false
+
     })
   }
 
