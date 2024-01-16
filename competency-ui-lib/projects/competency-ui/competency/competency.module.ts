@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http'
 import { RequiredComptencyCardComponent } from './components/required-comptency-card/required-comptency-card.component';
@@ -15,6 +15,9 @@ import { CoreModule } from '@aastrika_npmjs/comptency/core';
 import { CompetencyAccordionComponent } from './components/competency-accordion/competency-accordion.component';
 import { SelfAssessmentModule } from '@aastrika_npmjs/comptency/self-assessment';
 import { TranslateModule } from '@ngx-translate/core';
+import { ConfigurationContext } from './services/configuration-context';
+import { ConfigService } from './services/config.service';
+
 
 @NgModule({
   declarations: [
@@ -40,4 +43,18 @@ import { TranslateModule } from '@ngx-translate/core';
     ActiveSummaryComponent
   ]
 })
-export class CompetencyModule { }
+export class CompetencyModule {
+  /**
+ * Take the config from consuming apps
+ *
+ * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
+ */
+  static forRoot(configContext: ConfigurationContext): ModuleWithProviders {
+    return {
+      ngModule: CompetencyModule,
+      providers: [ConfigService,
+        {provide: 'config', useValue: configContext.config}
+      ]
+    }
+  }
+ }
