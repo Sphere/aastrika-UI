@@ -21,7 +21,7 @@ export class NoResultComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("no data ",this.data)
+    // console.log("no data ",this.data)
     this.setMessage();
   }
 

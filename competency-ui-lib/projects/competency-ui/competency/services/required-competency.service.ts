@@ -27,7 +27,7 @@ export class RequiredCompetencyService extends DataService {
       url: urlConfig.getEntityById(3),
       data: reqBody
     };
-    console.log('reqBody',httpOptions)
+    // console.log('reqBody',httpOptions)
     return this.post(httpOptions)
   }
   

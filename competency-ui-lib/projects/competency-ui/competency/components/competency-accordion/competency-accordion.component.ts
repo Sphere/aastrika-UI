@@ -16,7 +16,7 @@ export class CompetencyAccordionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log("list",this.competencyList)
+    // console.log("list",this.competencyList)
   }
 
   viewCourses(data){

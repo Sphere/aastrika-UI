@@ -52,7 +52,7 @@ export class SelfAssessmentComponent implements OnInit {
           if (this.roleBasedCompetency) {
             const competencyIds = _.flatMap(this.roleBasedCompetency.competency, (item) =>
               _.flatMap(item, (competency) => {
-                console.log(competency.id)
+                // console.log(competency.id)
                 this.roleCompetencyData.push(competency.id)
              
               }

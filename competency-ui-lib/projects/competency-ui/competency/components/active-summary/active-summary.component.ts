@@ -63,19 +63,19 @@ export class ActiveSummaryComponent implements OnInit {
         return forkJoin([getActivity , getCourses ]);
       }
     })).subscribe((res: any) => {
-      console.log(res)
+      // console.log(res)
       let rolesCompetencyData =  _.find(res[0].response, {'position': this.desigination })
-      console.log(rolesCompetencyData)
+      // console.log(rolesCompetencyData)
       this.assessmentData = this.requestUtil.formatedCompetencyCourseData(res[1]);
       this.getAssessmentBtnType(this.assessmentData);
       const formatedResponse = this.requestUtil.formatedActivitityByPostion(rolesCompetencyData, this.language, this.assessmentData, this.competencyProgress)
       // const formatedResponse = this.requestUtil.formatedActivitityByPostion(rolesCompetencyData, this.language, this.assessmentData, this.competencyProgress)
       this.roleactivitySummaries = formatedResponse
       this.loading = false
-      console.log("data after the activity", this.roleactivitySummaries)
+      // console.log("data after the activity", this.roleactivitySummaries)
      
     })
-    console.log("data after the activity", this.roleactivitySummaries)
+    // console.log("data after the activity", this.roleactivitySummaries)
   }
 
   getProgress() {
@@ -171,7 +171,7 @@ export class ActiveSummaryComponent implements OnInit {
   private designationMap(designation: string) {
     let positionMap :any
     this.activeSummaryService.getRolesMapping().pipe().subscribe((res:any)=>{
-      console.log(res)
+      // console.log(res)
       positionMap = res.response
       if (positionMap.hasOwnProperty(designation)) {
         this.roleId = positionMap[designation]
@@ -181,7 +181,7 @@ export class ActiveSummaryComponent implements OnInit {
         return 1
     },
     (err)=>{
-      console.log("error", err)
+      // console.log("error", err)
       positionMap = err
       if (positionMap.hasOwnProperty(designation)) {
         this.roleId = positionMap[designation]

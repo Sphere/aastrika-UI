@@ -26,8 +26,6 @@ export class ConfigService {
       if(!_.isEmpty(res)){
         config =  res
       } else {
-        console.log("competency config service local storage", JSON.parse(localStorage.getItem('competency')) )
-        console.log("local storage", localStorage.getItem('isOnlyPassbook') )
         const c_cofig = JSON.parse(localStorage.getItem('competency')) 
         config = c_cofig
       }

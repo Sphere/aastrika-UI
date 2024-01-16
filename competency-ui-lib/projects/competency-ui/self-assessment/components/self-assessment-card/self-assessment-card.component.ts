@@ -18,7 +18,6 @@ export class SelfAssessmentCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.cardData)
   }
   startSelfAssesment(data: any) {
     console.log("query data ", data)
