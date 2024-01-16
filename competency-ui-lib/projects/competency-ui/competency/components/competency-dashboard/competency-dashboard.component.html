@@ -1,51 +1,62 @@
 <div [ngClass]="isMobileApp ? 'content-mobile' : 'content'">
-  <mat-icon (click)="navigateBack()" class="cursor-pointer mb-3"
-    >chevron_left</mat-icon
-  >
+  <mat-icon (click)="navigateBack()" class="cursor-pointer mb-3">chevron_left</mat-icon>
 
-  <h1 class="pl-2 mb-0" i18n>{{'COMPETENCY_DASHBOARD' | translate}}</h1>
+  <h1 *ngIf="isPassbok == 'false'" class="pl-2 mb-0" i18n>{{'COMPETENCY_DASHBOARD' | translate}}</h1>
 
   <div class="pl-2 tab-container">
-    <mat-tab-group
-      [ngClass]="{ 'header-width-icon': tabIndex === 1 }"
-      class="remove-border-bottom"
-      animationDuration="0ms"
-      [selectedIndex]="tabIndex"
-      (selectedTabChange)="changeTab($event)"
-    >
-      <!-- Active Summary as Job Description -->
-      <mat-tab i18n-label label="{{'JOB_DESCRIPTION' | translate}}">
-        <h4 class="mt-4 mb-1" i18n>{{'ROLES' | translate}}</h4>
-        <lib-active-summary [language]="language" [isMobileApp]="isMobileApp" [desigination]="role" *ngIf="tabIndex === 0"></lib-active-summary>
-      </mat-tab>
+    <ng-container *ngIf="isPassbok == 'false'; else onlyPassbok">
+      <mat-tab-group [ngClass]="{ 'header-width-icon': tabIndex === 1 }" class="remove-border-bottom"
+        animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="changeTab($event)">
+        <!-- Active Summary as Job Description -->
+        <mat-tab i18n-label label="{{'JOB_DESCRIPTION' | translate}}">
+          <h4 class="mt-4 mb-1" i18n>{{'ROLES' | translate}}</h4>
+          <lib-active-summary [language]="language" [isMobileApp]="isMobileApp" [desigination]="role"
+            *ngIf="tabIndex === 0"></lib-active-summary>
+        </mat-tab>
 
-      <!-- gained as Passbook  -->
-      <mat-tab i18n-label label="{{'PASSBOOK' | translate}}">
+        <!-- gained as Passbook  -->
+        <mat-tab i18n-label label="{{'PASSBOOK' | translate}}">
+          <div class="legend-container">
+            <div class="legend legend-blue"></div>
+            <h5 class="mb-0" i18n>{{'FRMELEMNTS_LBL_OBSERVATION' | translate}}</h5>
+            <div class="legend legend-green"></div>
+            <h5 class="mb-0" i18n>{{'SELF' | translate}}</h5>
+            <div class="legend legend-yellow"></div>
+            <h5 class="mb-0" i18n>{{'CRS_TRK_FRMELEMNTS_LBL_TRAINING' | translate}}</h5>
+          </div>
+          <lib-gained-comptency-card [language]="language" *ngIf="tabIndex === 1"></lib-gained-comptency-card>
+        </mat-tab>
+
+        <!-- required -->
+        <mat-tab i18n-label label="{{'REQUIRED' | translate}}">
+          <div class="required-comperencies">
+            <div class="mt-2 tab-badge" i18n>{{'SELF_ASSESSMENTS' | translate}}</div>
+            <lib-required-comptency-card [language]="language" [role]="role"
+              *ngIf="tabIndex === 2"></lib-required-comptency-card>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </ng-container>
+
+    <ng-template #onlyPassbok>
+      <!-- <mat-tab-group class="remove-border-bottom"
+      animationDuration="0ms"> -->
+     <!-- gained as Passbook  -->
+      <!-- <mat-tab i18n-label label="{{'PASSBOOK' | translate}}"> -->
         <div class="legend-container">
           <div class="legend legend-blue"></div>
-          <h5 class="mb-0" i18n>{{'EXTERNAL' | translate}}</h5>
+          <h5 class="mb-0" i18n>{{'FRMELEMNTS_LBL_OBSERVATION' | translate}}</h5>
           <div class="legend legend-green"></div>
           <h5 class="mb-0" i18n>{{'SELF' | translate}}</h5>
           <div class="legend legend-yellow"></div>
           <h5 class="mb-0" i18n>{{'CRS_TRK_FRMELEMNTS_LBL_TRAINING' | translate}}</h5>
         </div>
-        <lib-gained-comptency-card
-        [language]="language"
-          *ngIf="tabIndex === 1"
-        ></lib-gained-comptency-card>
-      </mat-tab>
+        <lib-gained-comptency-card [language]="language"></lib-gained-comptency-card>
+      <!-- </mat-tab> -->
 
-      <!-- required -->
-      <mat-tab i18n-label label="{{'REQUIRED' | translate}}">
-        <div class="required-comperencies">
-          <div class="mt-2 tab-badge" i18n>{{'SELF_ASSESSMENTS' | translate}}</div>
-          <lib-required-comptency-card
-          [language]="language"
-          [role]="role"
-            *ngIf="tabIndex === 2"
-          ></lib-required-comptency-card>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
+     
+    <!-- </mat-tab-group> -->
+    </ng-template>
+
   </div>
 </div>

@@ -15,6 +15,7 @@ export class CompetencyDashboardComponent implements OnInit {
   isMobileApp;
   language;
   role;
+  isPassbok: string = 'false';
 
   constructor(  public router: Router, 
     public configService: ConfigService,
@@ -27,6 +28,8 @@ export class CompetencyDashboardComponent implements OnInit {
     this.isMobileApp = this.configService.getConfig().isMobileApp
     this.role = this.configService.getConfig().profileData[0].designation;
     this.language = this.configService.getConfig().language;
+    this.isPassbok = localStorage.getItem('isOnlyPassbook')
+    console.log(this.isPassbok)
     this.getUserDetails().subscribe(
       (res)=>{
         this.language = this.configService.getConfig().language ==  res.profileDetails!.preferences!.language ? this.configService.getConfig().language :  res.profileDetails!.preferences!.language;
@@ -44,7 +47,11 @@ export class CompetencyDashboardComponent implements OnInit {
     return this.activeSummaryService.getUserdetailsFromRegistry(reqBody)
   }
   navigateBack() {
-    this.router.navigate([`/page/home`])
+    if(this.isPassbok !== 'false'){
+      this.router.navigate([`/profile-dashboard`])
+    }else{
+      this.router.navigate([`/page/home`])
+    }
   }
   changeTab(event:any){
     this.tabIndex = event.index;
