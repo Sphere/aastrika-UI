@@ -263,7 +263,7 @@ export class RequestUtil {
           response.push({
             'title': lang == 'hi' ? this.getHiTitle(cid, entity, competency) : _.get(competency, 'additionalParams.competencyName'),
             'logs': this.acquiredPassbookLogs(_.get(competency, 'acquiredDetails'), lang),
-            'proficiencyLevels': this.acauiredChannelColourCode(_.get(competency, 'acquiredDetails')),
+            'proficiencyLevels': this.acquiredChannelColourCode(_.get(competency, 'acquiredDetails')),
             'competencyStoreData': this.competencyStoreDataFomat(competency),
             'titleHi': this.getHiTitle(cid, entity, competency)
           })
@@ -410,6 +410,69 @@ export class RequestUtil {
     })
     return response
   }
+
+  acquiredChannelColourCode(acquiredDetails: any) {
+    //console.log(acquiredDetails);
+    let response = [
+      { 'color': '#FFFBB0', 'displayLevel': 1, 'selected': false },
+      { 'color': '#FFFBB0', 'displayLevel': 2, 'selected': false },
+      { 'color': '#FFFBB0', 'displayLevel': 3, 'selected': false },
+      { 'color': '#FFFBB0', 'displayLevel': 4, 'selected': false },
+      { 'color': '#FFFBB0', 'displayLevel': 5, 'selected': false },
+    ];
+    let levelAssigned = {}; // Keep track of whether a level has been assigned
+
+    _.forEach(acquiredDetails, (value: any) => {
+      const channel = _.get(value, 'acquiredChannel');
+      const competencyLevelId = _.get(value, 'competencyLevelId');
+  
+      if (!levelAssigned[competencyLevelId]) {
+      // Check for 'admin' channel first
+      if (channel === 'admin') {
+        const level = response.find((item) => item.displayLevel == competencyLevelId);
+        if (level) {
+          level.color = '#7cb5e6';
+          level.selected = true;
+        }
+        levelAssigned[competencyLevelId] = true; 
+      } else if (channel === 'selfAssessment') {
+        // Check for 'selfAssessment' channel next
+        const level = response.find((item) => item.displayLevel == competencyLevelId);
+        if (level) {
+          level.color = '#A4DFCA';
+          level.selected = true;
+        }
+        levelAssigned[competencyLevelId] = true; 
+      } else if (channel === 'Course') {
+        // Check for 'selfAssessment' channel next
+        const level = response.find((item) => item.displayLevel == competencyLevelId);
+        if (level) {
+          level.color = '#FFFBB0';
+          level.selected = true;
+        }
+        levelAssigned[competencyLevelId] = true; 
+      } else if (channel === 'course') {
+        // Check for 'selfAssessment' channel next
+        const level = response.find((item) => item.displayLevel == competencyLevelId);
+        if (level) {
+          level.color = '#FFFBB0';
+          level.selected = true;
+        }
+        levelAssigned[competencyLevelId] = true; 
+      } else {
+        // Default case for other channels
+        const level = response.find((item) => item.displayLevel == competencyLevelId);
+        if (level) {
+          level.color = '#FFFBB0';
+          level.selected = false;
+        }
+      }
+    }
+    });
+  
+    return response;
+  }
+  
   competencyStoreDataFomat(data) {
     let response = {}
     let levels = []
