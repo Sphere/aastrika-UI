@@ -105,14 +105,20 @@ export class DataService {
 
   private setHeader(session, header?: any) {
     const default_headers = {
-      'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJTNHNNVFdjZUZqYkxUWGxiczkzUzk4dmFtODBhdkRPUiJ9.nPOCY0-bVX28iNcxxnYbGpihY3ZzfNwx0-SFCnJwjas`,
+      'Authorization': `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJYUkZWVDBidDlBNGdsWm5uSUF5d1BJYWFzdjRReGFHWSJ9.APB-Ma_1l_R5l0xRddDhhlYkxBxxwZzcQofyhoif2bE`,
       'X-authenticated-user-token': session ? session.access_token : '',
+      'Accept': 'application/json',
     }
     if (header) {
       return { ...default_headers, ...header }
     } else {
-
+      
       return { ...default_headers }
     }
   }
 }
+
+// 'Access-Control-Allow-Origin':'*',
+// 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+// 'Content-Type': 'application/json',
+// 'Access-Control-Allow-Headers': 'Origin, X-Requested-with, Content-Type, Accept'
