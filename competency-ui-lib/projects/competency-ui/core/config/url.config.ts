@@ -4,8 +4,9 @@
  * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
  */
 export const urlConfig = {
-  host: window.location.protocol + "//" + window.location.host || 'https://aastrika-stage.tarento.com',
-  mobileHost: 'https://aastrika-stage.tarento.com',
+  host: window.location.protocol + "//" + window.location.host || 'https://sphere.aastrika.org',
+  mobileHost: 'https://sphere.aastrika.org',
+  authorization:`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJTNHNNVFdjZUZqYkxUWGxiczkzUzk4dmFtODBhdkRPUiJ9.nPOCY0-bVX28iNcxxnYbGpihY3ZzfNwx0-SFCnJwjas`,
   apiSlug: '/apis/protected/v8',
   apiProxy: '/apis/proxies/v8',
   apiPublic: '/apis/public/v8',
