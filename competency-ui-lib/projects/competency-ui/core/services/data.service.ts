@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { mergeMap } from 'rxjs/operators'
 import { of as observableOf, throwError as observableThrowError, Observable } from 'rxjs';
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
+import { urlConfig } from '@aastrika_npmjs/comptency/core/config/url.config';
+
 /**
  * DataService to make http call
  *
