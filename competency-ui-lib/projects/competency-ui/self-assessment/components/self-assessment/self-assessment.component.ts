@@ -75,44 +75,51 @@ export class SelfAssessmentComponent implements OnInit {
               const assessData = this.requestUtil.formatedCompetencyCourseData(res);
               this.selfAssessmentData = this.getCompetencyFilter(assessData);
 
-              return forkJoin(
-                _.map(this.selfAssessmentData, (value: any) =>
-                  this.getProgress(value).pipe(
-                    map((res) => {
-                      if (res.result) {
-                        if (res.result.contentList.length > 0) {
-                          if (res.result.contentList.length > 0 && value.childContent === res.result.contentList.length) {
-                            let type = '';
-                            _.forEach(res.result.contentList, (item: any) => {
-                              if (item.completionPercentage === 100 && item.completionPercentage !== 0) {
-                                type = 'DONE';
-                              } else {
-                                type = 'RESUME';
-                              }
-                            });
-                            this.btnType.push({
-                              courseId: value.contentId,
-                              type: type,
-                            });
-                          } else {
-                            this.btnType.push({
-                              courseId: value.contentId,
-                              type: 'RESUME',
-                            });
+              if(this.selfAssessmentData.length > 0 ){
+                return forkJoin(
+                  _.map(this.selfAssessmentData, (value: any) =>
+                    this.getProgress(value).pipe(
+                      map((res) => {
+                        if (res.result) {
+                          if (res.result.contentList.length > 0) {
+                            if (res.result.contentList.length > 0 && value.childContent === res.result.contentList.length) {
+                              let type = '';
+                              _.forEach(res.result.contentList, (item: any) => {
+                                if (item.completionPercentage === 100 && item.completionPercentage !== 0) {
+                                  type = 'DONE';
+                                } else {
+                                  type = 'RESUME';
+                                }
+                              });
+                              this.btnType.push({
+                                courseId: value.contentId,
+                                type: type,
+                              });
+                            } else {
+                              this.btnType.push({
+                                courseId: value.contentId,
+                                type: 'RESUME',
+                              });
+                            }
                           }
                         }
-                      }
-
-                      if (res.result.contentList.length === 0) {
-                        this.btnType.push({
-                          courseId: value.contentId,
-                          type: 'START',
-                        });
-                      }
-                    })
+  
+                        if (res.result.contentList.length === 0) {
+                          this.btnType.push({
+                            courseId: value.contentId,
+                            type: 'START',
+                          });
+                        }
+                      })
+                    )
                   )
-                )
-              );
+                );
+              }else{
+                this.loading = false;
+                return of(null)
+              }
+
+              
             })
           );
         })

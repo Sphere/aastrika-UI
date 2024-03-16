@@ -9,7 +9,7 @@
     </ng-container>
     <ng-template #noData>
         <ng-container *ngIf="!loading">
-            <lib-no-result [data]="noResultData"></lib-no-result>
+            <lib-no-result [data]="noResultData" [languagePreferred]="language"></lib-no-result>
         </ng-container>
     </ng-template>
 </div>
