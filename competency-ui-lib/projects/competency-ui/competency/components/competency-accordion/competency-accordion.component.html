@@ -1,4 +1,4 @@
-<div class="competency-badge" i18n>{{'COMPETENCIES' | translate}} :</div>
+<div class="competency-badge">{{'COMPETENCIES' | translate}} :</div>
 <div *ngFor="let competency of (competencyList | removeDuplicatesPipe:['id', 'name']); let i = index; let last = last;">
   <ng-container *ngIf="competency.competency">
     <mat-accordion>
@@ -27,18 +27,14 @@
                         *ngIf="btn.type === 'START'"
                         mat-button
                         class="assess-btn btn-small"
-                        (click)="startSelfAssesment(competency.assessmentData)"
-                        i18n
-                      >
+                        (click)="startSelfAssesment(competency.assessmentData)">
                       {{'ASSESS' | translate}}
                       </button>
                       <button
                         *ngIf="btn.type === 'RESUME'"
                         mat-button
                         class="reassess-btn btn-small"
-                        (click)="startSelfAssesment(competency.assessmentData)"
-                        i18n
-                      >
+                        (click)="startSelfAssesment(competency.assessmentData)">
                       {{'RE-ASSESS' | translate}}
                       </button>
                       <button
@@ -46,15 +42,13 @@
                         mat-button
                         disabled
                         class="done-btn btn-small"
-                        (click)="startSelfAssesment(competency.assessmentData)"
-                        i18n
-                      >
+                        (click)="startSelfAssesment(competency.assessmentData)">
                       {{'DONE' | translate}}
                       </button>
                     </ng-container> 
                   </ng-container>
               
-                  <button class="btn-long" i18n (click)="viewCourses(competency)">{{'VIEW_COURSES' | translate}}</button>
+                  <button class="btn-long" (click)="viewCourses(competency)">{{'VIEW_COURSES' | translate}}</button>
                 </div>
               </div>
               
@@ -65,7 +59,7 @@
         <!-- <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader> -->
         <div class="expand-container">
           <!-- list of levels -->
-          <div class="Levels-badge" i18n>{{'LEVELS' | translate}}</div>
+          <div class="Levels-badge">{{'LEVELS' | translate}}</div>
           <ng-container *ngIf="competency.levelDescription !== ''; else manualLevel">
             <ng-container *ngFor="let level of competency.levelDescription; let i = index">
               <div class="flex flex-row  gap-2">

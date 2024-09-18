@@ -1,8 +1,8 @@
-import { NgModule ,ModuleWithProviders} from '@angular/core';
+import { NgModule ,ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SlefAssessmentEntryComponent } from './components/slef-assessment-entry/slef-assessment-entry.component';
 import { CompetencyEntryComponent } from './components/competency-entry/competency-entry.component';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { ConfigurationContext } from './services/configuration-context';
 import { ConfigService } from './services/config.service';

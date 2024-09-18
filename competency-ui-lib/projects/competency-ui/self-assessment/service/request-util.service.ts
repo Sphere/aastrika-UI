@@ -61,7 +61,19 @@ export class RequestUtil {
   getCompetencyData(competency:any){
     if(competency){
       let data = JSON.parse(competency)
-      return data[0].competencyId
+
+    // Ensure data is an array
+    if (!Array.isArray(data)) {
+      data = [data];
+  }
+
+      let transformedData = data.map(item => {
+        return {
+            competencyId: item.competencyId.toString(),
+            competencyName: item.competencyName.toString()
+        };
+    });
+      return transformedData[0].competencyId
     }
   }
 

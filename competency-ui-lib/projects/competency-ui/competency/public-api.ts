@@ -3,3 +3,4 @@ export * from './components/gained-comptency-card/gained-comptency-card.componen
 export * from './components/competency-dashboard/competency-dashboard.component'
 export * from './competency.module'
 export * from './services/request-util'
+export * from './components/active-summary/active-summary.component'
