@@ -25,7 +25,7 @@ export class ConfigService {
       if(!_.isEmpty(res)){
         config =  res
       } else {
-        const c_cofig = JSON.parse(localStorage.getItem('competency'))
+        const c_cofig = JSON.parse(localStorage.getItem('competency')as string)
         config = c_cofig
       }
      

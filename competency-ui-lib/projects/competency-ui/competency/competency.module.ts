@@ -39,7 +39,8 @@ import { ConfigService } from './services/config.service';
   exports: [RequiredComptencyCardComponent,
     GainedComptencyCardComponent,
     CompetencyDashboardComponent,
-    ActiveSummaryComponent
+    ActiveSummaryComponent,
+    SelfAssessmentModule
   ]
 })
 export class CompetencyModule {
@@ -48,7 +49,7 @@ export class CompetencyModule {
  *
  * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
  */
-  static forRoot(configContext: ConfigurationContext): ModuleWithProviders {
+  static forRoot(configContext: ConfigurationContext): ModuleWithProviders<any>{
     return {
       ngModule: CompetencyModule,
       providers: [ConfigService,
