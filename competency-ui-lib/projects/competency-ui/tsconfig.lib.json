@@ -11,6 +11,10 @@
       "es2018"
     ]
   },
+  "include": [
+    "./*.ts"
+  ],
+  
   "angularCompilerOptions": {
     "annotateForClosureCompiler": false,
     "skipTemplateCodegen": true,
@@ -20,6 +24,7 @@
     "enableResourceInlining": true
   },
   "exclude": [
+    "./dist/**/*" ,
     "src/test.ts",
     "**/*.spec.ts"
   ]
