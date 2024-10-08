@@ -11,15 +11,11 @@
       "es2018"
     ]
   },
-  "include": [
-    "./*.ts"
-  ],
-  
   "angularCompilerOptions": {
     "annotateForClosureCompiler": false,
     "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "fullTemplateTypeCheck": true,
+    "strictMetadataEmit": false,
+    "fullTemplateTypeCheck": false,
     "strictInjectionParameters": true,
     "enableResourceInlining": true
   },

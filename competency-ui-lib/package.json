@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "copy:assets": "cp -r ./projects/competency-ui/assets dist/competency-ui/",
-    "build-lib": "ng build  && npm run copy:assets",
+    "build-lib": "ng build && npm run copy:assets",
     "build-lib-watch": "ng build --watch && npm run copy:assets"
   },
   "private": true,
@@ -53,6 +53,7 @@
     "karma-jasmine-html-reporter": "^1.0.0",
     "ng-packagr": "^10.0.0",
     "protractor": "~7.0.0",
+    "sass-loader": "^16.0.2",
     "ts-node": "~8.10.2",
     "tslint": "~6.1.0",
     "typescript": "~3.9.5"
