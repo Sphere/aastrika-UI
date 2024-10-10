@@ -1,14 +1,13 @@
 import { NgModule ,ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SlefAssessmentEntryComponent } from './components/slef-assessment-entry/slef-assessment-entry.component';
-import { CompetencyEntryComponent } from './components/competency-entry/competency-entry.component';
+
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { ConfigurationContext } from './services/configuration-context';
 import { ConfigService } from './services/config.service';
 import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
-  declarations: [SlefAssessmentEntryComponent, CompetencyEntryComponent,],
+  declarations: [],
   imports: [
     CommonModule,
     RouterModule,
@@ -16,8 +15,6 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule
   ],
   exports: [
-    SlefAssessmentEntryComponent,
-    CompetencyEntryComponent,
   ],
   providers:[]
 })
