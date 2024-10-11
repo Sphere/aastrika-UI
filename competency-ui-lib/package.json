@@ -10,7 +10,7 @@
     "e2e": "ng e2e",
     "copy:assets": "cp -r ./projects/competency-ui/assets dist/competency-ui/",
     "build-lib": "ng build && npm run copy:assets",
-    "build-lib-prod": "ng build && npm run copy:assets",
+    "build-lib-prod": "ng build --prod && npm run copy:assets",
     "analyze": "source-map-explorer dist/competency-ui/**/*.js",
     "build-lib-watch": "ng build --watch && npm run copy:assets"
   },

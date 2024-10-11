@@ -5,6 +5,8 @@
     "target": "es2015",
     "declaration": true,
     "inlineSources": true,
+    "declarationMap": false,
+    "emitDecoratorMetadata": true,
     "types": [],
     "lib": [
       "dom",
@@ -13,14 +15,14 @@
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": false,
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": false,
+    "skipTemplateCodegen": false, // Should be false to generate metadata
+    "strictMetadataEmit": true,    // Set to true for stricter checks (optional)
     "fullTemplateTypeCheck": false,
     "strictInjectionParameters": true,
     "enableResourceInlining": true
   },
   "exclude": [
-    "./dist/**/*" ,
+    "./dist/**/*",
     "src/test.ts",
     "**/*.spec.ts"
   ]

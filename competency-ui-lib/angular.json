@@ -14,6 +14,12 @@
           "options": {
             "tsConfig": "projects/competency-ui/tsconfig.lib.json",
             "project": "projects/competency-ui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/competency-ui/tsconfig.lib.json",
+              "project": "projects/competency-ui/ng-package.json"
+            }
           }
         },
         "test": {
