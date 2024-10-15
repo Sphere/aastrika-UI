@@ -11,7 +11,7 @@
     "copy:assets": "cp -r ./projects/competency-ui/assets dist/competency-ui/",
     "build-lib": "ng build && npm run copy:assets",
     "build-lib-prod": "ng build --prod && npm run copy:assets",
-    "analyze": "source-map-explorer dist/competency-ui/**/*.js",
+   "analyze": "source-map-explorer dist/competency-ui/esm2020/self-assessment/*.mjs",
     "build-lib-watch": "ng build --watch && npm run copy:assets"
   },
   "private": true,
