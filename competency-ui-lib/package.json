@@ -1,6 +1,6 @@
 {
   "name": "@aastrika_npmjs/comptency",
-  "version": "0.0.0",
+  "version": "0.0.58",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,6 +10,7 @@
     "e2e": "ng e2e",
     "copy:assets": "cp -r ./projects/competency-ui/assets dist/competency-ui/",
     "build-lib": "ng build && npm run copy:assets",
+    "build-ng": "ng-packagr -p projects/competency-ui/ng-package.json --config projects/competency-ui/tsconfig.lib.json && npm run copy:assets",
     "build-lib-watch": "ng build --watch && npm run copy:assets"
   },
   "private": true,

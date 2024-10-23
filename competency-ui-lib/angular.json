@@ -37,11 +37,15 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "competency-ui",
   "schematics": {
     "@schematics/angular:component": {
       "styleext": "scss"
     }
+  },
+  "cli": {
+    "analytics": "045ccbf7-28d8-4dd4-92da-d0bc9f7ed90d"
   }
 }
