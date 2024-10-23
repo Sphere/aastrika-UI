@@ -13,11 +13,13 @@
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": false,
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": false,
-    "fullTemplateTypeCheck": false,
+    "skipTemplateCodegen": false,
+    "strictMetadataEmit": true,
+    "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "enableResourceInlining": true
+    "enableResourceInlining": true,
+    "compilationMode": "full",
+    "enableIvy": true,
   },
   "exclude": [
     "./dist/**/*" ,
