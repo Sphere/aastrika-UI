@@ -2,10 +2,7 @@
   "compileOnSave": false,
   
   "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    "enableIvy": true,
-    "compilationMode": "full"
+    "enableIvy": false
   },
   "compilerOptions": {
     "baseUrl": "./",
