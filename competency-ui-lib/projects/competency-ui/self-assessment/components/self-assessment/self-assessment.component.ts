@@ -86,6 +86,7 @@ export class SelfAssessmentComponent implements OnInit {
                     this.getProgress(value).pipe(
                       map((res) => {
                         if (res.result) {
+                          console.log('>>.',res.result)
                           if (res.result.contentList.length > 0) {
                             if (res.result.contentList.length > 0 && value.childContent === res.result.contentList.length) {
                               let type = '';
@@ -147,7 +148,7 @@ export class SelfAssessmentComponent implements OnInit {
         }
       })
     })
-    return result;
+    return _.uniqBy(result, 'contentId');
   }
 
   getUserDetails() {
