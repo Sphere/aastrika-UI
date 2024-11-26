@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { DataService } from '@aastrika_npmjs/comptency/core';
+import { DataService } from '@aastrika_npmjs/competency-web/core';
 import { HttpClient } from '@angular/common/http';
-import { urlConfig  } from '@aastrika_npmjs/comptency/core';
-import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
+import { urlConfig } from '@aastrika_npmjs/competency-web/core';
+import { ConfigService } from '@aastrika_npmjs/competency-web/entry-module';
 /**
  * RequiredCompetencyService to extend Data Service 
  *
@@ -13,16 +13,16 @@ import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 })
 export class RequiredCompetencyService extends DataService {
 
-  constructor(http:HttpClient, public configService: ConfigService) {
+  constructor(http: HttpClient, public configService: ConfigService) {
     super(http, configService)
-   }
+  }
 
   /**
    * for making getall required competency api calls
    * 
    */
 
-   public getRequiredCompetencyById(reqBody:any){
+  public getRequiredCompetencyById(reqBody: any) {
     const httpOptions: any = {
       url: urlConfig.getEntityById(3),
       data: reqBody
@@ -30,5 +30,5 @@ export class RequiredCompetencyService extends DataService {
     // console.log('reqBody',httpOptions)
     return this.post(httpOptions)
   }
-  
+
 }

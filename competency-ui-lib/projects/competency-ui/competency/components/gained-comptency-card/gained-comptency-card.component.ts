@@ -4,7 +4,7 @@ import { GainedService } from '../../services/gained.service';
 import { RequestUtil } from '../../services/request-util';
 import * as _ from 'lodash-es';
 import { ActiveSummaryService } from '../../services/active-summary.service';
-import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
+import { ConfigService } from '@aastrika_npmjs/competency-web/entry-module';
 @Component({
   selector: 'lib-gained-comptency-card',
   templateUrl: './gained-comptency-card.component.html',
@@ -12,7 +12,7 @@ import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
   encapsulation: ViewEncapsulation.None
 })
 export class GainedComptencyCardComponent implements OnInit {
-  @Input()language;
+  @Input() language;
   requestUtil: any
   loading = false
   panelOpenState: Boolean = false;
@@ -21,13 +21,13 @@ export class GainedComptencyCardComponent implements OnInit {
   selectedDisplayLevel = -1;
   // public profileData: any
   // appLanguage: any
-  noResultData:any = 'NO_DATA_DISPLAY_SELF_ASSESSMENT'
-  
+  noResultData: any = 'NO_DATA_DISPLAY_SELF_ASSESSMENT'
+
   // {
   //   'message': 'No data to display, please take self-assessment or pass courses to see data in the passbook',
   //   'messageHi': 'प्रदर्शित करने के लिए कोई डेटा नहीं है, कृपया पासबुक में डेटा देखने के लिए स्व-मूल्यांकन करें या कोर्स पास करें।'
   // }
-  
+
   constructor(
     public gainedService: GainedService,
     public configService: ConfigService,
@@ -38,8 +38,8 @@ export class GainedComptencyCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-    if(!this.language){
+
+    if (!this.language) {
       this.getUserDetails().subscribe(
         (res: any) => {
           this.language = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
@@ -85,7 +85,7 @@ export class GainedComptencyCardComponent implements OnInit {
         "typeName": "competency"
       }
     };
-    return this.gainedService.fetchUserPassbook(reqBody,id)
+    return this.gainedService.fetchUserPassbook(reqBody, id)
   }
 
   private getAllEntity() {

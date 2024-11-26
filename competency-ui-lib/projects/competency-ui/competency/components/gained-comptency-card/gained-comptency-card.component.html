@@ -6,7 +6,7 @@
         <div class="title">{{ proficency?.title }}</div>
       </ng-container>
 
-      <div class="levelsTitle">{{'LEVELS' | translate}}</div>
+      <div class="levelsTitle" i18n>Levels :</div>
       <mat-accordion>
         <mat-expansion-panel [expanded]="i === selectedProficiencyIndex" class="w-full panel" hideToggle>
           <mat-expansion-panel-header class="flex-between items-center panel-header w-full">
@@ -36,7 +36,7 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div>
-            <span class="log-header">{{'LOG' | translate}}</span>
+            <span class="log-header" i18n>Log :</span>
             <ng-container *ngFor="let log of proficency?.logs; let logIndex = index; let last = last; ">
               <ng-container *ngIf="
                   selectedDisplayLevel === -1 ||
@@ -46,7 +46,7 @@
                 <div class="log" [ngClass]="{'border-bottom-0': last}">
                   <div class="flex w-full gap-1">
                     <ng-container *ngIf="log.header">
-                      <div class="log-level-id">{{'LEVEL' | translate}} </div>
+                      <div class="log-level-id" i18n>Level </div>
                       <div>{{ log.level }}</div>
                       <div>:</div>
                       <div class="log-level-details"> {{ log.header }}</div>
@@ -77,6 +77,6 @@
 
 <ng-template #noData>
   <ng-container *ngIf="!loading">
-      <lib-no-result [data]="noResultData" [languagePreferred]="language"></lib-no-result>
+    <lib-no-result [data]="noResultData" [languagePreferred]="language"></lib-no-result>
   </ng-container>
 </ng-template>

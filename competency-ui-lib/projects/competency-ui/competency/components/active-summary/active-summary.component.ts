@@ -4,9 +4,9 @@ import { ActiveSummaryService } from '../../services/active-summary.service';
 import { mergeMap } from 'rxjs/operators';
 import { forkJoin, of, Subscription } from 'rxjs';
 import * as _ from 'lodash-es';
-import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
+import { ConfigService } from '@aastrika_npmjs/competency-web/entry-module';
 import { GainedService } from '../../services/gained.service';
-import { SelfAssessmentService } from '@aastrika_npmjs/comptency/self-assessment';
+import { SelfAssessmentService } from '@aastrika_npmjs/competency-web/self-assessment';
 @Component({
   selector: 'lib-active-summary',
   templateUrl: './active-summary.component.html',
@@ -18,9 +18,9 @@ export class ActiveSummaryComponent implements OnInit {
  *
  * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
  */
-  @Input()language;
-  @Input()isMobileApp;
-  @Input()desigination;
+  @Input() language;
+  @Input() isMobileApp;
+  @Input() desigination;
   panelOpenState: Boolean = true
   requestUtil: any
   private unsubscribe: Subscription;
@@ -33,7 +33,7 @@ export class ActiveSummaryComponent implements OnInit {
   assessmentData: any
   btnType = [];
   roleId;
-  noResultData:any = 'NO_RESULT_FOUND';
+  noResultData: any = 'NO_RESULT_FOUND';
   showNodata = false
   constructor(
     public activeSummaryService: ActiveSummaryService,
@@ -46,7 +46,7 @@ export class ActiveSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true
-    if(!this.desigination){
+    if (!this.desigination) {
       this.loading = false
       this.showNodata = true
     }
@@ -54,23 +54,23 @@ export class ActiveSummaryComponent implements OnInit {
     this.getProgress()
     this.getUserDetails().pipe(mergeMap((res: any) => {
       this.profileData = res.profileDetails.profileReq
-      if(!this.language){
+      if (!this.language) {
         this.language = res.profileDetails!.preferences ? res.profileDetails!.preferences!.language : 'en';
       }
-      if(!this.desigination){
+      if (!this.desigination) {
         this.desigination = res.profileDetails!.profileReq!.professionalDetails[0]!.designation;
         this.designationMap(this.desigination)
       }
 
       if (this.profileData) {
         const getActivity = this.getRolesWiseCompetencyData()
-        const getCourses = this.getCompetencyCourse()        
-        return forkJoin([getActivity , getCourses ]);
+        const getCourses = this.getCompetencyCourse()
+        return forkJoin([getActivity, getCourses]);
       }
     })).subscribe((res: any) => {
       // console.log(res)
-      let rolesCompetencyData =  _.find(res[0].response, {'position': this.desigination })
-      // console.log(rolesCompetencyData)
+      let rolesCompetencyData = _.find(res[0], { 'position': this.desigination })
+      console.log('res[1]', res, res[1], rolesCompetencyData, this.desigination)
       this.assessmentData = this.requestUtil.formatedCompetencyCourseData(res[1]);
       this.getAssessmentBtnType(this.assessmentData);
       const formatedResponse = this.requestUtil.formatedActivitityByPostion(rolesCompetencyData, this.language, this.assessmentData, this.competencyProgress)
@@ -78,7 +78,7 @@ export class ActiveSummaryComponent implements OnInit {
       this.roleactivitySummaries = formatedResponse
       this.loading = false
       // console.log("data after the activity", this.roleactivitySummaries)
-     
+
     })
     // console.log("data after the activity", this.roleactivitySummaries)
   }
@@ -91,44 +91,44 @@ export class ActiveSummaryComponent implements OnInit {
     )
   }
 
-  getAssessmentBtnType(data){
-    _.forEach( data, (value: any) => {
-            this.getAssessmentProgress(value).subscribe((res) => {
-              if (res.result) {
-                if (res.result.contentList.length > 0) {
-                  if (res.result.contentList.length > 0 && value.childContent === res.result.contentList.length) {
-                    let type = ''
-                    _.forEach(res.result.contentList, (item:any)=>{
-                      if(item.completionPercentage === 100 && item.completionPercentage !== 0 ){
-                        type = 'DONE'
-                      }else{
-                        type = 'RESUME'
-                      }
-                    })
-                    this.btnType.push({
-                      competencyId: value.competencyID,
-                      courseId: value.contentId,
-                      type
-                    })
-                  } else {
-                    this.btnType.push({
-                      competencyId: value.competencyID,
-                      courseId: value.contentId,
-                      type: 'RESUME'
-                    })
-                  }
+  getAssessmentBtnType(data) {
+    _.forEach(data, (value: any) => {
+      this.getAssessmentProgress(value).subscribe((res) => {
+        if (res.result) {
+          if (res.result.contentList.length > 0) {
+            if (res.result.contentList.length > 0 && value.childContent === res.result.contentList.length) {
+              let type = ''
+              _.forEach(res.result.contentList, (item: any) => {
+                if (item.completionPercentage === 100 && item.completionPercentage !== 0) {
+                  type = 'DONE'
+                } else {
+                  type = 'RESUME'
                 }
-              }
-  
-              if(res.result.contentList.length == 0 ) {
-                this.btnType.push({
-                  competencyId: value.competencyID,
-                  courseId: value.contentId,
-                  type: 'START'
-                })
-              }
-            })
+              })
+              this.btnType.push({
+                competencyId: value.competencyID,
+                courseId: value.contentId,
+                type
+              })
+            } else {
+              this.btnType.push({
+                competencyId: value.competencyID,
+                courseId: value.contentId,
+                type: 'RESUME'
+              })
+            }
+          }
+        }
+
+        if (res.result.contentList.length == 0) {
+          this.btnType.push({
+            competencyId: value.competencyID,
+            courseId: value.contentId,
+            type: 'START'
           })
+        }
+      })
+    })
   }
   getAssessmentProgress(data) {
     const reqbody = {
@@ -174,33 +174,33 @@ export class ActiveSummaryComponent implements OnInit {
   }
 
   private designationMap(designation: string) {
-    let positionMap :any
-    this.activeSummaryService.getRolesMapping().pipe().subscribe((res:any)=>{
-      // console.log(res)
-      positionMap = res.response
+    let positionMap: any
+    this.activeSummaryService.getRolesMapping().pipe().subscribe((res: any) => {
+      console.log("designationMap", res)
+      positionMap = res
       if (positionMap.hasOwnProperty(designation)) {
         this.roleId = positionMap[designation]
         return this.roleId
-      }else
-      this.roleId = 1
-        return 1
+      } else
+        this.roleId = 1
+      return 1
     },
-    (err)=>{
-      // console.log("error", err)
-      positionMap = err
-      if (positionMap.hasOwnProperty(designation)) {
-        this.roleId = positionMap[designation]
-        return this.roleId
-      }else
-      this.roleId = 1
+      (err) => {
+        // console.log("error", err)
+        positionMap = err
+        if (positionMap.hasOwnProperty(designation)) {
+          this.roleId = positionMap[designation]
+          return this.roleId
+        } else
+          this.roleId = 1
         return 1
-    },
-    
+      },
+
 
     )
   }
 
-  public getActivityByRoleId(id: any) { 
+  public getActivityByRoleId(id: any) {
     this.acordianLoading = true
     const index = _.findIndex(this.roleactivitySummaries, { 'id': id })
     this.roleactivitySummaries[index]['activities'] = []
@@ -214,7 +214,7 @@ export class ActiveSummaryComponent implements OnInit {
       })
       this.acordianLoading = false
 
-      return forkJoin([...calls ])
+      return forkJoin([...calls])
     })).subscribe((res: any) => {
       const response = this.requestUtil.formatedCompetency(res, this.competencyProgress, this.language, this.assessmentData)
       this.roleactivitySummaries[index]['activities'] = _.values(_.merge(_.keyBy(response, 'id'),
@@ -222,7 +222,7 @@ export class ActiveSummaryComponent implements OnInit {
 
       this.roleactivitySummaries[index]['averagePercentage'] = []
       let competencyLength = this.getAveragepercentage(response)
-      this.roleactivitySummaries[index]['averagePercentage'] = competencyLength    
+      this.roleactivitySummaries[index]['averagePercentage'] = competencyLength
       this.loading = false
     })
   }
@@ -251,7 +251,7 @@ export class ActiveSummaryComponent implements OnInit {
     assessData = this.activeSummaryService.getCompetencyCourseIdentifier(this.language)
     return assessData;
   }
-  
+
   ngOnDestroy() {
     if (this.unsubscribe) {
       this.unsubscribe.unsubscribe()

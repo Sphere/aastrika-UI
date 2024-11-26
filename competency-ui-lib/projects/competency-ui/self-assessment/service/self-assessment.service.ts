@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { DataService } from '@aastrika_npmjs/comptency/core';
+import { DataService } from '@aastrika_npmjs/competency-web/core';
 import { HttpClient } from '@angular/common/http';
-import { urlConfig  } from '@aastrika_npmjs/comptency/core';
+import { urlConfig } from '@aastrika_npmjs/competency-web/core';
 import { map } from 'rxjs/operators';
-import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
+import { ConfigService } from '@aastrika_npmjs/competency-web/entry-module';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelfAssessmentService extends DataService {
-  constructor(http:HttpClient,  public configService: ConfigService) {
+  constructor(http: HttpClient, public configService: ConfigService) {
     super(http, configService)
   }
 
@@ -17,7 +17,7 @@ export class SelfAssessmentService extends DataService {
    *searching for the content Identifier
    * 
    */
-  public getCompetencyCourseIdentifier(data:any){ 
+  public getCompetencyCourseIdentifier(data: any) {
     const reqBody = {
       "request": {
         "filters": {
@@ -42,20 +42,20 @@ export class SelfAssessmentService extends DataService {
     }
     let config = this.configService.getConfig()
     const httpOptions: any = {
-      url:   config!.isMobileApp?   urlConfig.getSearchMobile() : urlConfig.getSearch(),
+      url: config!.isMobileApp ? urlConfig.getSearchMobile() : urlConfig.getSearch(),
       data: reqBody
     };
-    
+
     return this.post(httpOptions)
   }
 
-   /**
-   *getting the details of course by pasing the identifier and hierarchyType
-   * 
-   */
+  /**
+  *getting the details of course by pasing the identifier and hierarchyType
+  * 
+  */
 
-  public fetchHiearchyDetails(identifier, hierarchyType){
-    
+  public fetchHiearchyDetails(identifier, hierarchyType) {
+
     const httpOptions: any = {
       url: urlConfig.getHierachyDetails(identifier, hierarchyType),
     };
@@ -72,19 +72,19 @@ const */
       url: config!.isMobileApp ? urlConfig.getContentProgressMobile() : urlConfig.getContentProgress(req.request.courseId),
       data: req
     };
-    
+
     return this.post(httpOptions)
-    
+
   }
-  public getRolesWiseCompetency(){
+  public getRolesWiseCompetency() {
     const httpOtions: any = {
-     url: urlConfig.getRoleWiseCompetency()
+      url: urlConfig.getRoleWiseCompetency()
     };
 
-    return this.getwithouTAuthorization(httpOtions)
-   }
+    return this.getCompetencyData(httpOtions)
+  }
 
-  public getUserdetailsFromRegistry(reqBody:any){
+  public getUserdetailsFromRegistry(reqBody: any) {
     let config = this.configService.getConfig()
     const httpOptions: any = {
       url: config!.isMobileApp ? urlConfig.getUserdetailsMobile(reqBody.id) : urlConfig.getUserdetailsFromRegistry(reqBody.id),

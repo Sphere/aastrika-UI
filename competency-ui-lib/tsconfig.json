@@ -24,10 +24,10 @@
       "dom"
     ],
     "paths": {
-      "@aastrika_npmjs/comptency/*": [
+      "@aastrika_npmjs/competency-web/*": [
         "projects/competency-ui/*"
       ],
-      "@aastrika_npmjs/comptency": [
+      "@aastrika_npmjs/competency-web": [
         "projects/competency-ui"
       ]
     }
