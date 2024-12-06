@@ -38,7 +38,8 @@ import { ConfigService } from './services/config.service';
     GainedComptencyCardComponent,
     CompetencyDashboardComponent,
     ActiveSummaryComponent
-  ]
+  ],
+  providers: [ConfigService]
 })
 export class CompetencyModule {
   /**
