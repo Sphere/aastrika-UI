@@ -6,8 +6,7 @@ import { ActiveSummaryService } from '../../services/active-summary.service';
 @Component({
   selector: 'lib-competency-dashboard',
   templateUrl: './competency-dashboard.component.html',
-  styleUrls: ['./competency-dashboard.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./competency-dashboard.component.scss']
 })
 export class CompetencyDashboardComponent implements OnInit {
   @Output() stateChange: EventEmitter<any> = new EventEmitter();

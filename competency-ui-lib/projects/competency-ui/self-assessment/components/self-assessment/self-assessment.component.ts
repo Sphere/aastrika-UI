@@ -66,7 +66,11 @@ export class SelfAssessmentComponent implements OnInit {
         mergeMap(() => {
           return this.getUserDetails().pipe(
             mergeMap((res: any) => {
-              this.language = !this.language ? res.profileDetails!.preferences!.language || 'en' : this.language;
+              if(res.profileDetails!.preferences!.language !== this.language) {
+                this.language = res.profileDetails!.preferences!.language
+              } else {
+                this.language = !this.language ? 'en' : this.language;
+              }
               if (this.language) {
                 return this.getCompetencyCourse();
               }
@@ -82,6 +86,7 @@ export class SelfAssessmentComponent implements OnInit {
                     this.getProgress(value).pipe(
                       map((res) => {
                         if (res.result) {
+                          console.log('>>.',res.result)
                           if (res.result.contentList.length > 0) {
                             if (res.result.contentList.length > 0 && value.childContent === res.result.contentList.length) {
                               let type = '';
@@ -143,7 +148,7 @@ export class SelfAssessmentComponent implements OnInit {
         }
       })
     })
-    return result;
+    return _.uniqBy(result, 'contentId');
   }
 
   getUserDetails() {

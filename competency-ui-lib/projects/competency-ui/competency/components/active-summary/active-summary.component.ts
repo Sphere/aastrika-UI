@@ -10,8 +10,7 @@ import { SelfAssessmentService } from '@aastrika_npmjs/comptency/self-assessment
 @Component({
   selector: 'lib-active-summary',
   templateUrl: './active-summary.component.html',
-  styleUrls: ['./active-summary.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./active-summary.component.scss']
 })
 export class ActiveSummaryComponent implements OnInit {
   /**
