@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { urlConfig  } from '@aastrika_npmjs/comptency/core';
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 /**
- * RequiredCompetencyService to extend Data Service 
+ * RequiredCompetencyService to extend Data Service
  *
  * @author Mansur Shaik <mansur.shaik@tarento.com>
  */
@@ -19,7 +19,7 @@ export class RequiredCompetencyService extends DataService {
 
   /**
    * for making getall required competency api calls
-   * 
+   *
    */
 
    public getRequiredCompetencyById(reqBody:any){
@@ -30,5 +30,5 @@ export class RequiredCompetencyService extends DataService {
     // console.log('reqBody',httpOptions)
     return this.post(httpOptions)
   }
-  
+
 }

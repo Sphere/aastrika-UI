@@ -5,7 +5,7 @@ import { urlConfig  } from '@aastrika_npmjs/comptency/core';
 import { map } from 'rxjs/operators';
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 /**
- * ActiveSummaryService to extend Data Service 
+ * ActiveSummaryService to extend Data Service
  *
  * @author Aman Kumar Sharma <amankumar.sharma@tarento.com>
  */
@@ -20,7 +20,7 @@ export class ActiveSummaryService extends DataService {
 
    /**
    * for making getall activity api calls
-   * 
+   *
    */
     public getActivityById(reqBody:any){
       // console.log('calling getActivityById>>')

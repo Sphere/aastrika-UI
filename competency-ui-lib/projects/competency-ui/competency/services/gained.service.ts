@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 
 /**
- * GainedService to extend Data Service 
+ * GainedService to extend Data Service
  *
  * @author Vishali Sakar <vishali.sakar@tarento.com>
  */
@@ -25,7 +25,7 @@ export class GainedService extends DataService {
 
   /**
    * for making getall Gained api calls
-   * 
+   *
    */
 
    public fetchUserPassbook(reqBody:any, id?:any){
@@ -38,7 +38,7 @@ export class GainedService extends DataService {
     return this.post(httpOptions)
   }
 
-  
+
   public fetchAllEntity(reqBody:any){
     let config = this.configService.getConfig()
     const httpOptions: any = {
