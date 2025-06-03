@@ -2,7 +2,7 @@
   "name": "@aastrika_npmjs/comptency",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "~14.3.0",
-    "@angular/core": "~14.3.0"
+    "@angular/common": "~15.2.10",
+    "@angular/core": "~15.2.10"
   }
 }
