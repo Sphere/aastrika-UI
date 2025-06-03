@@ -39,7 +39,6 @@
       }
     }
   },
-  "defaultProject": "competency-ui",
   "schematics": {
     "@schematics/angular:component": {
       "style": "scss"
