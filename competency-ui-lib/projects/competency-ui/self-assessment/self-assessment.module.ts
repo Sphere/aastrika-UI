@@ -16,6 +16,6 @@ import { CoreModule } from '@aastrika_npmjs/competency-web/core';
     CoreModule
   ],
   exports: [SelfAssessmentCardComponent, SelfAssessmentComponent],
-  schema: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class SelfAssessmentModule { }
