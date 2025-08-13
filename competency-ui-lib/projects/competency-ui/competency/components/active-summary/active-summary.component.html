@@ -1,59 +1,55 @@
 <lib-app-loader *ngIf="loading === true"></lib-app-loader>
 <!-- <ng-container *ngIf="roleactivitySummaries.length > 0; else noData " > -->
-  <ng-container *ngFor="let role of roleactivitySummaries">
-    <div class="activity-card-container">
-      <mat-accordion>
-        <mat-expansion-panel
-          class=""
-          (opened)="panelOpenState = true"
-          (closed)="panelOpenState = false"
-        >
-          <mat-expansion-panel-header
-          id="activity-header"
-            class="flex-between items-center w-full"
-            collapsedHeight="auto"
-            expandedHeight="auto"
-          >
-  
-            <mat-panel-description class="panel-header-description">
-              <ng-container *ngIf="role?.roles">
-                <div class="flex flex-column w-full">
-                  <div class="role-title">{{ role?.roles }}</div>
-                  <div class="progress-status-none" *ngIf="role?.averagePercentage == 0"></div>
-                  <div class="progress-status" *ngIf="role?.averagePercentage < 100 && role?.averagePercentage != 0">{{'IN_PROGRESS' | translate }}</div>
-                  <div class="progress-status" *ngIf="role?.averagePercentage == 100">{{'COMPLETED' | translate}}</div>
-                  <ng-container >
-                    <div [ngClass]="{'green-bar': role?.averagePercentage == 100 , 'warn-bar': role?.averagePercentage < 100 && role?.averagePercentage != 0 }">
-                    <mat-progress-bar mode="determinate" value={{role?.averagePercentage}}  class="mt-1"></mat-progress-bar>
-                    </div>
-                  </ng-container>
-  
+<ng-container *ngFor="let role of roleactivitySummaries">
+  <div class="activity-card-container">
+    <mat-accordion>
+      <mat-expansion-panel class="" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header id="activity-header" class="flex-between items-center w-full" collapsedHeight="auto"
+          expandedHeight="auto">
+
+          <mat-panel-description class="panel-header-description">
+            <ng-container *ngIf="role?.roles">
+              <div class="flex flex-column w-full">
+                <div class="role-title">{{ role?.roles }}</div>
+                <div class="progress-status-none" *ngIf="role?.averagePercentage == 0"></div>
+                <div class="progress-status" *ngIf="role?.averagePercentage < 100 && role?.averagePercentage != 0" i18n>
+                  In Progress</div>
+                <div class="progress-status" *ngIf="role?.averagePercentage == 100" i18n>Completed
                 </div>
-              </ng-container>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader>
-          <div class="expand-container" *ngIf="roleactivitySummaries.length>0">
-            <!-- list of activity -->
-            <div class="activity-badge">{{'ACTIVITIES' | translate}}</div>
-            <ng-container
-              *ngFor="let activity of (role?.activities| removeDuplicatesPipe:['cid', 'name'] ); let i = index"
-            >
-              <div class="activity-title" *ngIf="activity.title">
-               - {{ activity.title }}
+                <ng-container>
+                  <div
+                    [ngClass]="{'green-bar': role?.averagePercentage == 100 , 'warn-bar': role?.averagePercentage < 100 && role?.averagePercentage != 0 }">
+                    <mat-progress-bar mode="determinate" value={{role?.averagePercentage}}
+                      class="mt-1"></mat-progress-bar>
+                  </div>
+                </ng-container>
+
               </div>
-  
-  
             </ng-container>
-              <ng-container *ngIf="role?.activities">
-                <lib-competency-accordion [competencyList]="role?.activities" [assessmentData]="assessmentData" [assessBtnType]="btnType"></lib-competency-accordion>
-              </ng-container>
-          </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-  
-    </div>
-  </ng-container>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader>
+        <div class="expand-container" *ngIf="roleactivitySummaries.length>0">
+          <!-- list of activity -->
+          <div class="activity-badge" i18n>Activities</div>
+          <ng-container
+            *ngFor="let activity of (role?.activities| removeDuplicatesPipe:['cid', 'name'] ); let i = index">
+            <div class="activity-title" *ngIf="activity.title">
+              - {{ activity.title }}
+            </div>
+
+
+          </ng-container>
+          <ng-container *ngIf="role?.activities">
+            <lib-competency-accordion [competencyList]="role?.activities" [assessmentData]="assessmentData"
+              [assessBtnType]="btnType"></lib-competency-accordion>
+          </ng-container>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+  </div>
+</ng-container>
 <!-- </ng-container> -->
 
 

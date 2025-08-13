@@ -9,31 +9,21 @@
     <!-- <button class="assess-btn">Assess</button> -->
     <ng-container *ngFor="let btn of btnType">
       <ng-container *ngIf="btn.courseId == cardData.contentId">
-        <button
-          *ngIf="btn.type === 'START'"
-          mat-button
-          class="assess-btn btn-small"
-          (click)="startSelfAssesment(cardData)">
-        {{'ASSESS' | translate}}
+        <button *ngIf="btn.type === 'START'" mat-button class="assess-btn btn-small"
+          (click)="startSelfAssesment(cardData)" i18n>
+          Assess
         </button>
-        <button
-          *ngIf="btn.type === 'RESUME'"
-          mat-button
-          class="reassess-btn btn-small"
-          (click)="startSelfAssesment(cardData)">
-       {{'RE-ASSESS' | translate}}
+        <button *ngIf="btn.type === 'RESUME'" mat-button class="reassess-btn btn-small"
+          (click)="startSelfAssesment(cardData)" i18n>
+          Re-Assess
         </button>
-        <button
-          *ngIf="btn.type === 'DONE'"
-          mat-button
-          disabled
-          class="done-btn btn-small"
-          (click)="startSelfAssesment(cardData)">
-        {{'DONE' | translate}}
+        <button *ngIf="btn.type === 'DONE'" mat-button disabled class="done-btn btn-small"
+          (click)="startSelfAssesment(cardData)" i18n>
+          Done
         </button>
       </ng-container>
     </ng-container>
 
-    <button class="btn-long" (click)="viewCourses(cardData)">{{'VIEW_COURSES' | translate}}</button>
+    <button class="btn-long" (click)="viewCourses(cardData)" i18n>View Courses</button>
   </div>
 </div>

@@ -4,7 +4,7 @@ import { SelfAssessmentService } from '../../service/self-assessment.service';
 import { RequestUtil } from '../../service/request-util.service';
 import { map, mergeMap } from 'rxjs/operators';
 import * as _ from 'lodash-es';
-import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
+import { ConfigService } from '@aastrika_npmjs/competency-web/entry-module';
 import * as competencyRoleData from '../../rolesWiseCompetencyData.json';
 import { forkJoin, of } from 'rxjs';
 
@@ -23,7 +23,7 @@ export class SelfAssessmentComponent implements OnInit {
   btnType = [];
   roleBasedCompetency: any = competencyRoleData;
   roleCompetencyData = [];
-  noResultData:any = 'NO_RESULT_FOUND';
+  noResultData: any = 'NO_RESULT_FOUND';
   // {
   //   'message': 'No result found',
   //   'messageHi': 'कोई परिणाम नहीं मिला'
@@ -49,13 +49,13 @@ export class SelfAssessmentComponent implements OnInit {
     this.selfAssessmentService.getRolesWiseCompetency()
       .pipe(
         mergeMap((result) => {
-          this.roleBasedCompetency = _.find(result.response, { 'position': this.position });
+          this.roleBasedCompetency = _.find(result, { 'position': this.position });
           if (this.roleBasedCompetency) {
             const competencyIds = _.flatMap(this.roleBasedCompetency.competency, (item) =>
               _.flatMap(item, (competency) => {
                 // console.log(competency.id)
                 this.roleCompetencyData.push(competency.id)
-             
+
               }
 
               )
@@ -66,7 +66,7 @@ export class SelfAssessmentComponent implements OnInit {
         mergeMap(() => {
           return this.getUserDetails().pipe(
             mergeMap((res: any) => {
-              if(res.profileDetails?.preferences?.language && res.profileDetails.preferences.language !== this.language) {
+              if (res.profileDetails!.preferences!.language !== this.language) {
                 this.language = res.profileDetails!.preferences!.language
               } else {
                 this.language = !this.language ? 'en' : this.language;
@@ -80,13 +80,13 @@ export class SelfAssessmentComponent implements OnInit {
               const assessData = this.requestUtil.formatedCompetencyCourseData(res);
               this.selfAssessmentData = this.getCompetencyFilter(assessData);
 
-              if(this.selfAssessmentData.length > 0 ){
+              if (this.selfAssessmentData.length > 0) {
                 return forkJoin(
                   _.map(this.selfAssessmentData, (value: any) =>
                     this.getProgress(value).pipe(
                       map((res) => {
                         if (res.result) {
-                          console.log('>>.',res.result)
+                          console.log('>>.', res.result)
                           if (res.result.contentList.length > 0) {
                             if (res.result.contentList.length > 0 && value.childContent === res.result.contentList.length) {
                               let type = '';
@@ -109,7 +109,7 @@ export class SelfAssessmentComponent implements OnInit {
                             }
                           }
                         }
-  
+
                         if (res.result.contentList.length === 0) {
                           this.btnType.push({
                             courseId: value.contentId,
@@ -120,12 +120,12 @@ export class SelfAssessmentComponent implements OnInit {
                     )
                   )
                 );
-              }else{
+              } else {
                 this.loading = false;
                 return of(null)
               }
 
-              
+
             })
           );
         })

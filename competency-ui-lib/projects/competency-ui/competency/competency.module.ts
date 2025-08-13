@@ -10,10 +10,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
 import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
-import { CoreModule } from '@aastrika_npmjs/comptency/core';
+import { CoreModule } from '@aastrika_npmjs/competency-web/core';
 import { CompetencyAccordionComponent } from './components/competency-accordion/competency-accordion.component';
-import { SelfAssessmentModule } from '@aastrika_npmjs/comptency/self-assessment';
-import { TranslateModule } from '@ngx-translate/core';
+import { SelfAssessmentModule } from '@aastrika_npmjs/competency-web/self-assessment';
 import { ConfigurationContext } from './services/configuration-context';
 import { ConfigService } from './services/config.service';
 
@@ -33,15 +32,15 @@ import { ConfigService } from './services/config.service';
     MatProgressSpinnerModule,
     HttpClientModule,
     CoreModule,
-    SelfAssessmentModule,
-    TranslateModule
+    SelfAssessmentModule
   ],
   exports: [RequiredComptencyCardComponent,
     GainedComptencyCardComponent,
     CompetencyDashboardComponent,
     ActiveSummaryComponent,
     SelfAssessmentModule
-  ]
+  ],
+  providers: [ConfigService]
 })
 export class CompetencyModule {
   /**
@@ -53,8 +52,8 @@ export class CompetencyModule {
     return {
       ngModule: CompetencyModule,
       providers: [ConfigService,
-        {provide: 'config', useValue: configContext.config}
+        { provide: 'config', useValue: configContext.config }
       ]
     }
   }
- }
+}

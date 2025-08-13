@@ -1,4 +1,4 @@
-<div class="competency-badge">{{'COMPETENCIES' | translate}} :</div>
+<div class="competency-badge" i18n>Competencies :</div>
 <div *ngFor="let competency of (competencyList | removeDuplicatesPipe:['id', 'name']); let i = index; let last = last;">
   <ng-container *ngIf="competency.competency">
     <mat-accordion>
@@ -22,44 +22,35 @@
                 </div>
                 <div class="flex flex-row gap-3 mt-3">
                   <ng-container *ngFor="let btn of assessBtnType">
-                  <ng-container *ngIf="btn.courseId == competency?.assessmentData?.contentId">
-                      <button
-                        *ngIf="btn.type === 'START'"
-                        mat-button
-                        class="assess-btn btn-small"
-                        (click)="startSelfAssesment(competency.assessmentData)">
-                      {{'ASSESS' | translate}}
+                    <ng-container *ngIf="btn.courseId == competency?.assessmentData?.contentId">
+                      <button *ngIf="btn.type === 'START'" mat-button class="assess-btn btn-small"
+                        (click)="startSelfAssesment(competency.assessmentData)" i18n>
+                        Assess
                       </button>
-                      <button
-                        *ngIf="btn.type === 'RESUME'"
-                        mat-button
-                        class="reassess-btn btn-small"
-                        (click)="startSelfAssesment(competency.assessmentData)">
-                      {{'RE-ASSESS' | translate}}
+                      <button *ngIf="btn.type === 'RESUME'" mat-button class="reassess-btn btn-small"
+                        (click)="startSelfAssesment(competency.assessmentData)" i18n>
+                        Re-Assess
                       </button>
-                      <button
-                        *ngIf="btn.type === 'DONE'"
-                        mat-button
-                        disabled
-                        class="done-btn btn-small"
-                        (click)="startSelfAssesment(competency.assessmentData)">
-                      {{'DONE' | translate}}
+                      <button *ngIf="btn.type === 'DONE'" mat-button disabled class="done-btn btn-small"
+                        (click)="startSelfAssesment(competency.assessmentData)" i18n>
+                        Done
                       </button>
-                    </ng-container> 
+                    </ng-container>
                   </ng-container>
-              
-                  <button class="btn-long" (click)="viewCourses(competency)">{{'VIEW_COURSES' | translate}}</button>
+
+                  <button class="btn-long" (click)="viewCourses(competency)" i18n>
+                    View Courses</button>
                 </div>
               </div>
-              
+
             </ng-container>
-            
+
           </mat-panel-description>
         </mat-expansion-panel-header>
         <!-- <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader> -->
         <div class="expand-container">
           <!-- list of levels -->
-          <div class="Levels-badge">{{'LEVELS' | translate}}</div>
+          <div class="Levels-badge" i18n>Levels :</div>
           <ng-container *ngIf="competency.levelDescription !== ''; else manualLevel">
             <ng-container *ngFor="let level of competency.levelDescription; let i = index">
               <div class="flex flex-row  gap-2">
@@ -71,7 +62,7 @@
                     <mat-icon class="non-progress cursor-pointer">check_circle</mat-icon>
                   </ng-container>
                 </div>
-                <div class="Levels-title"> {{level.levelId}}. {{level.name}}</div>
+                <div class="Levels-title" i18n> {{level.levelId}}. {{level.name}}</div>
               </div>
             </ng-container>
           </ng-container>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { mergeMap } from 'rxjs/operators'
 import { of as observableOf, throwError as observableThrowError, Observable } from 'rxjs';
-import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
+import { ConfigService } from '@aastrika_npmjs/competency-web/entry-module';
 import { urlConfig } from '../config/url.config';
 
 /**
@@ -56,15 +56,32 @@ export class DataService {
     };
     return this.http.get(requestParam.url, httpOptions).pipe(
       mergeMap(({ body, headers }: any) => {
-        if (body.status === 200 ) {
+        if (body.status === 200) {
           return observableOf(body);
-        }else {
+        } else {
           return observableThrowError(body);
         }
       }));
 
   }
+  getCompetencyData(requestParam) {
+    let config = this.configService.getConfig()
+    let httpOptions: any = {
+      headers: this.getHeader(),
+      params: requestParam.param,
+      observe: 'response'
+    };
+    return this.http.get('https://aastar-app-assets.s3.ap-south-1.amazonaws.com/rolesWiseCompetencyData.json', httpOptions).pipe(
+      mergeMap(({ body, headers }: any) => {
+        if (body) {
+          console.log("body1111111111111", body);
+          return observableOf(body);
+        } else {
+          return observableThrowError(body);
+        }
+      }));
 
+  }
   /**
   * for making get api calls
   *
@@ -114,7 +131,7 @@ export class DataService {
     if (header) {
       return { ...default_headers, ...header }
     } else {
-      
+
       return { ...default_headers }
     }
   }

@@ -1,22 +1,20 @@
-import { NgModule ,ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { ConfigurationContext } from './services/configuration-context';
 import { ConfigService } from './services/config.service';
-import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     RouterModule,
-    MatIconModule,
-    TranslateModule
+    MatIconModule
   ],
   exports: [
   ],
-  providers:[]
+  providers: []
 })
 export class EntryModule {
   /**
@@ -28,7 +26,7 @@ export class EntryModule {
     return {
       ngModule: EntryModule,
       providers: [ConfigService,
-        {provide: 'config', useValue: configContext.config}
+        { provide: 'config', useValue: configContext.config }
       ]
     }
   }

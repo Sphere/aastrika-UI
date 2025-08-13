@@ -1,4 +1,4 @@
-import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
+import { ConfigService } from '@aastrika_npmjs/competency-web/entry-module';
 import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActiveSummaryService } from '../../services/active-summary.service';
@@ -16,25 +16,25 @@ export class CompetencyDashboardComponent implements OnInit {
   role;
   isPassbok: string = 'false';
 
-  constructor(  public router: Router, 
+  constructor(public router: Router,
     public configService: ConfigService,
     public activeSummaryService: ActiveSummaryService,
-    ) {
-   }
+  ) {
+  }
 
   ngOnInit() {
-    this.tabIndex = 2     
+    this.tabIndex = 2
     this.isMobileApp = this.configService.getConfig().isMobileApp
     this.role = this.configService.getConfig().profileData[0].designation;
     this.language = this.configService.getConfig().language;
     this.isPassbok = localStorage.getItem('isOnlyPassbook')
-    console.log(this.isPassbok)
+    console.log("this.passbook", this.isPassbok)
     this.getUserDetails().subscribe(
-      (res)=>{
-        this.language = this.configService.getConfig().language ==  res.profileDetails!.preferences!.language ? this.configService.getConfig().language :  res.profileDetails!.preferences!.language;
-        this.role = this.configService.getConfig().profileData[0].designation ==  res.profileDetails.profileReq.professionalDetails[0].designation
-         ? this.configService.getConfig().profileData[0].designation 
-         : res.profileDetails.profileReq.professionalDetails[0].designation;
+      (res) => {
+        this.language = this.configService.getConfig().language == res.profileDetails!.preferences!.language ? this.configService.getConfig().language : res.profileDetails!.preferences!.language;
+        this.role = this.configService.getConfig().profileData[0].designation == res.profileDetails.profileReq.professionalDetails[0].designation
+          ? this.configService.getConfig().profileData[0].designation
+          : res.profileDetails.profileReq.professionalDetails[0].designation;
       }
     )
   }
@@ -46,17 +46,17 @@ export class CompetencyDashboardComponent implements OnInit {
     return this.activeSummaryService.getUserdetailsFromRegistry(reqBody)
   }
   navigateBack() {
-    if(this.isPassbok !== 'false'){
-      this.router.navigate([`/profile-dashboard`])
-    }else{
+    if (this.isPassbok !== 'false') {
+      this.router.navigate([`/app/profile-dashboard`])
+    } else {
       this.router.navigate([`/page/home`])
     }
   }
-  changeTab(event:any){
+  changeTab(event: any) {
     this.tabIndex = event.index;
   }
   startSelfAssessment() {
-    this.stateChange.emit({'navigation':true})
+    this.stateChange.emit({ 'navigation': true })
   }
 
 }
