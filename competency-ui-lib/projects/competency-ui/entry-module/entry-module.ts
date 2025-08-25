@@ -30,7 +30,7 @@ export class EntryModule {
   static forRoot(configContext: ConfigurationContext): ModuleWithProviders {
     return {
       ngModule: EntryModule,
-      providers: [ConfigService,
+      providers: [
         {provide: 'config', useValue: configContext.config}
       ]
     }

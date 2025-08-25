@@ -66,8 +66,8 @@ export class SelfAssessmentComponent implements OnInit {
         mergeMap(() => {
           return this.getUserDetails().pipe(
             mergeMap((res: any) => {
-              if(res.profileDetails!.preferences!.language !== this.language) {
-                this.language = res.profileDetails!.preferences!.language
+              if(res.profileDetails?.preferences?.language !== this.language) {
+                this.language = res.profileDetails?.preferences?.language
               } else {
                 this.language = !this.language ? 'en' : this.language;
               }

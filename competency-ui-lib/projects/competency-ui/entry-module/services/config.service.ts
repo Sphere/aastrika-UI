@@ -6,7 +6,7 @@ import * as _ from 'lodash-es';
   providedIn: 'root'
 })
 export class ConfigService {
-  public config$: Subject<any> = new BehaviorSubject<any>({});
+   public config$: BehaviorSubject<any> = new BehaviorSubject<any>({});
   private _config = this.config$.asObservable()
  
   constructor(@Optional() @Inject('config') public config:ConfigurationContext ) { 
@@ -19,20 +19,19 @@ export class ConfigService {
   public setConfig(context) {
     this.config$.next(context)
   }
-  public getConfig(){
-    let config :any 
-    this._config.subscribe((res:any)=>{
-      if(!_.isEmpty(res)){
-        config =  res
-      } else {
-        const c_cofig = JSON.parse(localStorage.getItem('competency'))
-        config = c_cofig
+  public getConfig() {
+      // First check BehaviorSubject's current value
+      const currentValue = this.config$.getValue();
+      if (!_.isEmpty(currentValue)) {
+        return currentValue;
       }
-     
-    })
-    return config
-  }
+      // Fallback to localStorage if BehaviorSubject is empty
+      const localConfig = JSON.parse(localStorage.getItem('competency') || '{}');
+      return localConfig;
+}
+
   public clearConfig() {
     this.config$.next({});
+    localStorage.removeItem('competency');
   }
 }
