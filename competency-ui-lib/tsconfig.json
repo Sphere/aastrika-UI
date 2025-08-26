@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "angularCompilerOptions": {
-    "compilationMode": "partial"
+    "enableIvy": false
   },
   "compilerOptions": {
     "baseUrl": "./",
@@ -9,11 +9,14 @@
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule":true,
     "module": "es2015",
     "moduleResolution": "node",
+    "esModuleInterop": true,
     "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
     "target": "es2020",
     "typeRoots": [
       "node_modules/@types"
@@ -29,6 +32,7 @@
       "@aastrika_npmjs/comptency": [
         "projects/competency-ui"
       ]
-    }
+    },
+    "useDefineForClassFields": false
   }
 }
