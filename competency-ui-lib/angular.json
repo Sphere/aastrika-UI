@@ -14,6 +14,11 @@
           "options": {
             "tsConfig": "projects/competency-ui/tsconfig.lib.json",
             "project": "projects/competency-ui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/competency-ui/tsconfig.lib.json"
+            }
           }
         },
         "test": {
@@ -23,18 +28,6 @@
             "tsConfig": "projects/competency-ui/tsconfig.spec.json",
             "karmaConfig": "projects/competency-ui/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/competency-ui/tsconfig.lib.json",
-              "projects/competency-ui/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     }
@@ -43,8 +36,5 @@
     "@schematics/angular:component": {
       "style": "scss"
     }
-  },
-  "cli": {
-    "analytics": "045ccbf7-28d8-4dd4-92da-d0bc9f7ed90d"
   }
 }

@@ -32,12 +32,22 @@
   margin: 0 10px;
 }
 
-.remove-border-bottom .mat-mdc-tab-list {
+.remove-border-bottom .mat-tab-header {
   border-bottom: none !important;
+  button {
+    display: none !important;
+  }
+
+  .mat-tab-label-container .mat-tab-label {
+    font: 600 16px / 30px Roboto !important;
+  }
 }
 
-:host ::ng-deep .remove-border-bottom .mat-mdc-tab-list {
+:host ::ng-deep .remove-border-bottom .mat-tab-header {
   border-bottom: none !important;
+  button {
+    display: none !important;
+  }
 }
 
 ::ng-deep .mdc-tab {

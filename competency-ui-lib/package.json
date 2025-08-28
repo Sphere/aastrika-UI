@@ -1,6 +1,6 @@
 {
   "name": "@aastrika_npmjs/comptency",
-  "version": "0.0.61",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -60,6 +60,5 @@
     "ts-node": "~9.1.1",
     "tslint": "~6.1.3",
     "typescript": "~4.9.5"
-  },
-  "sideEffects": false
+  }
 }
