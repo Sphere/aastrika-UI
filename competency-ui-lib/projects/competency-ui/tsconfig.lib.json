@@ -17,9 +17,7 @@
     "strictMetadataEmit": true,
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "enableResourceInlining": true,
-    "compilationMode": "full",
-    "enableIvy": true,
+    "enableResourceInlining": true
   },
   "exclude": [
     "./dist/**/*" ,
