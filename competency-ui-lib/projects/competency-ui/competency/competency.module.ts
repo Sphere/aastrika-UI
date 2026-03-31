@@ -5,11 +5,11 @@ import { RequiredComptencyCardComponent } from './components/required-comptency-
 import { GainedComptencyCardComponent } from './components/gained-comptency-card/gained-comptency-card.component';
 import { CompetencyDashboardComponent } from './components/competency-dashboard/competency-dashboard.component';
 import { ActiveSummaryComponent } from './components/active-summary/active-summary.component';
-import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
-import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CoreModule } from '@aastrika_npmjs/comptency/core';
 import { CompetencyAccordionComponent } from './components/competency-accordion/competency-accordion.component';
 import { SelfAssessmentModule } from '@aastrika_npmjs/comptency/self-assessment';
