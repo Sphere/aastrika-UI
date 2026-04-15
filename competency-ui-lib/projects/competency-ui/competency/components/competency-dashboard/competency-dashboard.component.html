@@ -1,19 +1,22 @@
 <div [ngClass]="isMobileApp ? 'content-mobile' : 'content'">
   <mat-icon (click)="navigateBack()" class="cursor-pointer mb-3">chevron_left</mat-icon>
 
-  <h1 *ngIf="isPassbok == 'false'" class="pl-2 mb-0">{{'COMPETENCY_DASHBOARD' | translate}}</h1>
+  @if (isPassbok == 'false') {
+    <h1 class="pl-2 mb-0">{{'COMPETENCY_DASHBOARD' | translate}}</h1>
+  }
 
   <div class="pl-2 tab-container">
-    <ng-container *ngIf="isPassbok == 'false'; else onlyPassbok">
+    @if (isPassbok == 'false') {
       <mat-tab-group [ngClass]="{ 'header-width-icon': tabIndex === 1 }" class="remove-border-bottom"
         animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="changeTab($event)">
         <!-- Active Summary as Job Description -->
         <mat-tab label="{{'JOB_DESCRIPTION' | translate}}">
           <h4 class="mt-4 mb-1">{{'ROLES' | translate}}</h4>
-          <lib-active-summary [language]="language" [isMobileApp]="isMobileApp" [desigination]="role"
-            *ngIf="tabIndex === 0"></lib-active-summary>
+          @if (tabIndex === 0) {
+            <lib-active-summary [language]="language" [isMobileApp]="isMobileApp" [desigination]="role"
+            ></lib-active-summary>
+          }
         </mat-tab>
-
         <!-- gained as Passbook  -->
         <mat-tab label="{{'PASSBOOK' | translate}}">
           <div class="legend-container">
@@ -24,39 +27,39 @@
             <div class="legend legend-yellow"></div>
             <h5 class="mb-0">{{'CRS_TRK_FRMELEMNTS_LBL_TRAINING' | translate}}</h5>
           </div>
-          <lib-gained-comptency-card [language]="language" *ngIf="tabIndex === 1"></lib-gained-comptency-card>
+          @if (tabIndex === 1) {
+            <lib-gained-comptency-card [language]="language"></lib-gained-comptency-card>
+          }
         </mat-tab>
-
         <!-- required -->
         <mat-tab label="{{'REQUIRED' | translate}}">
           <div class="required-comperencies">
             <div class="mt-2 tab-badge">{{'SELF_ASSESSMENTS' | translate}}</div>
-            <lib-required-comptency-card [language]="language" [role]="role"
-              *ngIf="tabIndex === 2"></lib-required-comptency-card>
+            @if (tabIndex === 2) {
+              <lib-required-comptency-card [language]="language" [role]="role"
+              ></lib-required-comptency-card>
+            }
           </div>
         </mat-tab>
       </mat-tab-group>
-    </ng-container>
-
-    <ng-template #onlyPassbok>
+    } @else {
       <!-- <mat-tab-group class="remove-border-bottom"
       animationDuration="0ms"> -->
-     <!-- gained as Passbook  -->
+      <!-- gained as Passbook  -->
       <!-- <mat-tab label="{{'PASSBOOK' | translate}}"> -->
-        <div class="legend-container">
-          <div class="legend legend-blue"></div>
-          <h5 class="mb-0">{{'FRMELEMNTS_LBL_OBSERVATION' | translate}}</h5>
-          <div class="legend legend-green"></div>
-          <h5 class="mb-0">{{'SELF' | translate}}</h5>
-          <div class="legend legend-yellow"></div>
-          <h5 class="mb-0">{{'CRS_TRK_FRMELEMNTS_LBL_TRAINING' | translate}}</h5>
-        </div>
-        <lib-gained-comptency-card [language]="language"></lib-gained-comptency-card>
-      <!-- </mat-tab> -->
+      <div class="legend-container">
+        <div class="legend legend-blue"></div>
+        <h5 class="mb-0">{{'FRMELEMNTS_LBL_OBSERVATION' | translate}}</h5>
+        <div class="legend legend-green"></div>
+        <h5 class="mb-0">{{'SELF' | translate}}</h5>
+        <div class="legend legend-yellow"></div>
+        <h5 class="mb-0">{{'CRS_TRK_FRMELEMNTS_LBL_TRAINING' | translate}}</h5>
+      </div>
+      <lib-gained-comptency-card [language]="language"></lib-gained-comptency-card>
+    <!-- </mat-tab> -->
+  <!-- </mat-tab-group> -->
+}
 
-     
-    <!-- </mat-tab-group> -->
-    </ng-template>
 
-  </div>
+</div>
 </div>

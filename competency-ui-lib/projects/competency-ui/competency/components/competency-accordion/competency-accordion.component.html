@@ -1,99 +1,99 @@
 <div class="competency-badge">{{'COMPETENCIES' | translate}} :</div>
-<div *ngFor="let competency of (competencyList | removeDuplicatesPipe:['id', 'name']); let i = index; let last = last;">
-  <ng-container *ngIf="competency.competency">
-    <mat-accordion>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header class="flex-between items-center w-full" collapsedHeight="auto"
-          expandedHeight="auto">
-          <mat-panel-description class="panel-header-description" (click)="$event.stopPropagation();">
-            <ng-container *ngIf="competency.competency">
-              <div class="flex flex-col">
+@for (competency of (competencyList | removeDuplicatesPipe:['id', 'name']); track competency; let i = $index; let last = $last) {
+  <div>
+    @if (competency.competency) {
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header class="flex-between items-center w-full" collapsedHeight="auto"
+            expandedHeight="auto">
+            <mat-panel-description class="panel-header-description" (click)="$event.stopPropagation();">
+              @if (competency.competency) {
+                <div class="flex flex-col">
+                  <div class="flex flex-row align-items-center gap-2">
+                    <div>
+                      @if (competency.completionPercentage == 100) {
+                        <mat-icon class="circle-tick cursor-pointer">check_circle</mat-icon>
+                      }
+                      @if (competency.completionPercentage < 100) {
+                        <mat-progress-spinner diameter="20" strokeWidth="2" mode="determinate"
+                        [value]="competency.completionPercentage"></mat-progress-spinner>
+                      }
+                    </div>
+                    <div class="competency-title">{{ competency.competency }}</div>
+                  </div>
+                  <div class="flex flex-row gap-3 mt-3">
+                    @for (btn of assessBtnType; track btn) {
+                      @if (btn.courseId == competency?.assessmentData?.contentId) {
+                        @if (btn.type === 'START') {
+                          <button
+                            mat-button
+                            class="assess-btn btn-small"
+                            (click)="startSelfAssesment(competency.assessmentData)">
+                            {{'ASSESS' | translate}}
+                          </button>
+                        }
+                        @if (btn.type === 'RESUME') {
+                          <button
+                            mat-button
+                            class="reassess-btn btn-small"
+                            (click)="startSelfAssesment(competency.assessmentData)">
+                            {{'RE-ASSESS' | translate}}
+                          </button>
+                        }
+                        @if (btn.type === 'DONE') {
+                          <button
+                            mat-button
+                            disabled
+                            class="done-btn btn-small"
+                            (click)="startSelfAssesment(competency.assessmentData)">
+                            {{'DONE' | translate}}
+                          </button>
+                        }
+                      }
+                    }
+                    <button class="btn-long" (click)="viewCourses(competency)">{{'VIEW_COURSES' | translate}}</button>
+                  </div>
+                </div>
+              }
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <!-- <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader> -->
+          <div class="expand-container">
+            <!-- list of levels -->
+            <div class="Levels-badge">{{'LEVELS' | translate}}</div>
+            @if (competency.levelDescription !== '') {
+              @for (level of competency.levelDescription; track level; let i = $index) {
+                <div class="flex flex-row  gap-2">
+                  <div>
+                    @if (level.achived) {
+                      <mat-icon class="circle-tick cursor-pointer">check_circle</mat-icon>
+                    }
+                    @if (!level.achived) {
+                      <mat-icon class="non-progress cursor-pointer">check_circle</mat-icon>
+                    }
+                  </div>
+                  <div class="Levels-title"> {{level.levelId}}. {{level.name}}</div>
+                </div>
+              }
+            } @else {
+              @for (level of competency.levels; track level; let i = $index) {
                 <div class="flex flex-row align-items-center gap-2">
                   <div>
-                    <ng-container *ngIf="competency.completionPercentage == 100">
+                    @if (level.achived) {
                       <mat-icon class="circle-tick cursor-pointer">check_circle</mat-icon>
-                    </ng-container>
-                    <ng-container *ngIf="competency.completionPercentage < 100">
-                      <mat-progress-spinner diameter="20" strokeWidth="2" mode="determinate"
-                        [value]="competency.completionPercentage"></mat-progress-spinner>
-                    </ng-container>
+                    }
+                    @if (!level.achived) {
+                      <mat-icon class="non-progress cursor-pointer">check_circle</mat-icon>
+                    }
                   </div>
-                  <div class="competency-title">{{ competency.competency }}</div>
+                  <div class="Levels-title">{{ i + 1 }} : {{ level.name }}</div>
                 </div>
-                <div class="flex flex-row gap-3 mt-3">
-                  <ng-container *ngFor="let btn of assessBtnType">
-                  <ng-container *ngIf="btn.courseId == competency?.assessmentData?.contentId">
-                      <button
-                        *ngIf="btn.type === 'START'"
-                        mat-button
-                        class="assess-btn btn-small"
-                        (click)="startSelfAssesment(competency.assessmentData)">
-                      {{'ASSESS' | translate}}
-                      </button>
-                      <button
-                        *ngIf="btn.type === 'RESUME'"
-                        mat-button
-                        class="reassess-btn btn-small"
-                        (click)="startSelfAssesment(competency.assessmentData)">
-                      {{'RE-ASSESS' | translate}}
-                      </button>
-                      <button
-                        *ngIf="btn.type === 'DONE'"
-                        mat-button
-                        disabled
-                        class="done-btn btn-small"
-                        (click)="startSelfAssesment(competency.assessmentData)">
-                      {{'DONE' | translate}}
-                      </button>
-                    </ng-container> 
-                  </ng-container>
-              
-                  <button class="btn-long" (click)="viewCourses(competency)">{{'VIEW_COURSES' | translate}}</button>
-                </div>
-              </div>
-              
-            </ng-container>
-            
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <!-- <lib-app-loader *ngIf="acordianLoading === true"></lib-app-loader> -->
-        <div class="expand-container">
-          <!-- list of levels -->
-          <div class="Levels-badge">{{'LEVELS' | translate}}</div>
-          <ng-container *ngIf="competency.levelDescription !== ''; else manualLevel">
-            <ng-container *ngFor="let level of competency.levelDescription; let i = index">
-              <div class="flex flex-row  gap-2">
-                <div>
-                  <ng-container *ngIf="level.achived">
-                    <mat-icon class="circle-tick cursor-pointer">check_circle</mat-icon>
-                  </ng-container>
-                  <ng-container *ngIf="!level.achived">
-                    <mat-icon class="non-progress cursor-pointer">check_circle</mat-icon>
-                  </ng-container>
-                </div>
-                <div class="Levels-title"> {{level.levelId}}. {{level.name}}</div>
-              </div>
-            </ng-container>
-          </ng-container>
-          <ng-template #manualLevel>
-            <ng-container *ngFor="let level of competency.levels; let i = index">
-              <div class="flex flex-row align-items-center gap-2">
-                <div>
-                  <ng-container *ngIf="level.achived">
-                    <mat-icon class="circle-tick cursor-pointer">check_circle</mat-icon>
-                  </ng-container>
-                  <ng-container *ngIf="!level.achived">
-                    <mat-icon class="non-progress cursor-pointer">check_circle</mat-icon>
-                  </ng-container>
-                </div>
-                <div class="Levels-title">{{ i + 1 }} : {{ level.name }}</div>
-              </div>
-            </ng-container>
-          </ng-template>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-
-    <hr class="mt-3 mb-3" [ngClass]="{'d-none' : last}" />
-  </ng-container>
-</div>
+              }
+            }
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <hr class="mt-3 mb-3" [ngClass]="{'d-none' : last}" />
+    }
+  </div>
+}

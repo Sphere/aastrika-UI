@@ -19,10 +19,6 @@
     "typeRoots": [
       "node_modules/@types"
     ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
     "paths": {
       "@aastrika_npmjs/comptency/*": [
         "projects/competency-ui/*"

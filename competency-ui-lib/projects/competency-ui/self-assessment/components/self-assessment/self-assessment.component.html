@@ -1,15 +1,18 @@
-<lib-app-loader *ngIf="loading === true"></lib-app-loader>
-<div class="" *ngIf="selfAssessmentData">
-    <ng-container *ngIf="selfAssessmentData.length > 0; else noData ">
-        <ng-container *ngFor="let cardData   of selfAssessmentData">
-            <ng-container *ngIf="cardData">
-                <lib-self-assessment-card [cardData]="cardData" [btnType]="btnType"></lib-self-assessment-card>
-            </ng-container>
-        </ng-container>
-    </ng-container>
-    <ng-template #noData>
-        <ng-container *ngIf="!loading">
-            <lib-no-result [data]="noResultData" [languagePreferred]="language"></lib-no-result>
-        </ng-container>
-    </ng-template>
-</div>
+@if (loading === true) {
+  <lib-app-loader></lib-app-loader>
+}
+@if (selfAssessmentData) {
+  <div class="">
+    @if (selfAssessmentData.length > 0) {
+      @for (cardData   of selfAssessmentData; track cardData  ) {
+        @if (cardData) {
+          <lib-self-assessment-card [cardData]="cardData" [btnType]="btnType"></lib-self-assessment-card>
+        }
+      }
+    } @else {
+      @if (!loading) {
+        <lib-no-result [data]="noResultData" [languagePreferred]="language"></lib-no-result>
+      }
+    }
+  </div>
+}
