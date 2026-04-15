@@ -6,7 +6,7 @@ describe('ActiveSummaryService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: ActiveSummaryService = TestBed.get(ActiveSummaryService);
+    const service: ActiveSummaryService = TestBed.inject(ActiveSummaryService);
     expect(service).toBeTruthy();
   });
 });

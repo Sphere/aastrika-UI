@@ -6,7 +6,7 @@ describe('RequiredCompetencyService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: RequiredCompetencyService = TestBed.get(RequiredCompetencyService);
+    const service: RequiredCompetencyService = TestBed.inject(RequiredCompetencyService);
     expect(service).toBeTruthy();
   });
 });
