@@ -10,9 +10,10 @@ import { forkJoin, of } from 'rxjs';
 
 
 @Component({
-  selector: 'lib-self-assessment',
-  templateUrl: './self-assessment.component.html',
-  styleUrls: ['./self-assessment.component.scss']
+    selector: 'lib-self-assessment',
+    templateUrl: './self-assessment.component.html',
+    styleUrls: ['./self-assessment.component.scss'],
+    standalone: false
 })
 export class SelfAssessmentComponent implements OnInit {
   @Input() language;

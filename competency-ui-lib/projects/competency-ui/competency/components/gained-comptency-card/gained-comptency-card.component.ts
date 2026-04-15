@@ -6,10 +6,11 @@ import * as _ from 'lodash-es';
 import { ActiveSummaryService } from '../../services/active-summary.service';
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 @Component({
-  selector: 'lib-gained-comptency-card',
-  templateUrl: './gained-comptency-card.component.html',
-  styleUrls: ['./gained-comptency-card.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'lib-gained-comptency-card',
+    templateUrl: './gained-comptency-card.component.html',
+    styleUrls: ['./gained-comptency-card.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class GainedComptencyCardComponent implements OnInit {
   @Input()language;

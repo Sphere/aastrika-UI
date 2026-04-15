@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { ActiveSummaryService } from '../../services/active-summary.service';
 
 @Component({
-  selector: 'lib-competency-dashboard',
-  templateUrl: './competency-dashboard.component.html',
-  styleUrls: ['./competency-dashboard.component.scss']
+    selector: 'lib-competency-dashboard',
+    templateUrl: './competency-dashboard.component.html',
+    styleUrls: ['./competency-dashboard.component.scss'],
+    standalone: false
 })
 export class CompetencyDashboardComponent implements OnInit {
   @Output() stateChange: EventEmitter<any> = new EventEmitter();

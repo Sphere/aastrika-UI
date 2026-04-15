@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as _ from 'lodash-es'
 @Component({
-  selector: 'lib-app-loader',
-  templateUrl: './app-loader.component.html',
-  styleUrls: ['./app-loader.component.scss']
+    selector: 'lib-app-loader',
+    templateUrl: './app-loader.component.html',
+    styleUrls: ['./app-loader.component.scss'],
+    standalone: false
 })
 export class AppLoaderComponent implements OnInit {
 

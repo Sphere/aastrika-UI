@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SelfAssessmentService } from '../../service/self-assessment.service';
 @Component({
-  selector: 'lib-self-assessment-card',
-  templateUrl: './self-assessment-card.component.html',
-  styleUrls: ['./self-assessment-card.component.scss']
+    selector: 'lib-self-assessment-card',
+    templateUrl: './self-assessment-card.component.html',
+    styleUrls: ['./self-assessment-card.component.scss'],
+    standalone: false
 })
 export class SelfAssessmentCardComponent implements OnInit {
 

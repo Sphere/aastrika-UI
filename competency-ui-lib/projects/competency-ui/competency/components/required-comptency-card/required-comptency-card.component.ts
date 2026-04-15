@@ -5,9 +5,10 @@ import { RequestUtil } from '../../services/request-util';
 import { RequiredCompetencyService } from '../../services/required-competency.service';
 
 @Component({
-  selector: 'lib-required-comptency-card',
-  templateUrl: './required-comptency-card.component.html',
-  styleUrls: ['./required-comptency-card.component.scss']
+    selector: 'lib-required-comptency-card',
+    templateUrl: './required-comptency-card.component.html',
+    styleUrls: ['./required-comptency-card.component.scss'],
+    standalone: false
 })
 export class RequiredComptencyCardComponent implements OnInit, OnDestroy {
   @Input() language;

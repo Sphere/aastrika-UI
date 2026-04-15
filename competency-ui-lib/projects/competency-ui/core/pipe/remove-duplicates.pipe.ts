@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'removeDuplicatesPipe'
+    name: 'removeDuplicatesPipe',
+    standalone: false
 })
 export class RemoveDuplicatesPipe implements PipeTransform {
 

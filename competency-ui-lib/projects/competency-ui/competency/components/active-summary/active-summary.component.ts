@@ -8,9 +8,10 @@ import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 import { GainedService } from '../../services/gained.service';
 import { SelfAssessmentService } from '@aastrika_npmjs/comptency/self-assessment';
 @Component({
-  selector: 'lib-active-summary',
-  templateUrl: './active-summary.component.html',
-  styleUrls: ['./active-summary.component.scss']
+    selector: 'lib-active-summary',
+    templateUrl: './active-summary.component.html',
+    styleUrls: ['./active-summary.component.scss'],
+    standalone: false
 })
 export class ActiveSummaryComponent implements OnInit {
   /**

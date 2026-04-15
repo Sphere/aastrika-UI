@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'lib-no-result',
-  templateUrl: './no-result.component.html',
-  styleUrls: ['./no-result.component.scss']
+    selector: 'lib-no-result',
+    templateUrl: './no-result.component.html',
+    styleUrls: ['./no-result.component.scss'],
+    standalone: false
 })
 export class NoResultComponent implements OnInit {
 

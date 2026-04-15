@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'lib-competency-accordion',
-  templateUrl: './competency-accordion.component.html',
-  styleUrls: ['./competency-accordion.component.scss']
+    selector: 'lib-competency-accordion',
+    templateUrl: './competency-accordion.component.html',
+    styleUrls: ['./competency-accordion.component.scss'],
+    standalone: false
 })
 export class CompetencyAccordionComponent implements OnInit {
   @Input() competencyList: any
