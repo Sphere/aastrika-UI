@@ -1,18 +1,13 @@
-@if (loading === true) {
+@if (loading) {
   <lib-app-loader></lib-app-loader>
-}
-@if (selfAssessmentData) {
-  <div class="">
-    @if (selfAssessmentData.length > 0) {
-      @for (cardData   of selfAssessmentData; track cardData  ) {
-        @if (cardData) {
-          <lib-self-assessment-card [cardData]="cardData" [btnType]="btnType"></lib-self-assessment-card>
-        }
+} @else {
+  @if (selfAssessmentData?.length > 0) {
+    <div>
+      @for (cardData of selfAssessmentData; track cardData) {
+        <lib-self-assessment-card [cardData]="cardData" [btnType]="btnType"> </lib-self-assessment-card>
       }
-    } @else {
-      @if (!loading) {
-        <lib-no-result [data]="noResultData" [languagePreferred]="language"></lib-no-result>
-      }
-    }
-  </div>
+    </div>
+  } @else {
+    <lib-no-result [data]="noResultData" [languagePreferred]="language"></lib-no-result>
+  }
 }

@@ -17,7 +17,7 @@ export class DataService {
   /**
  * Contains base Url for api end points
  */
-  baseUrl: string;
+  baseUrl: string = '';
   /**
  * angular HttpClient
  */
@@ -47,7 +47,7 @@ export class DataService {
   }
 
 
-  getwithouTAuthorization(requestParam) {
+  getwithouTAuthorization(requestParam: any) {
     let config = this.configService.getConfig()
     let httpOptions: any = {
       headers: this.getHeader(),
@@ -105,7 +105,7 @@ export class DataService {
     }
   }
 
-  private setHeader(session, header?: any) {
+  private setHeader(session: any, header?: any) {
     const default_headers = {
       'Authorization': urlConfig.authorization,
       'X-authenticated-user-token': session ? session.access_token : '',

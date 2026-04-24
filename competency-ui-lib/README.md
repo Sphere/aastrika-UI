@@ -31,3 +31,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 |--|--|
 |ng-upgrade-15|1.0.0|
 |ng-upgrade-16|1.0.1|
+|ng-upgrade-21|2.0.0|

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { GainedService } from '../../services/gained.service';
 import { RequestUtil } from '../../services/request-util';
@@ -13,13 +13,15 @@ import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
     standalone: false
 })
 export class GainedComptencyCardComponent implements OnInit {
-  @Input()language;
+  @Input() language: string = '';
   requestUtil: any
   loading = false
   panelOpenState: Boolean = false;
   gainedproficencyData: any
-  selectedProficiencyIndex = -1;
-  selectedDisplayLevel = -1;
+  // selectedProficiencyIndex = -1;
+  // selectedDisplayLevel = -1;
+  selectedProficiencyIndex: number | null = null;
+  selectedDisplayLevel: number | null = null;
   // public profileData: any
   // appLanguage: any
   noResultData:any = 'NO_DATA_DISPLAY_SELF_ASSESSMENT'
@@ -33,7 +35,7 @@ export class GainedComptencyCardComponent implements OnInit {
     public gainedService: GainedService,
     public configService: ConfigService,
     public activeSummaryService: ActiveSummaryService,
-
+    private cdr: ChangeDetectorRef
   ) {
     this.requestUtil = new RequestUtil()
   }
@@ -54,7 +56,7 @@ export class GainedComptencyCardComponent implements OnInit {
       this.gainedproficencyData = response
       // this.gainedproficencyData = this.dummyData
       if (this.gainedproficencyData) {
-        let res = []
+        let res: any = []
         _.forEach(this.gainedproficencyData, (competency: any) => {
           if (competency.competencyStoreData) {
             res.push(competency.competencyStoreData)
@@ -68,7 +70,7 @@ export class GainedComptencyCardComponent implements OnInit {
       //   }
       // }
       this.loading = false
-
+      this.cdr.detectChanges();
     })
   }
 
@@ -98,13 +100,31 @@ export class GainedComptencyCardComponent implements OnInit {
     return this.gainedService.fetchAllEntity(reqBody)
   }
 
-  selectLevel(selectedProficiencyIndex, selectedDisplayLevel) {
-    if ((selectedProficiencyIndex === this.selectedProficiencyIndex) && (selectedDisplayLevel === -1 ||
-      selectedDisplayLevel === this.selectedDisplayLevel)) {
-      this.selectedProficiencyIndex = -1
+  // selectLevel(selectedProficiencyIndex, selectedDisplayLevel) {
+  //   if ((selectedProficiencyIndex === this.selectedProficiencyIndex) && (selectedDisplayLevel === -1 ||
+  //     selectedDisplayLevel === this.selectedDisplayLevel)) {
+  //     this.selectedProficiencyIndex = -1
+  //   } else {
+  //     this.selectedProficiencyIndex = selectedProficiencyIndex
+  //   }
+  //   this.selectedDisplayLevel = selectedDisplayLevel
+  // }
+
+  selectLevel(index: number, displayLevel: number | null) {
+    const isSameIndex = this.selectedProficiencyIndex === index;
+    const isSameLevel =
+      displayLevel === null ||
+      this.selectedDisplayLevel === displayLevel;
+
+    if (isSameIndex && isSameLevel) {
+      // collapse
+      this.selectedProficiencyIndex = null;
+      this.selectedDisplayLevel = null;
     } else {
-      this.selectedProficiencyIndex = selectedProficiencyIndex
+      // expand
+      this.selectedProficiencyIndex = index;
+      this.selectedDisplayLevel = displayLevel;
     }
-    this.selectedDisplayLevel = selectedDisplayLevel
+    this.cdr.detectChanges();
   }
 }

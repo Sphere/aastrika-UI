@@ -1,6 +1,5 @@
-import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { RequiredComptencyCardComponent } from './components/required-comptency-card/required-comptency-card.component';
 import { GainedComptencyCardComponent } from './components/gained-comptency-card/gained-comptency-card.component';
 import { CompetencyDashboardComponent } from './components/competency-dashboard/competency-dashboard.component';
@@ -28,16 +27,17 @@ import { ConfigService } from './services/config.service';
         GainedComptencyCardComponent,
         CompetencyDashboardComponent,
         ActiveSummaryComponent,
-        SelfAssessmentModule
+        SelfAssessmentModule,
+        TranslateModule
     ], imports: [CommonModule,
+        TranslateModule,
         MatTabsModule,
         MatIconModule,
         MatExpansionModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         CoreModule,
-        SelfAssessmentModule,
-        TranslateModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        SelfAssessmentModule], providers: [] })
 export class CompetencyModule {
   /**
  * Take the config from consuming apps

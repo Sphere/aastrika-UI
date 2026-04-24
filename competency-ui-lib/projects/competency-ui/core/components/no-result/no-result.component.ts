@@ -17,7 +17,7 @@ export class NoResultComponent implements OnInit {
    * no result message
 
   */
-  message: string;
+  message: string = '';
 
   constructor() { }
 

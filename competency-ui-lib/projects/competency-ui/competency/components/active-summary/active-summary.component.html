@@ -1,70 +1,67 @@
 @if (loading === true) {
   <lib-app-loader></lib-app-loader>
-}
-<!-- <ng-container *ngIf="roleactivitySummaries.length > 0; else noData " > -->
-@for (role of roleactivitySummaries; track role) {
-  <div class="activity-card-container">
-    <mat-accordion>
-      <mat-expansion-panel
-        class=""
-        (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false"
-        >
-        <mat-expansion-panel-header
-          id="activity-header"
-          class="flex-between items-center w-full"
-          collapsedHeight="auto"
-          expandedHeight="auto"
-          >
-          <mat-panel-description class="panel-header-description">
-            @if (role?.roles) {
-              <div class="flex flex-column w-full">
-                <div class="role-title">{{ role?.roles }}</div>
-                @if (role?.averagePercentage == 0) {
-                  <div class="progress-status-none"></div>
-                }
-                @if (role?.averagePercentage < 100 && role?.averagePercentage != 0) {
-                  <div class="progress-status">{{'IN_PROGRESS' | translate }}</div>
-                }
-                @if (role?.averagePercentage == 100) {
-                  <div class="progress-status">{{'COMPLETED' | translate}}</div>
-                }
-                <ng-container >
-                  <div [ngClass]="{'green-bar': role?.averagePercentage == 100 , 'warn-bar': role?.averagePercentage < 100 && role?.averagePercentage != 0 }">
-                    <mat-progress-bar mode="determinate" value={{role?.averagePercentage}}  class="mt-1"></mat-progress-bar>
+} @else {
+  @if (roleactivitySummaries?.length > 0) {
+    @for (role of roleactivitySummaries; track role) {
+      <div class="activity-card-container">
+        <mat-accordion>
+          <mat-expansion-panel
+            class=""
+            (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false"
+            >
+            <mat-expansion-panel-header
+              id="activity-header"
+              class="flex-between items-center w-full"
+              collapsedHeight="auto"
+              expandedHeight="auto"
+              >
+              <mat-panel-description class="panel-header-description">
+                @if (role?.roles) {
+                  <div class="flex flex-column w-full">
+                    <div class="role-title">{{ role?.roles }}</div>
+                    @if (role?.averagePercentage == 0) {
+                      <div class="progress-status-none"></div>
+                    }
+                    @if (role?.averagePercentage < 100 && role?.averagePercentage != 0) {
+                      <div class="progress-status">{{'IN_PROGRESS' | translate }}</div>
+                    }
+                    @if (role?.averagePercentage == 100) {
+                      <div class="progress-status">{{'COMPLETED' | translate}}</div>
+                    }
+                    <ng-container >
+                      <div [ngClass]="{'green-bar': role?.averagePercentage == 100 , 'warn-bar': role?.averagePercentage < 100 && role?.averagePercentage != 0 }">
+                        <mat-progress-bar mode="determinate" value={{role?.averagePercentage}}  class="mt-1"></mat-progress-bar>
+                      </div>
+                    </ng-container>
                   </div>
-                </ng-container>
+                }
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            @if (acordianLoading === true) {
+              <lib-app-loader></lib-app-loader>
+            }
+            @if (roleactivitySummaries.length>0) {
+              <div class="expand-container">
+                <!-- list of activity -->
+                <div class="activity-badge">{{'ACTIVITIES' | translate}}</div>
+                @for (activity of (role?.activities| removeDuplicatesPipe:['cid', 'name'] ); track activity; let i = $index) {
+                  @if (activity.title) {
+                    <div class="activity-title">
+                      - {{ activity.title }}
+                    </div>
+                  }
+                }
+                @if (role?.activities) {
+                  <lib-competency-accordion [competencyList]="role?.activities" [assessmentData]="assessmentData" [assessBtnType]="btnType"></lib-competency-accordion>
+                }
               </div>
             }
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        @if (acordianLoading === true) {
-          <lib-app-loader></lib-app-loader>
-        }
-        @if (roleactivitySummaries.length>0) {
-          <div class="expand-container">
-            <!-- list of activity -->
-            <div class="activity-badge">{{'ACTIVITIES' | translate}}</div>
-            @for (activity of (role?.activities| removeDuplicatesPipe:['cid', 'name'] ); track activity; let i = $index) {
-              @if (activity.title) {
-                <div class="activity-title">
-                  - {{ activity.title }}
-                </div>
-              }
-            }
-            @if (role?.activities) {
-              <lib-competency-accordion [competencyList]="role?.activities" [assessmentData]="assessmentData" [assessBtnType]="btnType"></lib-competency-accordion>
-            }
-          </div>
-        }
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
-}
-<!-- </ng-container> -->
-
-
-
-@if (showNodata) {
-  <lib-no-result [data]="noResultData" [languagePreferred]="language"></lib-no-result>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    }
+  } @else if (showNodata) {
+    <lib-no-result [data]="noResultData" [languagePreferred]="language"></lib-no-result>
+  }
 }

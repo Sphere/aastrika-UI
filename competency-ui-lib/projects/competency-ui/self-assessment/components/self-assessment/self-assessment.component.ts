@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common'
 import { SelfAssessmentService } from '../../service/self-assessment.service';
 import { RequestUtil } from '../../service/request-util.service';
-import { map, mergeMap } from 'rxjs/operators';
-import * as _ from 'lodash-es';
+import { map, switchMap } from 'rxjs/operators';
+import * as _ from 'lodash';
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 import * as competencyRoleData from '../../rolesWiseCompetencyData.json';
 import { forkJoin, of } from 'rxjs';
@@ -16,14 +16,14 @@ import { forkJoin, of } from 'rxjs';
     standalone: false
 })
 export class SelfAssessmentComponent implements OnInit {
-  @Input() language;
-  @Input() position;
-  selfAssessmentData = []
+  @Input() language: string = '';
+  @Input() position: string = '';
+  selfAssessmentData: any[] = []
   requestUtil: any
   loading = false
-  btnType = [];
+  btnType: any[] = [];
   roleBasedCompetency: any = competencyRoleData;
-  roleCompetencyData = [];
+  roleCompetencyData: any[] = [];
   noResultData:any = 'NO_RESULT_FOUND';
   // {
   //   'message': 'No result found',
@@ -33,117 +33,113 @@ export class SelfAssessmentComponent implements OnInit {
     private location: Location,
     private selfAssessmentService: SelfAssessmentService,
     public configService: ConfigService,
+    private cdr: ChangeDetectorRef
   ) {
-
     this.requestUtil = new RequestUtil()
   }
-  /**
-   *getting the details of course by pasing the identifier and hierarchyType
-   *
-   */
-
 
   ngOnInit() {
     this.loading = true;
     this.roleCompetencyData = [];
 
-    this.selfAssessmentService.getRolesWiseCompetency()
-      .pipe(
-        mergeMap((result) => {
-          this.roleBasedCompetency = _.find(result.response, { 'position': this.position });
-          if (this.roleBasedCompetency) {
-            const competencyIds = _.flatMap(this.roleBasedCompetency.competency, (item) =>
-              _.flatMap(item, (competency) => {
-                // console.log(competency.id)
-                this.roleCompetencyData.push(competency.id)
-             
-              }
+    this.selfAssessmentService.getRolesWiseCompetency().pipe(
 
-              )
-            );
-          }
-          return of(null); // Return null or an empty value since you're not using this result in the subsequent mergeMap
-        }),
-        mergeMap(() => {
-          return this.getUserDetails().pipe(
-            mergeMap((res: any) => {
-              if(res.profileDetails?.preferences?.language && res.profileDetails.preferences.language !== this.language) {
-                this.language = res.profileDetails!.preferences!.language
-              } else {
-                this.language = !this.language ? 'en' : this.language;
-              }
-              if (this.language) {
-                return this.getCompetencyCourse();
-              }
-              return of(null);
-            }),
-            mergeMap((res: any) => {
-              const assessData = this.requestUtil.formatedCompetencyCourseData(res);
-              this.selfAssessmentData = this.getCompetencyFilter(assessData);
+      // 👉 Step 1: Extract role competency IDs (NO mutation)
+      map((result) => {
+        const role = _.find(result.response, { position: this.position });
+        this.roleBasedCompetency = role;
 
-              if(this.selfAssessmentData.length > 0 ){
-                return forkJoin(
-                  _.map(this.selfAssessmentData, (value: any) =>
-                    this.getProgress(value).pipe(
-                      map((res) => {
-                        if (res.result) {
-                          console.log('>>.',res.result)
-                          if (res.result.contentList.length > 0) {
-                            if (res.result.contentList.length > 0 && value.childContent === res.result.contentList.length) {
-                              let type = '';
-                              _.forEach(res.result.contentList, (item: any) => {
-                                if (item.completionPercentage === 100 && item.completionPercentage !== 0) {
-                                  type = 'DONE';
-                                } else {
-                                  type = 'RESUME';
-                                }
-                              });
-                              this.btnType.push({
-                                courseId: value.contentId,
-                                type: type,
-                              });
-                            } else {
-                              this.btnType.push({
-                                courseId: value.contentId,
-                                type: 'RESUME',
-                              });
-                            }
-                          }
-                        }
-  
-                        if (res.result.contentList.length === 0) {
-                          this.btnType.push({
-                            courseId: value.contentId,
-                            type: 'START',
-                          });
-                        }
-                      })
+        if (!role) return [];
+
+        return _.flatMap(role.competency, (item: any) =>
+          _.map(item, (competency: any) => competency.id)
+        );
+      }),
+
+      // 👉 Step 2: Get user + language
+      switchMap((competencyIds) => {
+        this.roleCompetencyData = competencyIds;
+
+        return this.getUserDetails().pipe(
+          map((res: any) => {
+            this.language =
+              this.language ||
+              res.profileDetails?.preferences?.language ||
+              'en';
+          })
+        );
+      }),
+
+      // 👉 Step 3: Get competency courses
+      switchMap(() => this.getCompetencyCourse()),
+
+      // 👉 Step 4: Process assessment data
+      switchMap((res: any) => {
+        const assessData =
+          this.requestUtil.formatedCompetencyCourseData(res);
+
+        const filteredData = this.getCompetencyFilter(assessData);
+        this.selfAssessmentData = filteredData;
+
+        if (!filteredData.length) {
+          return of({ btnType: [] });
+        }
+
+        // 👉 Step 5: Get progress for all items
+        return forkJoin(
+          filteredData.map((value: any) =>
+            this.getProgress(value).pipe(
+              map((res) => {
+                let type = 'START';
+
+                if (res?.result?.contentList?.length > 0) {
+                  if (
+                    value.childContent === res.result.contentList.length
+                  ) {
+                    type = res.result.contentList.every(
+                      (item: any) => item.completionPercentage === 100
                     )
-                  )
-                );
-              }else{
-                this.loading = false;
-                return of(null)
-              }
+                      ? 'DONE'
+                      : 'RESUME';
+                  } else {
+                    type = 'RESUME';
+                  }
+                }
 
-              
-            })
-          );
-        })
-      )
-      .subscribe(() => {
+                return {
+                  courseId: value.contentId,
+                  type
+                };
+              })
+            )
+          )
+        ).pipe(
+          map((btnTypeArray) => ({
+            btnType: btnTypeArray
+          }))
+        );
+      })
+
+    ).subscribe({
+      next: (result: any) => {
+        this.btnType = result.btnType; // ✅ assign once
         this.loading = false;
-        console.log('self', this.selfAssessmentData);
-      });
+
+        this.cdr.detectChanges(); // ✅ critical for Angular 21
+      },
+      error: () => {
+        this.loading = false;
+      }
+    });
   }
 
 
 
-  getCompetencyFilter(data) {
-    let result = []
-    _.forEach(this.roleCompetencyData, (value) => {
+  getCompetencyFilter(data: any[]) {
+    let result: any[] = []
+    _.forEach(this.roleCompetencyData, (value: any) => {
       // console.log("data", value)
-      _.forEach(data, (item) => {
+      _.forEach(data, (item: any) => {
         if (item.competencyID == value) {
           result.push(item);
         }
@@ -163,7 +159,7 @@ export class SelfAssessmentComponent implements OnInit {
     return this.selfAssessmentService.getCompetencyCourseIdentifier(this.language)
   }
 
-  getProgress(data) {
+  getProgress(data: any) {
     const reqbody = {
       request: {
         userId: this.configService.getConfig().id,

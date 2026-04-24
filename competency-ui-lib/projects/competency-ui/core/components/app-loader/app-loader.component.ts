@@ -8,9 +8,9 @@ import * as _ from 'lodash-es'
 })
 export class AppLoaderComponent implements OnInit {
 
-  @Input() data;
-  headerMessage: string;
-  loaderMessage: string;
+  @Input() data: any;
+  headerMessage: string = '';
+  loaderMessage: string = '';
 
   constructor() { }
 

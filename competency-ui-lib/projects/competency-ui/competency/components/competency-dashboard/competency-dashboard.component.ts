@@ -1,5 +1,5 @@
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
-import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActiveSummaryService } from '../../services/active-summary.service';
 
@@ -12,10 +12,10 @@ import { ActiveSummaryService } from '../../services/active-summary.service';
 export class CompetencyDashboardComponent implements OnInit {
   @Output() stateChange: EventEmitter<any> = new EventEmitter();
   tabIndex = 1;
-  isMobileApp;
-  language;
-  role;
-  isPassbok: string = 'false';
+  isMobileApp: any;
+  language: string = '';
+  role: string = '';
+  isPassbok = 'false';
 
   constructor(  public router: Router, 
     public configService: ConfigService,
@@ -28,14 +28,16 @@ export class CompetencyDashboardComponent implements OnInit {
     this.isMobileApp = this.configService.getConfig().isMobileApp
     this.role = this.configService.getConfig().profileData[0].designation;
     this.language = this.configService.getConfig().language;
-    this.isPassbok = localStorage.getItem('isOnlyPassbook')
-    console.log(this.isPassbok)
+    this.isPassbok = localStorage.getItem('isOnlyPassbook') || 'false';
+    console.log(this.isPassbok, this.language)
     this.getUserDetails().subscribe(
       (res)=>{
-        this.language = this.configService.getConfig().language ==  res.profileDetails!.preferences!.language ? this.configService.getConfig().language :  res.profileDetails!.preferences!.language;
-        this.role = this.configService.getConfig().profileData[0].designation ==  res.profileDetails.profileReq.professionalDetails[0].designation
-         ? this.configService.getConfig().profileData[0].designation 
-         : res.profileDetails.profileReq.professionalDetails[0].designation;
+        setTimeout(() => {
+          this.language = this.configService.getConfig().language ==  res.profileDetails!.preferences!.language ? this.configService.getConfig().language :  res.profileDetails!.preferences!.language;
+          this.role = this.configService.getConfig().profileData[0].designation ==  res.profileDetails.profileReq.professionalDetails[0].designation
+          ? this.configService.getConfig().profileData[0].designation 
+          : res.profileDetails.profileReq.professionalDetails[0].designation;
+        });
       }
     )
   }

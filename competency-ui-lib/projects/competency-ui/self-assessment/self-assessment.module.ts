@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { SelfAssessmentCardComponent } from './components/self-assessment-card/self-assessment-card.component';
 import { SelfAssessmentComponent } from './components/self-assessment/self-assessment.component';
 import { MatIconModule } from '@angular/material/icon';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CoreModule } from '@aastrika_npmjs/comptency/core';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -12,5 +11,6 @@ import { TranslateModule } from '@ngx-translate/core';
     exports: [SelfAssessmentCardComponent, SelfAssessmentComponent], imports: [CommonModule,
         MatIconModule,
         CoreModule,
-        TranslateModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        TranslateModule
+    ], providers: [] })
 export class SelfAssessmentModule { }

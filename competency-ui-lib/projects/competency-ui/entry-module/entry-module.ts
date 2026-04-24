@@ -4,15 +4,12 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { ConfigurationContext } from './services/configuration-context';
-import { ConfigService } from './services/config.service';
-import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     RouterModule,
-    MatIconModule,
-    TranslateModule
+    MatIconModule
   ],
   exports: [
   ],
