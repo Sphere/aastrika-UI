@@ -26,6 +26,53 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
+## Structure
+competencu-ui-lib
+|___ tsconfig.json
+|___ tslint.json
+|___ package.json
+|___ package-lock.json
+|___ angular.json
+|___ project/competency-ui
+|___ |___ tsconfig.lib.json
+|___ |___ tsconfig.spec.json
+|___ |___ tslint.json
+|___ |___ package.json
+|___ |___ public-api.ts
+|___ |___ ng-package.json
+|___ |___ index.ts
+|___ |___ assets/*
+|___ |___ competency
+|___ |___ |___ competency.module.ts
+|___ |___ |___ components/*
+|___ |___ |___ services/*
+|___ |___ |___ index.ts
+|___ |___ |___ ng-package.json
+|___ |___ |___ public-api.ts
+|___ |___ core
+|___ |___ |___ core.module.ts
+|___ |___ |___ components/*
+|___ |___ |___ services/*
+|___ |___ |___ config/*
+|___ |___ |___ pipe/*
+|___ |___ |___ index.ts
+|___ |___ |___ ng-package.json
+|___ |___ |___ public-api.ts
+|___ |___ entry-module
+|___ |___ |___ entry-module.ts
+|___ |___ |___ services/*
+|___ |___ |___ index.ts
+|___ |___ |___ ng-package.json
+|___ |___ |___ public-api.ts
+|___ |___ self-assessment
+|___ |___ |___ self-assessment.module.ts
+|___ |___ |___ components/*
+|___ |___ |___ services/*
+|___ |___ |___ index.ts
+|___ |___ |___ ng-package.json
+|___ |___ |___ public-api.ts
+
+
 ## versions
 |Branch | versions| 
 |--|--|
