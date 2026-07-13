@@ -49,10 +49,10 @@ export class GainedComptencyCardComponent implements OnInit {
         })
     }
     this.loading = true
-    const allEntity = this.getAllEntity()
+    const allEntity = this.getCompetencyEntities()
     const userPassbook = this.getAllUserPassbook()
     forkJoin([allEntity, userPassbook]).subscribe((res) => {
-      const response = this.requestUtil.formatedGainedCompetency(res[0].result.response, res[1].result.content, this.language)
+      const response = this.requestUtil.formatedGainedCompetency(res[0], res[1].result.content, this.language)
       this.gainedproficencyData = response
       // this.gainedproficencyData = this.dummyData
       if (this.gainedproficencyData) {
@@ -91,13 +91,9 @@ export class GainedComptencyCardComponent implements OnInit {
     return this.gainedService.fetchUserPassbook(reqBody,id)
   }
 
-  private getAllEntity() {
-    const reqBody = {
-      "search": {
-        "type": "Competency"
-      }
-    };
-    return this.gainedService.fetchAllEntity(reqBody)
+  /** competency entities from the FRAC entity search (replaces the old getAllEntity registry call) */
+  private getCompetencyEntities() {
+    return this.gainedService.fetchCompetencyEntities(this.language)
   }
 
   // selectLevel(selectedProficiencyIndex, selectedDisplayLevel) {

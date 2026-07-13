@@ -42,7 +42,7 @@ export class SelfAssessmentComponent implements OnInit {
     this.loading = true;
     this.roleCompetencyData = [];
 
-    this.selfAssessmentService.getRolesWiseCompetency().pipe(
+    this.selfAssessmentService.getRolesWiseCompetency(this.position, this.language).pipe(
 
       // 👉 Step 1: Extract role competency IDs (NO mutation)
       map((result) => {
