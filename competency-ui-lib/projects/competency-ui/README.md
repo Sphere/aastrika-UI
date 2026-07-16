@@ -13,7 +13,28 @@ Run `ng build competency-ui` to build the project. The build artifacts will be s
 
 ## Publishing
 
-After building your library with `ng build competency-ui`, go to the dist folder `cd dist/competency-ui` and run `npm publish`.
+This library is published to npm as `@aastrika_npmjs/comptency`. Publishing is manual
+(no CI). See `RELEASE_NOTES/` for per-release notes (`RELEASE_NOTES/TEMPLATE.md` to start
+a new one).
+
+1. **Bump the version in `projects/competency-ui/package.json`** — this is the library
+   manifest ng-packagr publishes. The root workspace `package.json` is marked `"private": true`
+   and is *not* the published package. npm refuses to republish an existing version, so this
+   bump is required.
+2. **Build:** `npm run build-lib` (runs `ng build` + copies assets into `dist/competency-ui`).
+   Confirm `dist/competency-ui/package.json` shows the new version.
+3. **Publish from the built package:**
+   ```bash
+   cd dist/competency-ui
+   npm publish --access public          # add --otp=<code> if your npm account has 2FA
+   ```
+   Requires `npm login` with publish rights to the `@aastrika_npmjs` scope.
+4. **Roll into consumers:** bump eagle-fusion's dependency to the new `^X.Y.Z`, run
+   `yarn install` (updates the lockfile), commit, and redeploy.
+
+To hand a build to whoever holds publish rights instead of publishing yourself, run
+`npm pack` in `dist/competency-ui` to produce `aastrika_npmjs-comptency-<X.Y.Z>.tgz`, which
+they publish with `npm publish <tarball> --access public`.
 
 ## Running unit tests
 
