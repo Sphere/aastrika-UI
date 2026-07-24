@@ -49,7 +49,7 @@ export class GainedService extends DataService {
     const config = this.configService.getConfig()
     const lang = language || (config && config.language) || 'en'
     return this.post({
-      url: urlConfig.getEntitySearch(),
+      url: config!.isMobileApp ? urlConfig.getEntitySearchMobile() : urlConfig.getEntitySearch(),
       data: { entityType: 'Competency', language: lang, query: '', strict: 'false', field: ['code', 'name', 'levels'] }
     }).pipe(
       map((res: any) => {

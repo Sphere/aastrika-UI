@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { mergeMap } from 'rxjs/operators'
 import { of as observableOf, throwError as observableThrowError, Observable } from 'rxjs';
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
-import { urlConfig } from '../config/url.config';
 
 /**
  * DataService to make http call
@@ -107,7 +106,6 @@ export class DataService {
 
   private setHeader(session: any, header?: any) {
     const default_headers = {
-      'Authorization': urlConfig.authorization,
       'X-authenticated-user-token': session ? session.access_token : '',
       'Accept': 'application/json',
     }
@@ -119,11 +117,3 @@ export class DataService {
     }
   }
 }
-
-// `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJTNHNNVFdjZUZqYkxUWGxiczkzUzk4dmFtODBhdkRPUiJ9.nPOCY0-bVX28iNcxxnYbGpihY3ZzfNwx0-SFCnJwjas`,
-// `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJYUkZWVDBidDlBNGdsWm5uSUF5d1BJYWFzdjRReGFHWSJ9.APB-Ma_1l_R5l0xRddDhhlYkxBxxwZzcQofyhoif2bE`,
-
-// 'Access-Control-Allow-Origin':'*',
-// 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-// 'Content-Type': 'application/json',
-// 'Access-Control-Allow-Headers': 'Origin, X-Requested-with, Content-Type, Accept'

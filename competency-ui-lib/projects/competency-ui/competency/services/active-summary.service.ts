@@ -35,8 +35,9 @@ export class ActiveSummaryService extends DataService {
      * FRAC entity search for one entityType, returning the raw entity array.
      */
     private searchEntities(entityType: string){
+      const config = this.configService.getConfig()
       return this.post({
-        url: urlConfig.getEntitySearch(),
+        url: config!.isMobileApp ? urlConfig.getEntitySearchMobile() : urlConfig.getEntitySearch(),
         data: { entityType: entityType, language: 'en', query: '', strict: 'false', field: ['code', 'name', 'levels'] }
       }).pipe(
         map((res: any) => (res && res.result && res.result.entity) || []),
@@ -99,7 +100,7 @@ export class ActiveSummaryService extends DataService {
             return of({ response: [], status: 200 })
           }
           const hierarchy$ = this.post({
-            url: urlConfig.getEntityHierarchy(),
+            url: config!.isMobileApp ? urlConfig.getEntityHierarchyMobile() : urlConfig.getEntityHierarchy(),
             data: { entityType: 'Position', entityCode: entityCode, entityLanguage: lang }
           }).pipe(catchError(() => of(null)))
           return forkJoin([hierarchy$, this.getCompetencyEntityIdMap()]).pipe(
