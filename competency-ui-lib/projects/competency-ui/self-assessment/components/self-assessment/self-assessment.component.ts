@@ -5,7 +5,6 @@ import { RequestUtil } from '../../service/request-util.service';
 import { map, switchMap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
-import * as competencyRoleData from '../../rolesWiseCompetencyData.json';
 import { forkJoin, of } from 'rxjs';
 
 
@@ -22,7 +21,7 @@ export class SelfAssessmentComponent implements OnInit {
   requestUtil: any
   loading = false
   btnType: any[] = [];
-  roleBasedCompetency: any = competencyRoleData;
+  roleBasedCompetency: any;
   roleCompetencyData: any[] = [];
   noResultData:any = 'NO_RESULT_FOUND';
   // {
@@ -42,7 +41,7 @@ export class SelfAssessmentComponent implements OnInit {
     this.loading = true;
     this.roleCompetencyData = [];
 
-    this.selfAssessmentService.getRolesWiseCompetency().pipe(
+    this.selfAssessmentService.getRolesWiseCompetency(this.position, this.language).pipe(
 
       // 👉 Step 1: Extract role competency IDs (NO mutation)
       map((result) => {

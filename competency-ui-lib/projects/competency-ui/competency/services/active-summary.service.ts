@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '@aastrika_npmjs/comptency/core';
 import { HttpClient } from '@angular/common/http';
-import { urlConfig  } from '@aastrika_npmjs/comptency/core';
-import { map } from 'rxjs/operators';
+import { urlConfig, resolveFracPositionCode, transformFracHierarchyToLegacy } from '@aastrika_npmjs/comptency/core';
+import { map, catchError, switchMap } from 'rxjs/operators';
+import { forkJoin, of } from 'rxjs';
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 /**
  * ActiveSummaryService to extend Data Service
@@ -18,23 +19,9 @@ export class ActiveSummaryService extends DataService {
     super(http, configService)
   }
 
-   /**
-   * for making getall activity api calls
-   *
-   */
-    public getActivityById(reqBody:any){
-      // console.log('calling getActivityById>>')
-      let config = this.configService.getConfig()
-      const httpOptions: any = {
-        url: config!.isMobileApp ? urlConfig.getEntityByIdMobile(reqBody.id) : urlConfig.getEntityById(reqBody.id),
-        data: reqBody
-      };
-      // console.log('reqBody',httpOptions)
-      return this.post(httpOptions)
-    }
      /**
    * for making  api calls to get userDetails
-   * 
+   *
    */
     public getUserdetailsFromRegistry(reqBody:any ){
       let config = this.configService.getConfig()
@@ -44,20 +31,96 @@ export class ActiveSummaryService extends DataService {
       return this.get(httpOptions).pipe(map((res: any) => res.result.response))
     }
 
-    public getRolesMapping(){
-     const httpOtions: any = {
-      url: urlConfig.getRoleMapping()
-     };
-
-     return this.getwithouTAuthorization(httpOtions)
+    /**
+     * FRAC entity search for one entityType, returning the raw entity array.
+     */
+    private searchEntities(entityType: string){
+      const config = this.configService.getConfig()
+      return this.post({
+        url: config!.isMobileApp ? urlConfig.getEntitySearchMobile() : urlConfig.getEntitySearch(),
+        data: { entityType: entityType, language: 'en', query: '', strict: 'false', field: ['code', 'name', 'levels'] }
+      }).pipe(
+        map((res: any) => (res && res.result && res.result.entity) || []),
+        catchError(() => of([]))
+      )
     }
 
-    public getRolesWiseCompetency(){
-      const httpOtions: any = {
-       url: urlConfig.getRoleWiseCompetency()
-      };
- 
-      return this.getwithouTAuthorization(httpOtions)
+    /** Position designation (name) → FRAC Position entityCode, from the search API. */
+    public getPositionEntityCodeMap(){
+      return this.searchEntities('Position').pipe(
+        map((entities: any[]) => {
+          const posMap: { [name: string]: string } = {}
+          entities.forEach((entity: any) => {
+            if (entity && entity.name) {
+              posMap[entity.name] = entity.code
+            }
+          })
+          return posMap
+        })
+      )
+    }
+
+    /**
+     * Competency code → numeric entityId map from the FRAC entity search.
+     * This is the id courses / passbook / progress match on, so it is applied
+     * to the transformed competencies. Failures resolve to an empty map (ids
+     * then fall back to the code).
+     */
+    public getCompetencyEntityIdMap(){
+      return this.searchEntities('Competency').pipe(
+        map((entities: any[]) => {
+          const idMap: { [code: string]: string } = {}
+          entities.forEach((entity: any) => {
+            if (entity && entity.code) {
+              idMap[entity.code] = entity.entityId
+            }
+          })
+          return idMap
+        })
+      )
+    }
+
+    /**
+     * Role wise competency data from the FRAC service. The position designation
+     * is resolved to an entityCode via the search API, then the Position
+     * hierarchy is fetched once in the active language (from the eagle-fusion
+     * root config) — no separate en + hi calls, since the language is known up
+     * front — and merged with the competency id map into the
+     * { position, roles, activity, competency } shape the consumers expect.
+     * Returns an empty response (no legacy fallback) when the position has no
+     * FRAC mapping or FRAC returns no hierarchy.
+     */
+    public getRolesWiseCompetency(position?: string, language?: string){
+      const config = this.configService.getConfig()
+      const lang = language || (config && config.language) || 'en'
+      return this.getPositionEntityCodeMap().pipe(
+        switchMap((posMap) => {
+          const entityCode = resolveFracPositionCode(position as string, config, posMap)
+          if (!entityCode) {
+            return of({ response: [], status: 200 })
+          }
+          const hierarchy$ = this.post({
+            url: config!.isMobileApp ? urlConfig.getEntityHierarchyMobile() : urlConfig.getEntityHierarchy(),
+            data: { entityType: 'Position', entityCode: entityCode, entityLanguage: lang }
+          }).pipe(catchError(() => of(null)))
+          return forkJoin([hierarchy$, this.getCompetencyEntityIdMap()]).pipe(
+            map(([res, idMap]: any[]) => {
+              const result = res && res.result
+              if (!result || !(result.children && result.children.length)) {
+                return { response: [], status: 200 }
+              }
+              // single-language fetch: the one result populates both the name and
+              // lang-hi-* slots the consumers read, so the active language shows
+              // regardless of the lang=='hi' checks downstream.
+              return {
+                response: [transformFracHierarchyToLegacy(result, result, position as string, idMap)],
+                status: 200
+              }
+            })
+          )
+        }),
+        catchError(() => of({ response: [], status: 200 }))
+      )
      }
 
     public getCompetencyCourseIdentifier(data:any){ 

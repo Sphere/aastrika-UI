@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Competency Data: JSON → FRAC Migration — Before vs Now</title>
+  <style>
+    body {
+      font-family: 'Open Sans', Calibri, Arial, sans-serif;
+      font-size: 11pt;
+      color: #0D1218;
+      margin: 72pt 72pt 72pt 72pt;
+      line-height: 1.5;
+    }
+    h1 { font-size: 18pt; font-weight: 700; color: #17283C; border-bottom: 2pt solid #17283C; padding-bottom: 4pt; margin-top: 24pt; }
+    h2 { font-size: 14pt; font-weight: 600; color: #17283C; margin-top: 20pt; margin-bottom: 6pt; }
+    h3 { font-size: 12pt; font-weight: 600; color: #18293D; margin-top: 14pt; margin-bottom: 4pt; }
+    p  { margin: 6pt 0; }
+    a  { color: #186E6E; text-decoration: underline; }
+    code {
+      font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+      font-size: 9pt;
+      background-color: #F6F7F9;
+      padding: 1pt 3pt;
+      border-radius: 2pt;
+    }
+    pre {
+      font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+      font-size: 8.5pt;
+      background-color: #F6F7F9;
+      border: 1pt solid #D8DEE5;
+      border-left: 3pt solid #1E8F8E;
+      padding: 10pt 12pt;
+      margin: 8pt 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 10pt 0;
+      font-size: 10pt;
+    }
+    th {
+      background-color: #17283C;
+      color: #ffffff;
+      padding: 6pt 8pt;
+      text-align: left;
+      font-weight: 600;
+    }
+    td {
+      border: 0.5pt solid #D8DEE5;
+      padding: 5pt 8pt;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background-color: #F6F7F9; }
+    ul, ol { margin: 6pt 0 6pt 20pt; padding: 0; }
+    li { margin: 3pt 0; }
+    .meta { color: #7C8696; font-size: 10pt; margin-bottom: 4pt; }
+    .info {
+      background-color: #E3F7F6;
+      border-left: 4pt solid #1E8F8E;
+      padding: 8pt 12pt;
+      margin: 10pt 0;
+      font-size: 10pt;
+    }
+    .note {
+      background-color: #FEF6E0;
+      border-left: 4pt solid #F0A500;
+      padding: 8pt 12pt;
+      margin: 10pt 0;
+      font-size: 10pt;
+    }
+    .section-divider { border: none; border-top: 1pt solid #D8DEE5; margin: 20pt 0; }
+    .tag-old { color: #7C8696; font-weight: bold; }
+    .tag-new { color: #186E6E; font-weight: bold; }
+    .col-old { width: 44%; }
+    .col-new { width: 44%; }
+  </style>
+</head>
+<body>
+
+  <h1>Competency Data Migration: Static JSON → FRAC Service</h1>
+  <p class="meta">competency-ui library (<code>@aastrika_npmjs/comptency</code>) &middot; Before vs Now comparison</p>
+
+  <div class="info">
+    <strong>In one line:</strong> The competency dashboard used to read one big static JSON file. It now reads
+    live data from the <strong>FRAC service</strong> — the same information, but always up to date and split
+    into small, purpose-built API calls.
+  </div>
+
+  <hr class="section-divider">
+
+  <h2>1. Where the data comes from</h2>
+  <table>
+    <tr><th style="width:12%">&nbsp;</th><th class="col-old">Before</th><th class="col-new">Now</th></tr>
+    <tr>
+      <td><strong>Source</strong></td>
+      <td><span class="tag-old">Static JSON file</span> served from<br><code>public/v8/competencyAssets/roleWiseCompetencyData</code></td>
+      <td><span class="tag-new">FRAC service</span> (live)<br><code>proxies/v8/entity/v1/hierarchy</code> + <code>entity/v1/search</code></td>
+    </tr>
+    <tr>
+      <td><strong>Freshness</strong></td>
+      <td>Fixed file — updated only when someone manually regenerates and re-uploads it</td>
+      <td>Always current — reads straight from the FRAC system of record</td>
+    </tr>
+    <tr>
+      <td><strong>Size per call</strong></td>
+      <td>Whole file for <em>all</em> positions (~12 MB) downloaded, then filtered in the browser</td>
+      <td>Only the one position the user needs (a few KB)</td>
+    </tr>
+    <tr>
+      <td><strong>Maintenance</strong></td>
+      <td>Two hand-maintained JSON assets (<code>roleWiseCompetencyData</code>, <code>rolesMappingData</code>)</td>
+      <td>No static assets — FRAC is the single source</td>
+    </tr>
+  </table>
+
+  <hr class="section-divider">
+
+  <h2>2. How one competency page loads</h2>
+  <table>
+    <tr><th class="col-old">Before</th><th class="col-new">Now</th></tr>
+    <tr>
+      <td>
+        1. Download the <strong>entire</strong> role/competency JSON (all positions).<br>
+        2. Download the <code>rolesMappingData</code> JSON.<br>
+        3. In the browser, find the row matching the user's designation.<br>
+        4. Show roles, activities, competencies and the self-assessment courses.
+      </td>
+      <td>
+        1. <code>search(Position)</code> → find the user's designation → its FRAC code (e.g. <code>ANM/MPW → P10</code>).<br>
+        2. <code>hierarchy(P10)</code> → that position's roles → activities → competencies (with levels).<br>
+        3. <code>search(Competency)</code> → get each competency's real number.<br>
+        4. Show the same screen — roles, activities, competencies, courses.
+      </td>
+    </tr>
+  </table>
+  <div class="info">
+    The <strong>screen looks and behaves the same</strong> to the end user. Only the data plumbing behind it changed.
+  </div>
+
+  <hr class="section-divider">
+
+  <h2>3. The tricky part: the competency identifier</h2>
+  <p>This was the one real gotcha, and why the page briefly showed <em>"no result found"</em> during the switch.</p>
+  <table>
+    <tr><th style="width:22%">&nbsp;</th><th class="col-old">Before (JSON)</th><th class="col-new">FRAC first attempt</th></tr>
+    <tr>
+      <td><strong>Competency is identified by</strong></td>
+      <td>a <strong>number</strong> → <code>100</code></td>
+      <td>a <strong>code</strong> → <code>C1</code></td>
+    </tr>
+    <tr>
+      <td><strong>Courses are tagged with</strong></td>
+      <td><code>100</code> (number) &rarr; <span class="tag-new">MATCHED</span></td>
+      <td><code>100</code> (still number) &rarr; <span class="tag-old">C1 matched NOTHING</span></td>
+    </tr>
+    <tr>
+      <td><strong>Result</strong></td>
+      <td>Courses appeared under the competency</td>
+      <td>Empty "Required" tab → "no result found"</td>
+    </tr>
+  </table>
+
+  <h3>The fix</h3>
+  <p>FRAC's <code>entity/v1/search</code> returns <strong>both</strong> the code and the real number:</p>
+  <pre>{ "code": "C1", "entityId": "100", "name": "Pregnancy Identification", ... }</pre>
+  <p>So we now translate each competency's code back to its <strong>real number</strong> (<code>C1 → 100</code>) before
+  showing it. Courses, progress bars and the passbook all match on that number again — exactly like before.</p>
+  <div class="note">
+    <strong>Why it matters:</strong> the number (<code>entityId</code>) is the "real id" the rest of the platform
+    (courses, progress, passbook) has always used. FRAC's structure uses codes, so we map code → number in the
+    middle. Newer positions (like <code>ANM_UP</code>) already use codes end-to-end, so they map to themselves and
+    keep working too.
+  </div>
+
+  <hr class="section-divider">
+
+  <h2>4. Finding the position code</h2>
+  <table>
+    <tr><th class="col-old">Before (interim)</th><th class="col-new">Now</th></tr>
+    <tr>
+      <td>The designation → position-code list (<code>ANM/MPW → P10</code>) was <strong>hardcoded</strong> in the
+      library — fragile, and would break for new positions.</td>
+      <td>Pulled <strong>live</strong> from <code>search(Position)</code>, which returns all positions with their
+      codes and names. The hardcoded list is now only an offline safety net.</td>
+    </tr>
+  </table>
+
+  <hr class="section-divider">
+
+  <h2>5. Language: two calls became one</h2>
+  <table>
+    <tr><th class="col-old">Before</th><th class="col-new">Now</th></tr>
+    <tr>
+      <td>Fetched the hierarchy <strong>twice</strong> — once in English, once in Hindi — so the page could switch
+      language on the fly.</td>
+      <td>The language is already known from the app (eagle-fusion root config), so we fetch the hierarchy
+      <strong>once</strong> in that language. One less network call per tab.</td>
+    </tr>
+  </table>
+
+  <hr class="section-divider">
+
+  <h2>6. API endpoints — removed vs added</h2>
+  <table>
+    <tr><th>Status</th><th>Endpoint</th><th>Purpose</th></tr>
+    <tr>
+      <td><span class="tag-old">REMOVED</span></td>
+      <td><code>public/v8/competencyAssets/roleWiseCompetencyData</code></td>
+      <td>Old static role/competency tree (all positions)</td>
+    </tr>
+    <tr>
+      <td><span class="tag-old">REMOVED</span></td>
+      <td><code>public/v8/competencyAssets/rolesMappingData</code></td>
+      <td>Old designation → roleId map (its result was unused dead code)</td>
+    </tr>
+    <tr>
+      <td><span class="tag-new">ADDED</span></td>
+      <td><code>proxies/v8/entity/v1/hierarchy</code></td>
+      <td>One position's full tree: Roles → Activities → Competencies + levels</td>
+    </tr>
+    <tr>
+      <td><span class="tag-new">ADDED</span></td>
+      <td><code>proxies/v8/entity/v1/search</code> (Position)</td>
+      <td>Designation → position code lookup</td>
+    </tr>
+    <tr>
+      <td><span class="tag-new">ADDED</span></td>
+      <td><code>proxies/v8/entity/v1/search</code> (Competency)</td>
+      <td>Competency code → real number (<code>entityId</code>) lookup</td>
+    </tr>
+  </table>
+  <p class="meta">Unrelated endpoints (user profile read, course search, passbook, progress) are unchanged.</p>
+
+  <hr class="section-divider">
+
+  <h2>7. Net result</h2>
+  <ul>
+    <li><strong>Same experience</strong> for the user — the Job Description, Passbook and Required tabs look and work the same.</li>
+    <li><strong>Live data</strong> — no more stale hand-maintained JSON files.</li>
+    <li><strong>Lighter</strong> — a few KB per position instead of a ~12 MB whole-file download.</li>
+    <li><strong>Fewer calls</strong> — one hierarchy call per tab instead of two (English + Hindi).</li>
+    <li><strong>Nothing hardcoded</strong> — positions and competency numbers are resolved live from FRAC.</li>
+    <li><strong>Works for all positions</strong> — legacy (number-based) and newer (code-based) alike.</li>
+  </ul>
+
+  <hr class="section-divider">
+  <p class="meta">Prepared for the FRAC migration of the competency-ui library. Styled in the Aastrika brand
+  document theme (navy <code>#17283C</code> / teal <code>#1E8F8E</code> / gold <code>#F0A500</code>).</p>
+
+</body>
+</html>

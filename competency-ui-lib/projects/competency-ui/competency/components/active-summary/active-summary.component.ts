@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { RequestUtil } from '../../services/request-util';
 import { ActiveSummaryService } from '../../services/active-summary.service';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 import { forkJoin, of, Subscription } from 'rxjs';
 import * as _ from 'lodash';
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
@@ -33,7 +33,6 @@ export class ActiveSummaryComponent implements OnInit {
   profileData: any
   assessmentData: any
   btnType = [];
-  roleId: any;
   noResultData:any = 'NO_RESULT_FOUND';
   showNodata = false
   constructor(
@@ -53,7 +52,6 @@ export class ActiveSummaryComponent implements OnInit {
       this.showNodata = true
       this.cdr.detectChanges();
     }
-    this.designationMap(this.desigination)
     this.getProgress()
     this.getUserDetails().pipe(mergeMap((res: any) => {
       this.profileData = res.profileDetails.profileReq
@@ -62,19 +60,25 @@ export class ActiveSummaryComponent implements OnInit {
       }
       if(!this.desigination){
         this.desigination = res.profileDetails!.profileReq!.professionalDetails[0]!.designation;
-        this.designationMap(this.desigination)
       }
 
       if (this.profileData) {
         const getActivity = this.getRolesWiseCompetencyData()
-        const getCourses = this.getCompetencyCourse()        
-        return forkJoin([getActivity , getCourses ]);
+        const getCourses = this.getCompetencyCourse()
+        const getProgressData = this.getPassbookProgress()
+        return forkJoin([getActivity , getCourses , getProgressData ]);
       }
     })).subscribe((res: any) => {
       // console.log(res)
       let rolesCompetencyData =  _.find(res[0].response, {'position': this.desigination })
       // console.log(rolesCompetencyData)
       this.assessmentData = this.requestUtil.formatedCompetencyCourseData(res[1]);
+      // Progress fetched here so the Job Description tab does not depend on the
+      // Passbook tab having been opened first to populate competencyData$.
+      if (res[2] && res[2].length) {
+        this.competencyProgress = res[2]
+        this.gainedService.competencyData.next(res[2])
+      }
       this.getAssessmentBtnType(this.assessmentData);
       const formatedResponse = this.requestUtil.formatedActivitityByPostion(rolesCompetencyData, this.language, this.assessmentData, this.competencyProgress)
       // const formatedResponse = this.requestUtil.formatedActivitityByPostion(rolesCompetencyData, this.language, this.assessmentData, this.competencyProgress)
@@ -86,8 +90,35 @@ export class ActiveSummaryComponent implements OnInit {
 
   getProgress() {
     this.gainedService.competencyData$.subscribe(res => {
-      this.competencyProgress = res;
+      if (res && res.length) {
+        this.competencyProgress = res;
+      }
     })
+  }
+
+  /**
+   * Load the user's competency progress directly from the passbook, built into the
+   * same competencyStoreData shape the Passbook tab produces. This lets the Job
+   * Description tab render progress (level ticks, %, COMPLETED/In Progress) without
+   * depending on the Passbook tab having been opened first.
+   */
+  getPassbookProgress() {
+    const id = this.configService.getConfig().id
+    const reqBody = { request: { typeName: 'competency' } }
+    return this.gainedService.fetchUserPassbook(reqBody, id).pipe(
+      map((res: any) => {
+        const content = (res && res.result && res.result.content) || []
+        const progress: any[] = []
+        _.forEach(content, (record: any) => {
+          const competencies = _.get(record, 'competencies') || {}
+          _.forEach(_.keys(competencies), (cid: any) => {
+            progress.push(this.requestUtil.competencyStoreDataFomat(competencies[cid]))
+          })
+        })
+        return progress
+      }),
+      catchError(() => of([]))
+    )
   }
 
   getAssessmentBtnType(data: any){
@@ -154,67 +185,9 @@ export class ActiveSummaryComponent implements OnInit {
     if (this.profileData.professionalDetails) {
       designation = this.profileData.professionalDetails[0].designation
     }
-    return this.activeSummaryService.getRolesWiseCompetency()
+    return this.activeSummaryService.getRolesWiseCompetency(this.desigination, this.language)
   }
 
-  private getActivityByRole(id: any) {
-    let designation: any
-    if (this.profileData.professionalDetails) {
-      designation = this.profileData.professionalDetails[0].designation
-    }
-    const reqBody = {
-      filter: {
-        "isDetail": true
-      },
-      id: id
-    };
-    return this.activeSummaryService.getActivityById(reqBody)
-  }
-
-  private designationMap(designation: string) {
-    this.activeSummaryService.getRolesMapping().subscribe((res: any) => {
-      const map = res.response;
-      this.roleId = map?.[designation] ?? 1;
-
-      this.cdr.detectChanges();
-    });
-  }
-
-  public getActivityByRoleId(id: any) { 
-    this.acordianLoading = true
-    const index = _.findIndex(this.roleactivitySummaries, { 'id': id })
-    this.roleactivitySummaries[index]['activities'] = []
-    this.getEntityById(id).pipe(mergeMap((res) => {
-      const respone = this.requestUtil.formatedActivitityByRoleId(res, this.language)
-      this.roleactivitySummaries[index]['activities'] = respone
-      const cidArr = _.map(this.roleactivitySummaries[index]['activities'], 'cid')
-      let calls: any[] = [];
-      _.forEach(cidArr, (value: any) => {
-        calls.push(this.getEntityById(value))
-      })
-      this.acordianLoading = false
-
-      return forkJoin([...calls ])
-    })).subscribe((res: any) => {
-      const response = this.requestUtil.formatedCompetency(res, this.competencyProgress, this.language, this.assessmentData)
-      this.roleactivitySummaries[index]['activities'] = _.values(_.merge(_.keyBy(response, 'id'),
-        _.keyBy(this.roleactivitySummaries[index]['activities'], 'cid')))
-
-      this.roleactivitySummaries[index]['averagePercentage'] = []
-      let competencyLength = this.getAveragepercentage(response)
-      this.roleactivitySummaries[index]['averagePercentage'] = competencyLength    
-      this.loading = false
-    })
-  }
-  getEntityById(id: any) {
-    const reqBody = {
-      filter: {
-        "isDetail": true
-      },
-      id: id
-    };
-    return this.activeSummaryService.getActivityById(reqBody)
-  }
   getAveragepercentage(data: any) {
     let totalLength = data.length
     let percentage: any[] = []

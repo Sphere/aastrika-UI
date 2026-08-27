@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Release 2.1.1 — @aastrika_npmjs/comptency</title>
+  <style>
+    body {
+      font-family: 'Open Sans', Calibri, Arial, sans-serif;
+      font-size: 11pt;
+      color: #0D1218;
+      margin: 72pt 72pt 72pt 72pt;
+      line-height: 1.5;
+    }
+    h1 { font-size: 18pt; font-weight: 700; color: #17283C; border-bottom: 2pt solid #17283C; padding-bottom: 4pt; margin-top: 24pt; }
+    h2 { font-size: 14pt; font-weight: 600; color: #17283C; margin-top: 20pt; margin-bottom: 6pt; }
+    h3 { font-size: 12pt; font-weight: 600; color: #18293D; margin-top: 14pt; margin-bottom: 4pt; }
+    p  { margin: 6pt 0; }
+    a  { color: #186E6E; text-decoration: underline; }
+    code {
+      font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+      font-size: 9pt;
+      background-color: #F6F7F9;
+      padding: 1pt 3pt;
+      border-radius: 2pt;
+    }
+    pre {
+      font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+      font-size: 8.5pt;
+      background-color: #F6F7F9;
+      border: 1pt solid #D8DEE5;
+      border-left: 3pt solid #1E8F8E;
+      padding: 10pt 12pt;
+      margin: 8pt 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 10pt 0;
+      font-size: 10pt;
+    }
+    th {
+      background-color: #17283C;
+      color: #ffffff;
+      padding: 6pt 8pt;
+      text-align: left;
+      font-weight: 600;
+    }
+    td {
+      border: 0.5pt solid #D8DEE5;
+      padding: 5pt 8pt;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background-color: #F6F7F9; }
+    ul, ol { margin: 6pt 0 6pt 20pt; padding: 0; }
+    li { margin: 3pt 0; }
+    .meta { color: #7C8696; font-size: 10pt; margin-bottom: 4pt; }
+    .info {
+      background-color: #E3F7F6;
+      border-left: 4pt solid #1E8F8E;
+      padding: 8pt 12pt;
+      margin: 10pt 0;
+      font-size: 10pt;
+    }
+    .note {
+      background-color: #FEF6E0;
+      border-left: 4pt solid #F0A500;
+      padding: 8pt 12pt;
+      margin: 10pt 0;
+      font-size: 10pt;
+    }
+    .section-divider { border: none; border-top: 1pt solid #D8DEE5; margin: 20pt 0; }
+    .checklist li { list-style: none; margin-left: -16pt; }
+    .checklist li::before { content: "\2610  "; }
+    .sha { color: #7C8696; font-family: 'JetBrains Mono', Consolas, monospace; font-size: 8.5pt; }
+  </style>
+</head>
+<body>
+
+  <h1>Release 2.1.1</h1>
+  <p class="meta">@aastrika_npmjs/comptency (competency-ui library) &middot; 2026-07-24</p>
+
+  <table>
+    <tr><th style="width:34%">&nbsp;</th><th>&nbsp;</th></tr>
+    <tr><td><strong>Package</strong></td><td><code>@aastrika_npmjs/comptency</code> (npm)</td></tr>
+    <tr><td><strong>Version published</strong></td><td><code>2.1.1</code></td></tr>
+    <tr><td><strong>Baseline (previous)</strong></td><td><code>2.1.0</code></td></tr>
+    <tr><td><strong>Consumed by</strong></td><td>eagle-fusion (<code>^2.1.1</code>)</td></tr>
+    <tr><td><strong>Commits</strong></td><td><span class="sha">8034f0c</span> (fix) + version bump</td></tr>
+    <tr><td><strong>Author</strong></td><td>Likhith Thammegowda (fix), vpPavithra (release)</td></tr>
+  </table>
+
+  <h2>Summary</h2>
+  <div class="info">
+    Patch release on top of 2.1.0. The FRAC entity endpoints introduced in 2.1.0
+    (<code>entity/v1/search</code>, <code>entity/v1/hierarchy</code>) only existed as
+    protected proxy routes and were called unconditionally, so on the mobile app — whose
+    webview cannot reach that proxy — role/competency and gained-competency data came
+    back empty. This release routes those calls through the public
+    <code>mobileApp/kong</code> gateway when running on mobile, matching the existing
+    passbook/userdetails pattern, so mobile is fully supported.
+  </div>
+
+  <hr class="section-divider">
+
+  <h2>🐛 Fixes</h2>
+  <ul>
+    <li><strong>mobile FRAC calls</strong> — <code>entity/v1/search</code> and
+      <code>entity/v1/hierarchy</code> are now branched on
+      <code>config.isMobileApp</code>: web keeps calling the protected proxy
+      (<code>/apis/proxies/v8/entity/v1/...</code>), mobile now calls the public gateway
+      (<code>getEntitySearchMobile</code> / <code>getEntityHierarchyMobile</code> via
+      <code>mobileApp/kong</code>), mirroring the passbook/userdetails mobile wiring.
+      Applied at every FRAC call site in <code>active-summary</code>,
+      <code>self-assessment</code> and <code>gained</code> services.
+      <span class="sha">8034f0c</span></li>
+  </ul>
+
+  <h2>🏗️ Build / Chore</h2>
+  <ul>
+    <li><strong>removed the hardcoded Authorization bearer token</strong> from
+      <code>url.config</code> / <code>data.service</code> — no longer needed now that the
+      correct gateway (proxy vs. kong) is selected per platform.
+      <span class="sha">8034f0c</span></li>
+    <li><strong>added <code>url.config.spec.ts</code></strong> asserting the web &rarr;
+      proxy and mobile &rarr; kong endpoint wiring. <span class="sha">8034f0c</span></li>
+    <li>version bump: <code>package.json</code> (root + <code>projects/competency-ui</code>)
+      &rarr; <code>2.1.1</code>. <span class="sha">8c539c2</span></li>
+  </ul>
+
+  <hr class="section-divider">
+
+  <h2>⚠️ Deploy notes &amp; risk</h2>
+  <ul>
+    <li><strong>Config / env / secret changes:</strong> none.</li>
+    <li><strong>Backend / API contract dependencies:</strong> requires the public
+      <code>mobileApp/kong</code> gateway to expose <code>entity/v1/search</code> and
+      <code>entity/v1/hierarchy</code> on the mobile host, in addition to the
+      <code>2.1.0</code> proxy requirement. Verify both are reachable in the target
+      environment before deploying a consumer that uses <code>2.1.1</code> on mobile.</li>
+    <li><strong>Breaking changes:</strong> none. The public API surface (exported
+      components, modules, <code>RequestUtil</code>) is unchanged.</li>
+  </ul>
+
+  <div class="info">
+    <strong>Mobile — now supported.</strong> This is the fix that closes the 2.1.0
+    mobile gap noted in that release's notes.
+  </div>
+
+  <hr class="section-divider">
+
+  <h2>✅ Pre-publish checklist</h2>
+  <ul class="checklist">
+    <li>Version bumped in <code>projects/competency-ui/package.json</code> (the library
+      manifest ng-packagr publishes)</li>
+    <li>Build clean (<code>npm run build-lib</code>) &rarr; <code>dist/competency-ui</code>
+      shows <code>2.1.1</code></li>
+    <li>Bundle audit: <code>getEntitySearchMobile</code> /
+      <code>getEntityHierarchyMobile</code> present, hardcoded Authorization bearer token
+      absent</li>
+    <li><code>entity/v1/search</code> / <code>entity/v1/hierarchy</code> reachable via
+      both the web proxy and the mobile <code>kong</code> gateway in the target
+      environment</li>
+    <li>Consumer (eagle-fusion) <code>package.json</code> + lockfile updated to
+      <code>^2.1.1</code></li>
+  </ul>
+
+  <h2>Publish &amp; rollback</h2>
+  <p><strong>Publish</strong> — npm package (no Jenkins). Bump
+  <code>projects/competency-ui/package.json</code>, run <code>npm run build-lib</code>,
+  then:</p>
+  <pre>cd dist/competency-ui
+npm publish --access public        # @aastrika_npmjs publish rights required (+ --otp if 2FA)</pre>
+  <p>Then bump the consumer (eagle-fusion <code>package.json</code> &rarr;
+  <code>^2.1.1</code>, <code>yarn install</code>) and redeploy.</p>
+  <p><strong>Rollback</strong> — consumers pin the previous version (<code>2.1.0</code>),
+  reinstall, redeploy. Published npm versions are immutable and are not unpublished. Note:
+  rolling back to <code>2.1.0</code> reintroduces the mobile data gap this release fixes.</p>
+
+  <hr class="section-divider">
+  <p class="meta">Adapted from the eagle-fusion / CBP release-notes template for an
+  npm-published library. Styled in the Aastrika brand document theme (navy <code>#17283C</code>
+  / teal <code>#1E8F8E</code> / gold <code>#F0A500</code>).</p>
+
+</body>
+</html>

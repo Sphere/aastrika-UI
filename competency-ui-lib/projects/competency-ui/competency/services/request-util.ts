@@ -254,23 +254,42 @@ export class RequestUtil {
 
   formatedGainedCompetency(entity: any, passbook: any, lang: any) {
     let response = []
-    _.forEach(entity, (value: any) => {
-      const cid = _.get(value, 'id')
-      _.forEach(passbook, (passbookValue: any) => {
-        if (passbookValue.competencies.hasOwnProperty(cid)) {
-          const competency = passbookValue.competencies[cid]
-          //console.log(competency)
-          response.push({
-            'title': lang == 'hi' ? this.getHiTitle(cid, entity, competency) : _.get(competency, 'additionalParams.competencyName'),
-            'logs': this.acquiredPassbookLogs(_.get(competency, 'acquiredDetails'), lang),
-            'proficiencyLevels': this.acquiredChannelColourCode(_.get(competency, 'acquiredDetails')),
-            'competencyStoreData': this.competencyStoreDataFomat(competency),
-            'titleHi': this.getHiTitle(cid, entity, competency)
-          })
-        }
+    // FRAC competency entities keyed by the numeric entityId the passbook references.
+    // Names already come back in the active language.
+    const entityById: any = {}
+    _.forEach(entity, (item: any) => {
+      const id = _.get(item, 'id')
+      if (id !== undefined && id !== null) {
+        entityById[String(id)] = item
+      }
+    })
+    // Drive off the passbook, not the entity list, so every earned competency is shown —
+    // including ids FRAC has since re-keyed (e.g. 33 -> 292). Those records carry their
+    // own competencyName, so nothing is lost when FRAC has no entry for the id.
+    _.forEach(passbook, (passbookValue: any) => {
+      const competencies = _.get(passbookValue, 'competencies') || {}
+      _.forEach(_.keys(competencies), (cid: any) => {
+        const competency = competencies[cid]
+        const title = this.getCompetencyTitle(cid, entityById, competency)
+        response.push({
+          'title': title,
+          'logs': this.acquiredPassbookLogs(_.get(competency, 'acquiredDetails'), lang),
+          'proficiencyLevels': this.acquiredChannelColourCode(_.get(competency, 'acquiredDetails')),
+          'competencyStoreData': this.competencyStoreDataFomat(competency),
+          'titleHi': title
+        })
       })
     })
     return response
+  }
+
+  /**
+   * Localized competency name from the FRAC entity search, falling back to the name
+   * stored on the passbook record itself when FRAC has no entry for that id.
+   */
+  getCompetencyTitle(cid: any, entityById: any, competency: any) {
+    const entity = entityById[String(cid)]
+    return (entity && _.get(entity, 'name')) || _.get(competency, 'additionalParams.competencyName')
   }
 
   getHiTitle(id, entity, competency) {
