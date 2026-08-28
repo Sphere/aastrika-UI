@@ -11,9 +11,9 @@ import { RequiredCompetencyService } from '../../services/required-competency.se
     standalone: false
 })
 export class RequiredComptencyCardComponent implements OnInit, OnDestroy {
-  @Input() language;
-  @Input() isMobileApp;
-  @Input() role;
+  @Input() language: any;
+  @Input() isMobileApp: any;
+  @Input() role: any;
   seletectedLang: any;
   position: any;
 
