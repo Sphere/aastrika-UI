@@ -173,7 +173,7 @@ const */
     const httpOptions: any = {
       url: config!.isMobileApp ? urlConfig.getUserdetailsMobile(reqBody.id) : urlConfig.getUserdetailsFromRegistry(reqBody.id),
     };
-    return this.get(httpOptions).pipe(map((res: any) => res.result.response))
+    return this.get(httpOptions).pipe(map((res: any) => res?.result?.response))
   }
 
 

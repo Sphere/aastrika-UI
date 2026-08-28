@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common'
 import { SelfAssessmentService } from '../../service/self-assessment.service';
 import { RequestUtil } from '../../service/request-util.service';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ConfigService } from '@aastrika_npmjs/comptency/entry-module';
 import { forkJoin, of } from 'rxjs';
@@ -50,7 +50,9 @@ export class SelfAssessmentComponent implements OnInit {
 
         if (!role) return [];
 
-        return _.flatMap(role.competency, (item: any) =>
+        // Native Array.flatMap (not _.flatMap) — lodash-es's flatMap export has
+        // proven unreliable through some webpack ESM-interop configs at runtime.
+        return (role.competency as any[]).flatMap((item: any) =>
           _.map(item, (competency: any) => competency.id)
         );
       }),
@@ -63,8 +65,13 @@ export class SelfAssessmentComponent implements OnInit {
           map((res: any) => {
             this.language =
               this.language ||
-              res.profileDetails?.preferences?.language ||
+              res?.profileDetails?.preferences?.language ||
               'en';
+          }),
+          // 👉 A failed/empty user-details lookup must not block course fetching.
+          catchError(() => {
+            this.language = this.language || 'en';
+            return of(null);
           })
         );
       }),
@@ -124,10 +131,12 @@ export class SelfAssessmentComponent implements OnInit {
         this.btnType = result.btnType; // ✅ assign once
         this.loading = false;
 
-        this.cdr.detectChanges(); // ✅ critical for Angular 21
+        this.cdr.markForCheck();
       },
-      error: () => {
+      error: (err) => {
+        console.error('SelfAssessmentComponent: failed to load self-assessment data', err);
         this.loading = false;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -144,7 +153,12 @@ export class SelfAssessmentComponent implements OnInit {
         }
       })
     })
-    return _.uniqBy(result, 'contentId');
+    // Native dedup by contentId, keeping first occurrence (same semantics as
+    // _.uniqBy) — see the flatMap note above: 4.0+ lodash methods aren't
+    // reliably resolving on this app's runtime bundle, so avoid them here.
+    return Array.from(
+      new Map(result.map((item: any) => [item.contentId, item])).values()
+    );
   }
 
   getUserDetails() {
